@@ -17,9 +17,23 @@ interface RouterContextType {
 
 const RouterContext = createContext<RouterContextType | undefined>(undefined);
 
+// Detect base repo subfolder (e.g. /meridianblu on GitHub Pages)
+export const getBaseRepoPath = (): string => {
+  if (typeof window === 'undefined') return '';
+  const p = window.location.pathname.toLowerCase();
+  if (p.startsWith('/meridianblu')) {
+    return '/meridianblu';
+  }
+  return '';
+};
+
 // Normalize path aliases
 export const normalizePath = (pathname: string): string => {
-  const clean = pathname.toLowerCase().replace(/\/+$/, '') || '/';
+  let clean = pathname.toLowerCase().replace(/\/+$/, '') || '/';
+  const base = getBaseRepoPath();
+  if (base && clean.startsWith(base)) {
+    clean = clean.slice(base.length) || '/';
+  }
   if (clean === '/suites' || clean === '/accommodations' || clean === '/booking') return '/rooms';
   if (clean === '/virtual-tour' || clean === '/estate') return '/about';
   if (clean === '/experiences' || clean === '/hikes') return '/trails';
@@ -54,11 +68,13 @@ export const RouterProvider: React.FC<RouterProviderProps> = ({ children }) => {
       const url = new URL(to, window.location.origin);
       const targetPath = normalizePath(url.pathname);
       const targetSearch = url.search;
+      const base = getBaseRepoPath();
+      const fullPath = base ? `${base}${targetPath}` : targetPath;
 
       if (options?.replace) {
-        window.history.replaceState(options?.state ?? null, '', `${targetPath}${targetSearch}`);
+        window.history.replaceState(options?.state ?? null, '', `${fullPath}${targetSearch}`);
       } else {
-        window.history.pushState(options?.state ?? null, '', `${targetPath}${targetSearch}`);
+        window.history.pushState(options?.state ?? null, '', `${fullPath}${targetSearch}`);
       }
 
       setCurrentPath(targetPath);
