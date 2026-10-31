@@ -1,0 +1,6 @@
+{
+  "name": "The Celeste Mussoorie - Himalayan Luxury Sanctuary & Mountain Spa",
+  "description": "Luxury Himalayan retreat in Mussoorie featuring panoramic mountain views, direct online booking engine, 360 virtual tours, interactive hiking trails map, and AI concierge.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
