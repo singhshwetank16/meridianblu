@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState, useEffect, useCallback, ReactNode } from 'react';
+import { getBaseRepoPath } from '../utils/assetUrl';
 
 export type AppRoute = 
   | '/'
@@ -17,15 +18,7 @@ interface RouterContextType {
 
 const RouterContext = createContext<RouterContextType | undefined>(undefined);
 
-// Detect base repo subfolder (e.g. /meridianblu on GitHub Pages)
-export const getBaseRepoPath = (): string => {
-  if (typeof window === 'undefined') return '';
-  const p = window.location.pathname.toLowerCase();
-  if (p.startsWith('/meridianblu')) {
-    return '/meridianblu';
-  }
-  return '';
-};
+export { getBaseRepoPath };
 
 // Normalize path aliases
 export const normalizePath = (pathname: string): string => {

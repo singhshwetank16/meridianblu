@@ -16,6 +16,7 @@ import {
 } from 'lucide-react';
 import { GUEST_STORIES } from '../data/hotelData';
 import { GuestStory } from '../types';
+import { getAssetUrl } from '../utils/assetUrl';
 
 interface SocialHubProps {
   onSelectPhotoToShare?: (item: any) => void;
@@ -44,13 +45,13 @@ export const SocialHub: React.FC<SocialHubProps> = ({ onBookSuite }) => {
   const [newHandle, setNewHandle] = useState('');
   const [newCaption, setNewCaption] = useState('');
   const [newTag, setNewTag] = useState('#WinterlinePatron');
-  const [newPhotoUrl, setNewPhotoUrl] = useState('/images/terrace.jpg');
+  const [newPhotoUrl, setNewPhotoUrl] = useState(getAssetUrl('/images/terrace.jpg'));
 
   const presetPhotos = [
-    { label: 'Mountain Terrace', url: '/images/terrace.jpg' },
-    { label: 'Evening Bonfire', url: '/images/bonefire.jpg' },
-    { label: 'Alpine Dining', url: '/images/restaurant.jpg' },
-    { label: 'Balcony Suite', url: '/images/Summit Balcony Room/Summit Balcony Room.avif' },
+    { label: 'Mountain Terrace', url: getAssetUrl('/images/terrace.jpg') },
+    { label: 'Evening Bonfire', url: getAssetUrl('/images/bonefire.jpg') },
+    { label: 'Alpine Dining', url: getAssetUrl('/images/restaurant.jpg') },
+    { label: 'Balcony Suite', url: getAssetUrl('/images/Summit Balcony Room/Summit Balcony Room.avif') },
   ];
 
   const handleToggleLike = (id: string) => {

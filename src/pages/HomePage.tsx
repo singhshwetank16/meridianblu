@@ -3,6 +3,7 @@ import { HeroSection } from '../components/HeroSection';
 import { RoomTier, TrailAttraction } from '../types';
 import { useRouter, Link } from '../router';
 import { HOTEL_INFO } from '../data/hotelData';
+import { getAssetUrl } from '../utils/assetUrl';
 import {
   Compass,
   Sparkles,
@@ -116,7 +117,7 @@ export const HomePage: React.FC<HomePageProps> = ({
           <div className="lg:col-span-6 relative">
             <div className="relative rounded-3xl overflow-hidden border border-slate-200 shadow-2xl group">
               <img
-                src="/images/terrace.jpg"
+                src={getAssetUrl('/images/terrace.jpg')}
                 alt="Meridian Blu Mountain Terrace at Sunset"
                 className="w-full h-[460px] object-cover group-hover:scale-105 transition-transform duration-700"
               />
@@ -170,8 +171,8 @@ export const HomePage: React.FC<HomePageProps> = ({
             <div className="lg:col-span-6 rounded-2xl overflow-hidden border border-slate-200 bg-white shadow-lg group flex flex-col justify-between">
               <div className="relative aspect-video overflow-hidden">
                 <video
-                  src="/images/terres-video.mp4"
-                  poster="/images/terrace.jpg"
+                  src={getAssetUrl('/images/terres-video.mp4')}
+                  poster={getAssetUrl('/images/terrace.jpg')}
                   autoPlay
                   loop
                   muted
@@ -194,8 +195,8 @@ export const HomePage: React.FC<HomePageProps> = ({
             <div className="lg:col-span-6 rounded-2xl overflow-hidden border border-slate-200 bg-white shadow-lg group flex flex-col justify-between">
               <div className="relative aspect-video overflow-hidden">
                 <video
-                  src="/images/video-infuencer.mp4"
-                  poster="/images/hero/entrance.avif"
+                  src={getAssetUrl('/images/video-infuencer.mp4')}
+                  poster={getAssetUrl('/images/hero/entrance.avif')}
                   playsInline
                   controls
                   className="w-full h-full object-cover"
@@ -216,7 +217,7 @@ export const HomePage: React.FC<HomePageProps> = ({
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 pt-2 relative z-10">
             <div className="p-5 rounded-2xl bg-white border border-slate-200 flex items-center gap-4 group shadow-sm hover:shadow-md transition-shadow">
               <img
-                src="/images/restaurant.jpg"
+                src={getAssetUrl('/images/restaurant.jpg')}
                 alt="Meridian Blu Dining Restaurant"
                 className="w-20 h-20 rounded-xl object-cover shrink-0 border border-slate-200 group-hover:scale-105 transition-transform"
               />
@@ -232,7 +233,7 @@ export const HomePage: React.FC<HomePageProps> = ({
 
             <div className="p-5 rounded-2xl bg-white border border-slate-200 flex items-center gap-4 group shadow-sm hover:shadow-md transition-shadow">
               <img
-                src="/images/bonefire.jpg"
+                src={getAssetUrl('/images/bonefire.jpg')}
                 alt="Evening Bonfire on Mountain Terrace"
                 className="w-20 h-20 rounded-xl object-cover shrink-0 border border-slate-200 group-hover:scale-105 transition-transform"
               />
@@ -454,7 +455,7 @@ export const HomePage: React.FC<HomePageProps> = ({
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           <Link to="/gallery" className="group rounded-2xl overflow-hidden relative h-56 border border-slate-200 shadow-sm hover:shadow-md transition-all">
             <img
-              src="/images/terrace.jpg"
+              src={getAssetUrl('/images/terrace.jpg')}
               alt="Himalayan Mountain Terrace"
               className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
             />
@@ -465,7 +466,7 @@ export const HomePage: React.FC<HomePageProps> = ({
 
           <Link to="/gallery" className="group rounded-2xl overflow-hidden relative h-56 border border-slate-200 shadow-sm hover:shadow-md transition-all">
             <img
-              src="/images/restaurant.jpg"
+              src={getAssetUrl('/images/restaurant.jpg')}
               alt="Meridian Blu Dining Restaurant"
               className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
             />
@@ -476,7 +477,7 @@ export const HomePage: React.FC<HomePageProps> = ({
 
           <Link to="/gallery" className="group rounded-2xl overflow-hidden relative h-56 border border-slate-200 shadow-sm hover:shadow-md transition-all">
             <img
-              src="/images/bonefire.jpg"
+              src={getAssetUrl('/images/bonefire.jpg')}
               alt="Evening Mountain Bonfire"
               className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
             />
@@ -487,7 +488,7 @@ export const HomePage: React.FC<HomePageProps> = ({
 
           <Link to="/gallery" className="group rounded-2xl overflow-hidden relative h-56 border border-slate-200 shadow-sm hover:shadow-md transition-all">
             <img
-              src="/images/hero/entrance.avif"
+              src={getAssetUrl('/images/hero/entrance.avif')}
               alt="Estate Entrance & Welcome"
               className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
             />

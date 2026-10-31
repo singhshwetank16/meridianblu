@@ -1,4 +1,5 @@
 import React from 'react';
+import { getAssetUrl } from '../utils/assetUrl';
 
 interface MeridianBluLogoProps {
   theme?: 'light' | 'dark';
@@ -50,7 +51,7 @@ export const MeridianBluLogo: React.FC<MeridianBluLogoProps> = ({
     >
       {/* Real Brand Logo Image */}
       <img
-        src="/images/logo/logo.png"
+        src={getAssetUrl('/images/logo/logo.png')}
         alt="Meridian Blu Emblem"
         className={`${badgeSizes[size]} object-contain shrink-0`}
         onError={(e) => { (e.currentTarget as HTMLElement).style.display = 'none'; }}

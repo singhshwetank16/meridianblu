@@ -1,3 +1,4 @@
+import { getAssetUrl } from '../utils/assetUrl';
 import { RoomTier, LuxuryAddon, TrailAttraction, GalleryItem, GuestStory, VirtualTourScene, ApiRoomType } from '../types';
 
 export const SHOP_ID = 60;
@@ -54,12 +55,12 @@ const ROOM_METADATA_CONFIG: Record<string, {
     sizeSqFt: 850,
     bed: "Grand Four-Poster Maharaja King Bed",
     view: "Direct Himalayan Snow Peak Ridge & Valley Panorama",
-    imageUrl: "/images/Summit Balcony Room/Summit Balcony Room.avif",
+    imageUrl: getAssetUrl("/images/Summit Balcony Room/Summit Balcony Room.avif"),
     galleryImages: [
-      "/images/Summit Balcony Room/Summit Balcony Room.avif",
-      "/images/Summit Balcony Room/Summit Balcony Room (1).avif",
-      "/images/Summit Balcony Room/Summit Balcony Room balcony.avif",
-      "/images/Summit Balcony Room/Summit Balcony Room bathroom.jpg"
+      getAssetUrl("/images/Summit Balcony Room/Summit Balcony Room.avif"),
+      getAssetUrl("/images/Summit Balcony Room/Summit Balcony Room (1).avif"),
+      getAssetUrl("/images/Summit Balcony Room/Summit Balcony Room balcony.avif"),
+      getAssetUrl("/images/Summit Balcony Room/Summit Balcony Room bathroom.jpg")
     ],
     backupGradient: "from-amber-950 via-stone-900 to-emerald-950",
     description: "An homage to regal Himalayan heritage, the Maharaja Suite features an artisan river-stone hearth, a private royal drawing parlor, and panoramic bay windows framing Bandarpunch peaks.",
@@ -80,12 +81,12 @@ const ROOM_METADATA_CONFIG: Record<string, {
     sizeSqFt: 620,
     bed: "Plush King Bed with Feathered Duvet",
     view: "Misty Valley & Pine Grove Sunset",
-    imageUrl: "/images/Skyline Balcony Room/Skyline Balcony Room (6).avif",
+    imageUrl: getAssetUrl("/images/Skyline Balcony Room/Skyline Balcony Room (6).avif"),
     galleryImages: [
-      "/images/Skyline Balcony Room/Skyline Balcony Room (6).avif",
-      "/images/Skyline Balcony Room/Skyline Balcony Room (2).avif",
-      "/images/Skyline Balcony Room/Skyline Balcony Room balcony.avif",
-      "/images/Skyline Balcony Room/Skyline Balcony Room bathroom.avif"
+      getAssetUrl("/images/Skyline Balcony Room/Skyline Balcony Room (6).avif"),
+      getAssetUrl("/images/Skyline Balcony Room/Skyline Balcony Room (2).avif"),
+      getAssetUrl("/images/Skyline Balcony Room/Skyline Balcony Room balcony.avif"),
+      getAssetUrl("/images/Skyline Balcony Room/Skyline Balcony Room bathroom.avif")
     ],
     backupGradient: "from-rose-950 via-stone-900 to-amber-950",
     description: "A tailored sanctuary curated specifically for couples. Includes a private candlelit 4-course gourmet non-veg mountain dinner with Garhwali & Continental delicacies.",
@@ -106,11 +107,11 @@ const ROOM_METADATA_CONFIG: Record<string, {
     sizeSqFt: 600,
     bed: "Plush King Bed with 600-Thread Cotton",
     view: "Doon Valley Twilight & Cedar Forest",
-    imageUrl: "/images/Skyline Balcony Room/Skyline Balcony Room (3).avif",
+    imageUrl: getAssetUrl("/images/Skyline Balcony Room/Skyline Balcony Room (3).avif"),
     galleryImages: [
-      "/images/Skyline Balcony Room/Skyline Balcony Room (3).avif",
-      "/images/Skyline Balcony Room/Skyline Balcony Room (5).avif",
-      "/images/Skyline Balcony Room/Skyline Balcony Room balcony.avif"
+      getAssetUrl("/images/Skyline Balcony Room/Skyline Balcony Room (3).avif"),
+      getAssetUrl("/images/Skyline Balcony Room/Skyline Balcony Room (5).avif"),
+      getAssetUrl("/images/Skyline Balcony Room/Skyline Balcony Room balcony.avif")
     ],
     backupGradient: "from-emerald-950 via-stone-900 to-stone-950",
     description: "Serene mountain residence designed for romantic couples seeking mindful serenity, inclusive of farm-to-table organic pure vegetarian dining prepared by our executive chef.",
@@ -131,11 +132,11 @@ const ROOM_METADATA_CONFIG: Record<string, {
     sizeSqFt: 580,
     bed: "Handcrafted Cedar King Bed",
     view: "Dense Deodar Pine Forest Canopy",
-    imageUrl: "/images/Himalayan View Balcony Room/Himalayan View Balcony Room.avif",
+    imageUrl: getAssetUrl("/images/Himalayan View Balcony Room/Himalayan View Balcony Room.avif"),
     galleryImages: [
-      "/images/Himalayan View Balcony Room/Himalayan View Balcony Room.avif",
-      "/images/Himalayan View Balcony Room/Himalayan View Balcony Room balcony.avif",
-      "/images/Himalayan View Balcony Room/Himalayan View Balcony Room bathroom.avif"
+      getAssetUrl("/images/Himalayan View Balcony Room/Himalayan View Balcony Room.avif"),
+      getAssetUrl("/images/Himalayan View Balcony Room/Himalayan View Balcony Room balcony.avif"),
+      getAssetUrl("/images/Himalayan View Balcony Room/Himalayan View Balcony Room bathroom.avif")
     ],
     backupGradient: "from-amber-950 via-stone-900 to-zinc-950",
     description: "Constructed entirely from seasoned deodar and pine wood, these standalone cottages offer an authentic high-altitude retreat with warm wood aromatics and private outdoor wooden verandas.",
@@ -156,10 +157,10 @@ const ROOM_METADATA_CONFIG: Record<string, {
     sizeSqFt: 460,
     bed: "Luxury Teak King Bed",
     view: "Expansive Valley Vista & Starlit Sky",
-    imageUrl: "/images/meridianblu9.jpg",
+    imageUrl: getAssetUrl("/images/meridianblu9.jpg"),
     galleryImages: [
-      "/images/meridianblu9.jpg",
-      "/images/meridianblu10.jpg"
+      getAssetUrl("/images/meridianblu9.jpg"),
+      getAssetUrl("/images/meridianblu10.jpg")
     ],
     backupGradient: "from-stone-900 via-amber-950 to-stone-950",
     description: "Experience the romance of alpine safari glamping without compromising on luxury. Triple-layered weatherproof insulation, polished hardwood flooring, and private veranda overlooking Mussoorie's twilight.",
@@ -179,10 +180,10 @@ const ROOM_METADATA_CONFIG: Record<string, {
     sizeSqFt: 520,
     bed: "Plush King Bed with Egyptian Cotton",
     view: "Snow-Capped Himalayan Peak Range",
-    imageUrl: "/images/Himalayan View Balcony Room/Himalayan View Balcony Room 2.avif",
+    imageUrl: getAssetUrl("/images/Himalayan View Balcony Room/Himalayan View Balcony Room 2.avif"),
     galleryImages: [
-      "/images/Himalayan View Balcony Room/Himalayan View Balcony Room 2.avif",
-      "/images/Himalayan View Balcony Room/Himalayan View Balcony Room bathroom2.avif"
+      getAssetUrl("/images/Himalayan View Balcony Room/Himalayan View Balcony Room 2.avif"),
+      getAssetUrl("/images/Himalayan View Balcony Room/Himalayan View Balcony Room bathroom2.avif")
     ],
     backupGradient: "from-sky-950 via-stone-900 to-amber-950",
     description: "Spacious luxury sanctuary featuring oversized panoramic picture windows framing the snowy Garhwal peaks, polished Italian tiles, and comfortable lounge seating.",
@@ -202,10 +203,10 @@ const ROOM_METADATA_CONFIG: Record<string, {
     sizeSqFt: 490,
     bed: "Plush King Bed",
     view: "Estate Green Lawns & Misty Forest Ridge",
-    imageUrl: "/images/Valley View Balcony Room/Valley View Balcony Room.avif",
+    imageUrl: getAssetUrl("/images/Valley View Balcony Room/Valley View Balcony Room.avif"),
     galleryImages: [
-      "/images/Valley View Balcony Room/Valley View Balcony Room.avif",
-      "/images/Valley View Balcony Room/Valley View Balcony Room (1).avif"
+      getAssetUrl("/images/Valley View Balcony Room/Valley View Balcony Room.avif"),
+      getAssetUrl("/images/Valley View Balcony Room/Valley View Balcony Room (1).avif")
     ],
     backupGradient: "from-emerald-950 via-stone-900 to-stone-950",
     description: "Direct walk-out access to the estate's central manicured gardens and outdoor lawn lounge. Perfect for morning strolls and taking in fresh Himalayan mountain air.",
@@ -225,10 +226,10 @@ const ROOM_METADATA_CONFIG: Record<string, {
     sizeSqFt: 420,
     bed: "Comfortable Queen/King Bed",
     view: "Whispering Deodar Pine Forest",
-    imageUrl: "/images/Valley View Balcony Room/Valley View Balcony Room (8).avif",
+    imageUrl: getAssetUrl("/images/Valley View Balcony Room/Valley View Balcony Room (8).avif"),
     galleryImages: [
-      "/images/Valley View Balcony Room/Valley View Balcony Room (8).avif",
-      "/images/Valley View Balcony Room/Valley View Balcony Room 9.avif"
+      getAssetUrl("/images/Valley View Balcony Room/Valley View Balcony Room (8).avif"),
+      getAssetUrl("/images/Valley View Balcony Room/Valley View Balcony Room 9.avif")
     ],
     backupGradient: "from-stone-900 via-emerald-950 to-stone-950",
     description: "An intimate and restful room overlooking fragrant pine canopies, providing modern amenities, premium bedding, and a peaceful mountain stay.",
@@ -248,10 +249,10 @@ const ROOM_METADATA_CONFIG: Record<string, {
     sizeSqFt: 380,
     bed: "Plush Double/King Bed",
     view: "Valley Slopes & Forest Ridge",
-    imageUrl: "/images/Valley View Balcony Room/Valley View Balcony Room bath room.avif",
+    imageUrl: getAssetUrl("/images/Valley View Balcony Room/Valley View Balcony Room bath room.avif"),
     galleryImages: [
-      "/images/Valley View Balcony Room/Valley View Balcony Room bath room.avif",
-      "/images/meridianblu1.jpg"
+      getAssetUrl("/images/Valley View Balcony Room/Valley View Balcony Room bath room.avif"),
+      getAssetUrl("/images/meridianblu1.jpg")
     ],
     backupGradient: "from-stone-900 via-stone-800 to-stone-950",
     description: "Well-appointed deluxe room providing all modern comforts, warm mountain hospitality, and easy access to estate dining and hiking trails.",
@@ -271,10 +272,10 @@ const ROOM_METADATA_CONFIG: Record<string, {
     sizeSqFt: 340,
     bed: "Cozy Queen Timber Bed",
     view: "Pristine Deodar Wilderness",
-    imageUrl: "/images/meridianblu.jpg",
+    imageUrl: getAssetUrl("/images/meridianblu.jpg"),
     galleryImages: [
-      "/images/meridianblu.jpg",
-      "/images/meridianblu10.jpg"
+      getAssetUrl("/images/meridianblu.jpg"),
+      getAssetUrl("/images/meridianblu10.jpg")
     ],
     backupGradient: "from-zinc-950 via-emerald-950 to-stone-950",
     description: "Sustainable natural pine huts designed for nature lovers and trekkers seeking peaceful immersion in Mussoorie's mountain wilderness.",
@@ -335,8 +336,8 @@ export const mapApiRoomToTier = (apiRoom: ApiRoomType): RoomTier => {
     },
     bed: cfg?.bed || "King/Queen Luxury Mountain Bed",
     view: cfg?.view || "Doon Valley & Himalayan Ridge",
-    imageUrl: cfg?.imageUrl || "/images/meridianblu.jpg",
-    galleryImages: cfg?.galleryImages || [cfg?.imageUrl || "/images/meridianblu.jpg"],
+    imageUrl: cfg?.imageUrl || getAssetUrl("/images/meridianblu.jpg"),
+    galleryImages: cfg?.galleryImages || [cfg?.imageUrl || getAssetUrl("/images/meridianblu.jpg")],
     backupGradient: cfg?.backupGradient || "from-stone-900 via-emerald-950 to-stone-950",
     description: cfg?.description || apiRoom.roomtypedescription || "Experience tranquil Himalayan living with modern comforts and pristine nature.",
     features: cfg?.features || [
@@ -633,7 +634,7 @@ export const GALLERY_ITEMS: GalleryItem[] = [
     caption: "The radiant twilight and mountain vista observed directly from our open terrace overlooking the Mussoorie ranges.",
     location: "Sunset Terrace, Meridian Blu",
     elevation: "7,120 ft",
-    imageUrl: "/images/terrace.jpg",
+    imageUrl: getAssetUrl("/images/terrace.jpg"),
     aspectRatio: "16:9"
   },
   {
@@ -643,7 +644,7 @@ export const GALLERY_ITEMS: GalleryItem[] = [
     caption: "Warm ambiance and multi-cuisine culinary offerings crafted by our executive chefs in the hotel dining room.",
     location: "Meridian Blu Restaurant",
     elevation: "7,110 ft",
-    imageUrl: "/images/restaurant.jpg",
+    imageUrl: getAssetUrl("/images/restaurant.jpg"),
     aspectRatio: "4:3"
   },
   {
@@ -653,7 +654,7 @@ export const GALLERY_ITEMS: GalleryItem[] = [
     caption: "Crackling evening bonfire gatherings under the starlit Himalayan sky with warm beverages and barbecue.",
     location: "Campfire Terrace",
     elevation: "7,120 ft",
-    imageUrl: "/images/bonefire.jpg",
+    imageUrl: getAssetUrl("/images/bonefire.jpg"),
     aspectRatio: "4:3"
   },
   {
@@ -663,7 +664,7 @@ export const GALLERY_ITEMS: GalleryItem[] = [
     caption: "Welcoming entrance to Meridian Blu with peaceful mountain air and contemporary hospitality.",
     location: "Main Entrance",
     elevation: "7,120 ft",
-    imageUrl: "/images/hero/entrance.avif",
+    imageUrl: getAssetUrl("/images/hero/entrance.avif"),
     aspectRatio: "16:9"
   },
   {
@@ -673,7 +674,7 @@ export const GALLERY_ITEMS: GalleryItem[] = [
     caption: "Plush king bedding with private mountain view balcony framing breathtaking morning clouds.",
     location: "Summit Suite Floor",
     elevation: "7,140 ft",
-    imageUrl: "/images/Summit Balcony Room/Summit Balcony Room.avif",
+    imageUrl: getAssetUrl("/images/Summit Balcony Room/Summit Balcony Room.avif"),
     aspectRatio: "4:3"
   },
   {
@@ -683,7 +684,7 @@ export const GALLERY_ITEMS: GalleryItem[] = [
     caption: "Spacious contemporary bedroom with walk-out scenic balcony and designer furnishings.",
     location: "Skyline Wing",
     elevation: "7,130 ft",
-    imageUrl: "/images/Skyline Balcony Room/Skyline Balcony Room (6).avif",
+    imageUrl: getAssetUrl("/images/Skyline Balcony Room/Skyline Balcony Room (6).avif"),
     aspectRatio: "4:3"
   },
   {
@@ -693,7 +694,7 @@ export const GALLERY_ITEMS: GalleryItem[] = [
     caption: "Crisp daylight illuminating hand-hewn wood appointments and private mountain viewing balcony.",
     location: "Himalayan Wing",
     elevation: "7,120 ft",
-    imageUrl: "/images/Himalayan View Balcony Room/Himalayan View Balcony Room.avif",
+    imageUrl: getAssetUrl("/images/Himalayan View Balcony Room/Himalayan View Balcony Room.avif"),
     aspectRatio: "4:3"
   },
   {
@@ -703,7 +704,7 @@ export const GALLERY_ITEMS: GalleryItem[] = [
     caption: "Tranquil green valley views, private sit-out balcony, and comfortable luxury appointments.",
     location: "Valley Crest Wing",
     elevation: "7,110 ft",
-    imageUrl: "/images/Valley View Balcony Room/Valley View Balcony Room.avif",
+    imageUrl: getAssetUrl("/images/Valley View Balcony Room/Valley View Balcony Room.avif"),
     aspectRatio: "4:3"
   },
   {
@@ -713,7 +714,7 @@ export const GALLERY_ITEMS: GalleryItem[] = [
     caption: "Modern mountain architecture surrounded by Mussoorie's peaceful pine and oak woodland ridge.",
     location: "Central Courtyard",
     elevation: "7,120 ft",
-    imageUrl: "/images/gallery.jpg",
+    imageUrl: getAssetUrl("/images/gallery.jpg"),
     aspectRatio: "16:9"
   },
   {
@@ -723,7 +724,7 @@ export const GALLERY_ITEMS: GalleryItem[] = [
     caption: "Full exterior panorama of the hotel facade set amidst tranquil high-altitude Mussoorie hills.",
     location: "Main Facade",
     elevation: "7,120 ft",
-    imageUrl: "/images/meridianblu.jpg",
+    imageUrl: getAssetUrl("/images/meridianblu.jpg"),
     aspectRatio: "16:9"
   },
   {
@@ -733,7 +734,7 @@ export const GALLERY_ITEMS: GalleryItem[] = [
     caption: "Step out onto your private balcony for unobstructed morning fog and golden twilight vistas.",
     location: "Balcony Deck",
     elevation: "7,130 ft",
-    imageUrl: "/images/Himalayan View Balcony Room/Himalayan View Balcony Room balcony.avif",
+    imageUrl: getAssetUrl("/images/Himalayan View Balcony Room/Himalayan View Balcony Room balcony.avif"),
     aspectRatio: "4:3"
   },
   {
@@ -743,7 +744,7 @@ export const GALLERY_ITEMS: GalleryItem[] = [
     caption: "Spacious tiled en-suite washroom featuring 24-hour hot spring-quality water and designer fixtures.",
     location: "En-suite Bath",
     elevation: "7,120 ft",
-    imageUrl: "/images/Skyline Balcony Room/Skyline Balcony Room bathroom.avif",
+    imageUrl: getAssetUrl("/images/Skyline Balcony Room/Skyline Balcony Room bathroom.avif"),
     aspectRatio: "4:3"
   }
 ];
@@ -759,7 +760,7 @@ export const GUEST_STORIES: GuestStory[] = [
     rating: 5,
     badge: "Winterline Patron",
     caption: "Observing the sunset directly from the terrace at Meridian Blu was an extraordinary privilege. The evening bonfire with hot Kashmiri kahwa and barbecue was top notch!",
-    imageUrl: "/images/terrace.jpg",
+    imageUrl: getAssetUrl("/images/terrace.jpg"),
     likes: 342,
     liked: false
   },
@@ -773,7 +774,7 @@ export const GUEST_STORIES: GuestStory[] = [
     rating: 5,
     badge: "Alpine Naturalist",
     caption: "The evening bonfire setup was mesmerizing! Warm blankets, crackling cedar logs, and fresh mountain breezes. Unforgettable hospitality in Mussoorie.",
-    imageUrl: "/images/bonefire.jpg",
+    imageUrl: getAssetUrl("/images/bonefire.jpg"),
     likes: 219,
     liked: false
   },
@@ -787,7 +788,7 @@ export const GUEST_STORIES: GuestStory[] = [
     rating: 5,
     badge: "Estate Residence Patron",
     caption: "The dining restaurant was peerless. Authentic Pahadi cuisine paired with continental favorites. The balcony view of the morning sun from our room was magnificent.",
-    imageUrl: "/images/restaurant.jpg",
+    imageUrl: getAssetUrl("/images/restaurant.jpg"),
     likes: 184,
     liked: false
   }

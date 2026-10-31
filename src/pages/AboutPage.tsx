@@ -2,6 +2,7 @@ import React from 'react';
 import { VirtualTour } from '../components/VirtualTour';
 import { useRouter, Link } from '../router';
 import { HOTEL_INFO } from '../data/hotelData';
+import { getAssetUrl } from '../utils/assetUrl';
 import {
   Compass,
   Flame,
@@ -96,12 +97,12 @@ export const AboutPage: React.FC = () => {
           <div className="lg:col-span-6 space-y-4">
             <div className="grid grid-cols-2 gap-4">
               <img
-                src="/images/terrace.jpg"
+                src={getAssetUrl('/images/terrace.jpg')}
                 alt="Mussoorie Twilight Terrace"
                 className="w-full h-64 object-cover rounded-2xl border border-slate-200 shadow-xl hover:scale-102 transition-transform"
               />
               <img
-                src="/images/gallery.jpg"
+                src={getAssetUrl('/images/gallery.jpg')}
                 alt="Estate Architecture & Grounds"
                 className="w-full h-64 object-cover rounded-2xl border border-slate-200 shadow-xl hover:scale-102 transition-transform mt-6"
               />
@@ -110,8 +111,8 @@ export const AboutPage: React.FC = () => {
             {/* Embedded Property Video Clip */}
             <div className="rounded-2xl overflow-hidden border border-slate-200 bg-white shadow-xl">
               <video
-                src="/images/terres-video.mp4"
-                poster="/images/terrace.jpg"
+                src={getAssetUrl('/images/terres-video.mp4')}
+                poster={getAssetUrl('/images/terrace.jpg')}
                 autoPlay
                 loop
                 muted

@@ -2,6 +2,7 @@ import React, { useState, useRef } from 'react';
 import { Calendar, Users, Eye, MapPin, Sparkles, ChevronRight, Snowflake, Play, Pause, Volume2, VolumeX, Video } from 'lucide-react';
 import { HOTEL_INFO, ROOMS_DATA } from '../data/hotelData';
 import { RoomTier } from '../types';
+import { getAssetUrl } from '../utils/assetUrl';
 
 interface HeroSectionProps {
   rooms?: RoomTier[];
@@ -55,7 +56,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
   };
 
   // Real user video background state
-  const [activeVideo, setActiveVideo] = useState<'/images/front_view.mp4' | '/images/terres-video.mp4'>('/images/front_view.mp4');
+  const [activeVideo, setActiveVideo] = useState(getAssetUrl('/images/front_view.mp4'));
   const [isPlaying, setIsPlaying] = useState(true);
   const [isMuted, setIsMuted] = useState(true);
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -79,7 +80,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
   };
 
   const switchVideo = () => {
-    setActiveVideo(prev => prev === '/images/front_view.mp4' ? '/images/terres-video.mp4' : '/images/front_view.mp4');
+    setActiveVideo(prev => prev.includes('front_view.mp4') ? getAssetUrl('/images/terres-video.mp4') : getAssetUrl('/images/front_view.mp4'));
   };
 
   const handleSearch = (e: React.FormEvent) => {
@@ -100,7 +101,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
           ref={videoRef}
           key={activeVideo}
           src={activeVideo}
-          poster="/images/hero/entrance.avif"
+          poster={getAssetUrl('/images/hero/entrance.avif')}
           autoPlay
           loop
           muted={isMuted}
