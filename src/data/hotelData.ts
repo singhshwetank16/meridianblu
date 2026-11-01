@@ -290,6 +290,21 @@ const ROOM_METADATA_CONFIG: Record<string, {
   }
 };
 
+// Initial inventory state map strictly reflecting PMS Vacant Rooms (/60/room/status/0)
+// In PMS Shop 60, only 3 rooms are vacant: maharaja suit (1487), ECO HUTS (1284), and OPEN GROUND ROOMS (1268). All others are occupied/sold out!
+export const INITIAL_INVENTORY_DB: Record<string, { totalUnits: number; availableUnits: number; isSoldOut: boolean; statusText: string }> = {
+  "1487": { totalUnits: 2, availableUnits: 1, isSoldOut: false, statusText: "Only 1 Suite Remaining" },
+  "1284": { totalUnits: 1, availableUnits: 1, isSoldOut: false, statusText: "Only 1 Hut Remaining" },
+  "1268": { totalUnits: 1, availableUnits: 1, isSoldOut: false, statusText: "Only 1 Room Remaining" },
+  "553": { totalUnits: 7, availableUnits: 0, isSoldOut: true, statusText: "Sold Out in PMS" },
+  "1130": { totalUnits: 2, availableUnits: 0, isSoldOut: true, statusText: "Sold Out in PMS" },
+  "1131": { totalUnits: 1, availableUnits: 0, isSoldOut: true, statusText: "Sold Out in PMS" },
+  "1132": { totalUnits: 0, availableUnits: 0, isSoldOut: true, statusText: "Sold Out in PMS" },
+  "1145": { totalUnits: 1, availableUnits: 0, isSoldOut: true, statusText: "Sold Out in PMS" },
+  "1265": { totalUnits: 1, availableUnits: 0, isSoldOut: true, statusText: "Sold Out in PMS" },
+  "1266": { totalUnits: 1, availableUnits: 0, isSoldOut: true, statusText: "Sold Out in PMS" }
+};
+
 // Transform API room into complete UI RoomTier
 export const mapApiRoomToTier = (apiRoom: ApiRoomType): RoomTier => {
   const idStr = String(apiRoom.id);
@@ -380,21 +395,6 @@ export const RAW_API_ROOMS_SHOP_60: ApiRoomType[] = [
 
 // Initial preloaded ROOMS_DATA with room types & rents from API
 export const ROOMS_DATA: RoomTier[] = RAW_API_ROOMS_SHOP_60.map(mapApiRoomToTier);
-
-// Initial inventory state map strictly reflecting PMS Vacant Rooms (/60/room/status/0)
-// In PMS Shop 60, only 3 rooms are vacant: maharaja suit (1487), ECO HUTS (1284), and OPEN GROUND ROOMS (1268). All others are occupied/sold out!
-export const INITIAL_INVENTORY_DB: Record<string, { totalUnits: number; availableUnits: number; isSoldOut: boolean; statusText: string }> = {
-  "1487": { totalUnits: 2, availableUnits: 1, isSoldOut: false, statusText: "Only 1 Suite Remaining" },
-  "1284": { totalUnits: 1, availableUnits: 1, isSoldOut: false, statusText: "Only 1 Hut Remaining" },
-  "1268": { totalUnits: 1, availableUnits: 1, isSoldOut: false, statusText: "Only 1 Room Remaining" },
-  "553": { totalUnits: 7, availableUnits: 0, isSoldOut: true, statusText: "Sold Out in PMS" },
-  "1130": { totalUnits: 2, availableUnits: 0, isSoldOut: true, statusText: "Sold Out in PMS" },
-  "1131": { totalUnits: 1, availableUnits: 0, isSoldOut: true, statusText: "Sold Out in PMS" },
-  "1132": { totalUnits: 0, availableUnits: 0, isSoldOut: true, statusText: "Sold Out in PMS" },
-  "1145": { totalUnits: 1, availableUnits: 0, isSoldOut: true, statusText: "Sold Out in PMS" },
-  "1265": { totalUnits: 1, availableUnits: 0, isSoldOut: true, statusText: "Sold Out in PMS" },
-  "1266": { totalUnits: 1, availableUnits: 0, isSoldOut: true, statusText: "Sold Out in PMS" }
-};
 
 // Live fetch helper: fetches from https://hotelserver.billhost.co.in/60/rtmas or server proxy
 export const fetchLiveRoomTypes = async (shopId: number = SHOP_ID): Promise<RoomTier[]> => {
