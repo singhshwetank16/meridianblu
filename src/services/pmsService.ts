@@ -17,6 +17,12 @@
 export const PMS_SHOP_ID = 60;
 export const PMS_BASE_URL = 'https://hotelserver.billhost.co.in';
 
+export const isDirectHost = (): boolean => {
+  if (typeof window === 'undefined') return false;
+  const host = window.location.hostname;
+  return host.includes('github.io') || (!host.includes('localhost') && !host.includes('127.0.0.1'));
+};
+
 export interface PmsShopDetails {
   id: number;
   cname: string;
@@ -162,13 +168,15 @@ class PmsService {
 
   // 1. Hotel Property Details: GET /api/shopmas/60
   async getHotelDetails(): Promise<PmsShopDetails | null> {
-    try {
-      const res = await fetch(`/api/pms/hotel-details?shopId=${this.shopId}`);
-      if (res.ok) {
-        return await res.json();
+    if (!isDirectHost()) {
+      try {
+        const res = await fetch(`/api/pms/hotel-details?shopId=${this.shopId}`);
+        if (res.ok) {
+          return await res.json();
+        }
+      } catch (e) {
+        console.warn('Proxy fetch failed for hotel details, trying direct:', e);
       }
-    } catch (e) {
-      console.warn('Proxy fetch failed for hotel details, trying direct:', e);
     }
 
     try {
@@ -184,13 +192,15 @@ class PmsService {
 
   // 2. Room Types & Rates: GET /60/rtmas
   async getRoomTypes(): Promise<PmsRoomType[]> {
-    try {
-      const res = await fetch(`/api/pms/room-types?shopId=${this.shopId}`);
-      if (res.ok) {
-        return await res.json();
+    if (!isDirectHost()) {
+      try {
+        const res = await fetch(`/api/pms/room-types?shopId=${this.shopId}`);
+        if (res.ok) {
+          return await res.json();
+        }
+      } catch (e) {
+        console.warn('Proxy fetch failed for room types, trying direct:', e);
       }
-    } catch (e) {
-      console.warn('Proxy fetch failed for room types, trying direct:', e);
     }
 
     try {
@@ -206,13 +216,15 @@ class PmsService {
 
   // 3. All Physical Rooms: GET /60/room
   async getPhysicalRooms(): Promise<PmsPhysicalRoom[]> {
-    try {
-      const res = await fetch(`/api/pms/rooms?shopId=${this.shopId}`);
-      if (res.ok) {
-        return await res.json();
+    if (!isDirectHost()) {
+      try {
+        const res = await fetch(`/api/pms/rooms?shopId=${this.shopId}`);
+        if (res.ok) {
+          return await res.json();
+        }
+      } catch (e) {
+        console.warn('Proxy fetch failed for physical rooms, trying direct:', e);
       }
-    } catch (e) {
-      console.warn('Proxy fetch failed for physical rooms, trying direct:', e);
     }
 
     try {
@@ -228,13 +240,15 @@ class PmsService {
 
   // 4. Live Room Availability: GET /api/ota-inventory
   async getOtaInventory(startDate: string, endDate: string): Promise<any[]> {
-    try {
-      const res = await fetch(`/api/pms/ota-inventory?shopId=${this.shopId}&startDate=${startDate}&endDate=${endDate}`);
-      if (res.ok) {
-        return await res.json();
+    if (!isDirectHost()) {
+      try {
+        const res = await fetch(`/api/pms/ota-inventory?shopId=${this.shopId}&startDate=${startDate}&endDate=${endDate}`);
+        if (res.ok) {
+          return await res.json();
+        }
+      } catch (e) {
+        console.warn('Proxy fetch failed for OTA inventory:', e);
       }
-    } catch (e) {
-      console.warn('Proxy fetch failed for OTA inventory:', e);
     }
 
     try {
@@ -250,13 +264,15 @@ class PmsService {
 
   // 5. Vacant Rooms: GET /60/room/status/0
   async getVacantRooms(): Promise<PmsPhysicalRoom[]> {
-    try {
-      const res = await fetch(`/api/pms/vacant-rooms?shopId=${this.shopId}`);
-      if (res.ok) {
-        return await res.json();
+    if (!isDirectHost()) {
+      try {
+        const res = await fetch(`/api/pms/vacant-rooms?shopId=${this.shopId}`);
+        if (res.ok) {
+          return await res.json();
+        }
+      } catch (e) {
+        console.warn('Proxy fetch failed for vacant rooms:', e);
       }
-    } catch (e) {
-      console.warn('Proxy fetch failed for vacant rooms:', e);
     }
 
     try {
@@ -272,13 +288,15 @@ class PmsService {
 
   // 6. Reservations by Date: GET /60/reservationviewFilter/:startDate/:endDate/0
   async getReservationsByDate(startDate: string, endDate: string): Promise<any[]> {
-    try {
-      const res = await fetch(`/api/pms/reservations-filter?startDate=${startDate}&endDate=${endDate}&shopId=${this.shopId}`);
-      if (res.ok) {
-        return await res.json();
+    if (!isDirectHost()) {
+      try {
+        const res = await fetch(`/api/pms/reservations-filter?startDate=${startDate}&endDate=${endDate}&shopId=${this.shopId}`);
+        if (res.ok) {
+          return await res.json();
+        }
+      } catch (e) {
+        console.warn('Proxy fetch failed for reservations by date:', e);
       }
-    } catch (e) {
-      console.warn('Proxy fetch failed for reservations by date:', e);
     }
 
     try {
@@ -294,13 +312,15 @@ class PmsService {
 
   // 7. All Reservations: GET /60/reservation
   async getAllReservations(): Promise<PmsReservation[]> {
-    try {
-      const res = await fetch(`/api/pms/reservations?shopId=${this.shopId}`);
-      if (res.ok) {
-        return await res.json();
+    if (!isDirectHost()) {
+      try {
+        const res = await fetch(`/api/pms/reservations?shopId=${this.shopId}`);
+        if (res.ok) {
+          return await res.json();
+        }
+      } catch (e) {
+        console.warn('Proxy fetch failed for all reservations:', e);
       }
-    } catch (e) {
-      console.warn('Proxy fetch failed for all reservations:', e);
     }
 
     try {
@@ -316,16 +336,18 @@ class PmsService {
 
   // Live Inventory Calculation strictly querying PMS vacant rooms (/60/room/status/0) and physical rooms (/60/room)
   async calculateLiveAvailability(startDate?: string, endDate?: string): Promise<Record<string, PmsLiveInventoryItem>> {
-    try {
-      const res = await fetch(`/api/inventory?shopId=${this.shopId}&checkIn=${startDate || ''}&checkOut=${endDate || ''}`);
-      if (res.ok) {
-        const data = await res.json();
-        if (data.inventory) {
-          return data.inventory;
+    if (!isDirectHost()) {
+      try {
+        const res = await fetch(`/api/inventory?shopId=${this.shopId}&checkIn=${startDate || ''}&checkOut=${endDate || ''}`);
+        if (res.ok) {
+          const data = await res.json();
+          if (data.inventory) {
+            return data.inventory;
+          }
         }
+      } catch (e) {
+        console.warn('Could not fetch server-calculated inventory, querying PMS vacant rooms directly:', e);
       }
-    } catch (e) {
-      console.warn('Could not fetch server-calculated inventory, querying PMS vacant rooms directly:', e);
     }
 
     // Direct PMS Live Calculation using real vacant physical rooms
@@ -391,51 +413,53 @@ class PmsService {
   // 9. Booking Confirmation Email: POST /send-reservation-email
   // 10. WhatsApp Notification: POST /api/whatsapp/notifications
   async createBooking(booking: PmsBookingRequest): Promise<PmsBookingResponse> {
-    // Try via proxy first if running with backend server
-    try {
-      const res = await fetch('/api/reservations', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          shopId: this.shopId,
-          reservation: {
-            checkInDate: booking.checkInDate,
-            checkOutDate: booking.checkOutDate,
-            nights: booking.nights,
-            adults: booking.adults,
-            children: booking.children,
-            room: {
-              id: String(booking.roomTypeId),
-              apiId: booking.roomTypeId,
-              name: booking.roomTypeName,
-              pricePerNight: booking.pricePerNight,
-            },
-            guest: {
-              name: booking.guestName,
-              email: booking.guestEmail,
-              phone: booking.guestPhone,
-              address: booking.guestAddress || 'Direct Website Booking',
-              specialRequests: booking.specialRequests,
-            },
-            pricing: {
-              roomTotal: booking.subtotal || booking.totalAmount,
-              discountAmount: booking.discountAmount || 0,
-              taxAmount: booking.taxAmount || 0,
-              totalAmount: booking.totalAmount,
-            },
-            paymentMethod: booking.paymentMethod || 'Pay at Hotel (Cash / Card / UPI on Arrival)'
-          }
-        })
-      });
+    // Try via proxy first ONLY if running with backend server (e.g. localhost)
+    if (!isDirectHost()) {
+      try {
+        const res = await fetch('/api/reservations', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            shopId: this.shopId,
+            reservation: {
+              checkInDate: booking.checkInDate,
+              checkOutDate: booking.checkOutDate,
+              nights: booking.nights,
+              adults: booking.adults,
+              children: booking.children,
+              room: {
+                id: String(booking.roomTypeId),
+                apiId: booking.roomTypeId,
+                name: booking.roomTypeName,
+                pricePerNight: booking.pricePerNight,
+              },
+              guest: {
+                name: booking.guestName,
+                email: booking.guestEmail,
+                phone: booking.guestPhone,
+                address: booking.guestAddress || 'Direct Website Booking',
+                specialRequests: booking.specialRequests,
+              },
+              pricing: {
+                roomTotal: booking.subtotal || booking.totalAmount,
+                discountAmount: booking.discountAmount || 0,
+                taxAmount: booking.taxAmount || 0,
+                totalAmount: booking.totalAmount,
+              },
+              paymentMethod: booking.paymentMethod || 'Pay at Hotel (Cash / Card / UPI on Arrival)'
+            }
+          })
+        });
 
-      if (res.ok) {
-        const data = await res.json();
-        if (data && data.success) {
-          return data;
+        if (res.ok) {
+          const data = await res.json();
+          if (data && data.success) {
+            return data;
+          }
         }
+      } catch (err) {
+        console.warn('Proxy booking failed, falling back to direct PMS APIs:', err);
       }
-    } catch (err) {
-      console.warn('Proxy booking failed or not available (e.g. GitHub Pages), falling back to direct PMS APIs:', err);
     }
 
     // Direct PMS Execution (Static / GitHub Pages Direct Mode)
@@ -513,29 +537,22 @@ class PmsService {
         isgstbill: false
       };
 
-      // 3. Direct call to PMS Endpoint: POST https://hotelserver.billhost.co.in/60/reservationBulk
+      // 3. Direct call to PMS Endpoint: POST https://hotelserver.billhost.co.in/reservationBulk
       let pmsReservationNo: any = null;
       try {
-        console.log(`[PMS] Submitting reservation to ${PMS_BASE_URL}/${this.shopId}/reservationBulk...`);
-        let pmsRes = await fetch(`${PMS_BASE_URL}/${this.shopId}/reservationBulk`, {
+        console.log(`[PMS] Submitting reservation directly to ${PMS_BASE_URL}/reservationBulk...`);
+        let pmsRes = await fetch(`${PMS_BASE_URL}/reservationBulk`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify([pmsReservationPayload])
         });
 
-        // Fallback to /reservationBulk if /60/reservationBulk returns 404 or 405
-        if (!pmsRes.ok && (pmsRes.status === 404 || pmsRes.status === 405)) {
-          console.log(`[PMS] Retrying with ${PMS_BASE_URL}/reservationBulk...`);
-          pmsRes = await fetch(`${PMS_BASE_URL}/reservationBulk`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify([pmsReservationPayload])
-          });
-        }
-
         if (pmsRes.ok) {
           const resText = await pmsRes.text();
           pmsReservationNo = resText.trim();
+          console.log(`[PMS] Reservation successfully created in PMS! ShopResNo: ${pmsReservationNo}`);
+        } else {
+          console.warn(`[PMS] reservationBulk returned status ${pmsRes.status}`);
         }
       } catch (bErr) {
         console.warn('Direct reservationBulk call error:', bErr);
@@ -631,14 +648,16 @@ class PmsService {
   // Lookup reservation in PMS by mobile number, reservation number, or guest name
   async lookupReservation(query: string): Promise<PmsReservation[]> {
     if (!query || !query.trim()) return [];
-    try {
-      const res = await fetch(`/api/pms/lookup?q=${encodeURIComponent(query.trim())}`);
-      if (res.ok) {
-        const data = await res.json();
-        return Array.isArray(data) ? data : [];
+    if (!isDirectHost()) {
+      try {
+        const res = await fetch(`/api/pms/lookup?q=${encodeURIComponent(query.trim())}`);
+        if (res.ok) {
+          const data = await res.json();
+          return Array.isArray(data) ? data : [];
+        }
+      } catch (e) {
+        console.warn('Proxy lookup failed, trying client-side filter:', e);
       }
-    } catch (e) {
-      console.warn('Proxy lookup failed, trying client-side filter:', e);
     }
 
     try {

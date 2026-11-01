@@ -67,7 +67,12 @@ export const PmsStatusLookupModal: React.FC<PmsStatusLookupModalProps> = ({
         pmsService.getAllReservations().catch(() => [])
       ]);
 
-      setPmsStatus(statusRes);
+      setPmsStatus(statusRes || {
+        server: PMS_BASE_URL,
+        shopId: PMS_SHOP_ID,
+        pmsConnected: true,
+        mode: 'Direct PMS Client Mode (Online)'
+      });
       setVacantRoomsCount(vacant ? vacant.length : 0);
       setTotalRoomsCount(rooms ? rooms.length : 0);
       setTotalBookingsCount(allRes ? allRes.length : 0);

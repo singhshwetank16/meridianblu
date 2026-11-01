@@ -81,6 +81,7 @@ export interface BookingState {
 export interface ConfirmedReservation {
   confirmationCode: string;
   shopId: number;
+  pmsReservationNo?: number | string;
   bookingDate: string;
   checkInDate: string;
   checkOutDate: string;

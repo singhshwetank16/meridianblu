@@ -135,20 +135,6 @@ export const BookingEngine: React.FC<BookingEngineProps> = ({
 
   const fetchLiveInventory = async () => {
     try {
-      const res = await fetch(`/api/inventory?shopId=${SHOP_ID}&checkIn=${checkInDate}&checkOut=${checkOutDate}`);
-      if (res.ok) {
-        const data = await res.json();
-        if (data.inventory) {
-          setInventoryMap(data.inventory);
-          return;
-        }
-      }
-    } catch {
-      // Fallback to direct client PMS calculation
-    }
-
-    // Direct PMS Live Availability (strictly checks /60/room/status/0)
-    try {
       const pmsInv = await pmsService.calculateLiveAvailability(checkInDate, checkOutDate);
       if (pmsInv && Object.keys(pmsInv).length > 0) {
         setInventoryMap(pmsInv);
@@ -374,30 +360,41 @@ export const BookingEngine: React.FC<BookingEngineProps> = ({
     };
 
     try {
-      const response = await fetch('/api/reservations', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          shopId: SHOP_ID,
-          reservation: reservationPayload
-        })
+      const pmsResult = await pmsService.createBooking({
+        checkInDate,
+        checkOutDate,
+        nights,
+        adults,
+        children,
+        roomTypeId: parseInt(String(selectedRoom.apiId || selectedRoom.id), 10),
+        roomTypeName: selectedRoom.name,
+        pricePerNight: selectedRoom.pricePerNight,
+        totalAmount: grandTotal,
+        subtotal: roomTotal,
+        discountAmount,
+        taxAmount,
+        guestName,
+        guestEmail,
+        guestPhone,
+        guestAddress: 'Direct Website Booking',
+        specialRequests: `Estimated Arrival: ${expectedArrival}`,
+        paymentMethod: paymentMethodLabel,
       });
 
-      const data = await response.json();
-
-      if (!response.ok || !data.success) {
+      if (!pmsResult || !pmsResult.success) {
         setIsProcessing(false);
-        setBookingErrorMessage(data.error || 'Inventory verification could not be completed. Please reselect your dates.');
+        setBookingErrorMessage(pmsResult?.error || 'Inventory verification could not be completed. Please reselect your dates.');
         setStep('select');
         fetchLiveInventory();
         return;
       }
 
-      const confCode = data.confirmationCode || ('MB-' + Math.floor(100000 + Math.random() * 900000));
+      const confCode = pmsResult.confirmationCode || ('MB-' + Math.floor(100000 + Math.random() * 900000));
       const confirmed: ConfirmedReservation = {
         ...reservationPayload,
         shopId: SHOP_ID,
         confirmationCode: confCode,
+        pmsReservationNo: pmsResult.pmsReservationNo,
         bookingDate: new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
       };
 
@@ -409,7 +406,8 @@ export const BookingEngine: React.FC<BookingEngineProps> = ({
         onBookingConfirmed(confirmed);
       }
       window.scrollTo({ top: 200, behavior: 'smooth' });
-    } catch {
+    } catch (bookingErr) {
+      console.warn('Booking network fallback:', bookingErr);
       // Local fallback confirmation
       const confCode = 'MB-' + Math.floor(100000 + Math.random() * 900000);
       const confirmed: ConfirmedReservation = {

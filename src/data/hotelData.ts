@@ -410,16 +410,18 @@ export const fetchLiveRoomTypes = async (shopId: number = SHOP_ID): Promise<Room
     console.warn("Direct API fetch failed, trying local proxy:", err);
   }
 
-  try {
-    const res = await fetch(`/api/room-types?shopId=${shopId}`);
-    if (res.ok) {
-      const data = await res.json();
-      if (Array.isArray(data) && data.length > 0) {
-        return data.map(mapApiRoomToTier);
+  if (typeof window !== 'undefined' && !window.location.hostname.includes('github.io')) {
+    try {
+      const res = await fetch(`/api/room-types?shopId=${shopId}`);
+      if (res.ok) {
+        const data = await res.json();
+        if (Array.isArray(data) && data.length > 0) {
+          return data.map(mapApiRoomToTier);
+        }
       }
+    } catch (err) {
+      console.warn("Proxy API fetch failed, using preloaded shop 60 room data:", err);
     }
-  } catch (err) {
-    console.warn("Proxy API fetch failed, using preloaded shop 60 room data:", err);
   }
 
   return ROOMS_DATA;
