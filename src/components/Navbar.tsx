@@ -127,13 +127,13 @@ export const Navbar: React.FC<NavbarProps> = () => {
               <span>Book Stay</span>
             </button>
             <div className="flex items-center justify-between text-xs text-gray-500 pt-1">
-              <span>Cloud Crest Ridge, Mussoorie</span>
+              <span>1, Kempty Fall Road, Mussoorie</span>
               <a
-                href="tel:+911352638888"
+                href="tel:+919650514794"
                 className="flex items-center gap-1 text-[#005cd8] font-medium font-mono"
               >
                 <Phone className="w-3 h-3" />
-                +91 135 263 8888
+                +91 96505 14794
               </a>
             </div>
           </div>

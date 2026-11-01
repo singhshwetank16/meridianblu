@@ -75,7 +75,7 @@ export const HomePage: React.FC<HomePageProps> = ({
             </h2>
 
             <p className="text-sm sm:text-base text-slate-600 leading-relaxed font-sans">
-              Perched atop the secluded Cloud Crest Ridge in Mussoorie, <strong className="text-slate-900 font-bold">{HOTEL_INFO.name}</strong> is a bespoke Himalayan estate born from restored cedar architecture and panoramic natural splendor. Direct windows open to the snow-capped peaks of Kedarnath and Bandarpunch to the north, and the glowing Doon Valley below.
+              Perched along Kempty Fall Road, Charleville in Mussoorie (near Happy Valley &amp; Buddha Point), <strong className="text-slate-900 font-bold">{HOTEL_INFO.name}</strong> is a bespoke Himalayan estate born from restored cedar architecture and panoramic natural splendor. Direct windows open to the snow-capped peaks of Kedarnath and Bandarpunch to the north, and the glowing Doon Valley below.
             </p>
 
             <div className="grid grid-cols-2 gap-4 pt-2">

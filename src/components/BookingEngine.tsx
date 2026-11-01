@@ -435,7 +435,7 @@ export const BookingEngine: React.FC<BookingEngineProps> = ({
 VERSION:2.0
 PRODID:-//Meridian Blu Mussoorie//EN
 BEGIN:VEVENT
-UID:${confirmationCode}@meridianbluhotels.com
+UID:${confirmationCode}@meridianblu.com
 DTSTAMP:${new Date().toISOString().replace(/[-:]/g, '').split('.')[0]}Z
 DTSTART;VALUE=DATE:${start.replace(/-/g, '')}
 DTEND;VALUE=DATE:${end.replace(/-/g, '')}
@@ -463,7 +463,8 @@ END:VCALENDAR`;
       `Dates: *${confirmedReservation.checkInDate} to ${confirmedReservation.checkOutDate}* (${confirmedReservation.nights} Nights)\n` +
       `Guests: *${confirmedReservation.adults} Adults*\n` +
       `Total: *₹${confirmedReservation.pricing.totalAmount.toLocaleString('en-IN')}*\n` +
-      `Location: Cloud Crest Ridge, Mussoorie (7,120 ft)\n\n` +
+      `Location: 1, Kempty Fall Road, Charleville, Mussoorie (Near Happy Valley & Buddha Point)\n` +
+      `Front Desk: +91 96505 14794 | WhatsApp: +91 96505 14773\n\n` +
       `We look forward to welcoming you!`;
     window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(msg)}`, '_blank');
   };

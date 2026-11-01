@@ -65,7 +65,7 @@ export const GalleryPage: React.FC<GalleryPageProps> = ({
           <div className="space-y-2 text-center md:text-left">
             <div className="text-xs uppercase tracking-widest text-[#004e92] font-bold">Community Perspective</div>
             <h2 className="text-2xl font-serif text-slate-900">
-              Have You Captured Twilight at Cloud Crest Ridge?
+              Have You Captured Twilight at Meridian Blu Mussoorie?
             </h2>
             <p className="text-xs sm:text-sm text-slate-500 max-w-lg">
               Share your photographs in our live Guest Memoirs and community journal. Featured guest photographs receive an estate culinary voucher.

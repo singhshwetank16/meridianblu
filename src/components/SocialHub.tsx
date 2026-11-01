@@ -101,7 +101,7 @@ export const SocialHub: React.FC<SocialHubProps> = ({ onBookSuite }) => {
     setActiveStoryToShare(newStory);
   };
 
-  const shareUrl = typeof window !== 'undefined' ? window.location.href : 'https://meridianbluhotels.com';
+  const shareUrl = typeof window !== 'undefined' ? window.location.href : 'https://meridianblu.com';
   const getShareText = (story?: GuestStory | null) => {
     if (story) {
       return `"${story.caption}" — Recorded at Meridian Blu Mussoorie, Himalayan Luxury Sanctuary:`;

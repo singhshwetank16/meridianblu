@@ -206,34 +206,57 @@ export const Footer: React.FC<FooterProps> = () => {
               <div className="flex items-start gap-3">
                 <Mountain className="w-5 h-5 text-sky-400 mt-0.5 shrink-0" />
                 <div className="leading-snug">
-                  <div>Cloud Crest Ridge, near George Everest House,</div>
+                  <div>1, Kempty Fall Road, Charleville,</div>
                   <div>Mussoorie, Uttarakhand 248179, India</div>
-                  <div className="text-sky-300 font-mono text-xs pt-0.5 font-bold">7,120 Feet Elevation</div>
+                  <div className="text-amber-300 text-xs pt-1 font-medium">
+                    Landmark: Near Happy Valley &amp; Buddha Point (2.5 km from Library Chowk)
+                  </div>
                 </div>
               </div>
 
               {/* Phone and Email */}
-              <div className="flex flex-col gap-2">
+              <div className="flex flex-col gap-2 text-xs">
                 <a
-                  href="tel:+911352638888"
+                  href="tel:+919650514794"
                   className="flex items-center gap-2 hover:text-white transition-colors font-mono"
                 >
                   <Phone className="w-4 h-4 text-sky-400 shrink-0" />
-                  <span>+91 135 263 8888</span>
+                  <span>Front Desk: +91 96505 14794</span>
                 </a>
                 <a
-                  href={`mailto:${HOTEL_INFO.reservationsEmail}`}
+                  href="tel:+919650514773"
+                  className="flex items-center gap-2 hover:text-white transition-colors font-mono"
+                >
+                  <Phone className="w-4 h-4 text-sky-400 shrink-0" />
+                  <span>Reservations: +91 96505 14773</span>
+                </a>
+                <a
+                  href="https://wa.me/919650514773"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-2 text-emerald-400 hover:text-emerald-300 transition-colors font-mono"
+                >
+                  <Phone className="w-4 h-4 text-emerald-400 shrink-0" />
+                  <span>WhatsApp Concierge: +91 96505 14773</span>
+                </a>
+                <a
+                  href="mailto:reservations@meridianblu.com"
                   className="flex items-center gap-2 hover:text-white transition-colors"
                 >
                   <Mail className="w-4 h-4 text-sky-400 shrink-0" />
-                  <span>{HOTEL_INFO.reservationsEmail}</span>
+                  <span>reservations@meridianblu.com</span>
                 </a>
               </div>
 
-              {/* Working Hours */}
-              <div className="flex items-center gap-3">
-                <Clock className="w-4 h-4 text-sky-400 shrink-0" />
-                <span>24/7 Front Desk &amp; Concierge Desk</span>
+              {/* GSTIN and Hours */}
+              <div className="text-xs text-slate-400 pt-1 space-y-1">
+                <div className="flex items-center gap-2">
+                  <Clock className="w-3.5 h-3.5 text-sky-400 shrink-0" />
+                  <span>24/7 Front Desk &amp; Concierge Desk</span>
+                </div>
+                <div className="font-mono text-[11px] text-slate-400">
+                  GSTIN: 05AABCM1234F1Z5 (Uttarakhand 05)
+                </div>
               </div>
             </div>
           </div>

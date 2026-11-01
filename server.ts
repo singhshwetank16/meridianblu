@@ -109,9 +109,9 @@ app.get(['/api/shopmas/:shopId?', '/api/pms/hotel-details'], async (req, res) =>
   const data = await fetchWithCache(`shopmas_${shopId}`, url, {
     id: shopId,
     cname: "Meridian Blu Mussoorie",
-    address: "Cloud Crest Ridge, Mussoorie, Uttarakhand, India",
-    mobno: 9838020859,
-    gstno: "09AAEFW6906F",
+    address: "1, Kempty Fall Road, Charleville, Mussoorie, Uttarakhand 248179, India",
+    mobno: 9650514794,
+    gstno: "05AABCM1234F1Z5",
     checkintime: "14:00",
     checkouttime: "11:00"
   });
@@ -490,8 +490,8 @@ app.post(['/reservationBulk', '/api/pms/booking', '/api/reservations'], async (r
         `Guests: *${adults} Adults${children > 0 ? `, ${children} Children` : ''}*\n` +
         `Total Tariff: *₹${totalAmount.toLocaleString('en-IN')}*\n` +
         `Payment: *Pay at Hotel on Arrival*\n\n` +
-        `Location: Cloud Crest Ridge, Mussoorie (7,120 ft)\n` +
-        `Concierge Hotline: +91 9838020859\n\n` +
+        `Location: 1, Kempty Fall Road, Charleville, Mussoorie (Near Happy Valley & Buddha Point)\n` +
+        `Front Desk: +91 96505 14794 | WhatsApp: +91 96505 14773\n\n` +
         `We look forward to welcoming you to the Himalayas!`;
 
       const waRes = await fetch(`${PMS_BASE_URL}/api/whatsapp/notifications`, {

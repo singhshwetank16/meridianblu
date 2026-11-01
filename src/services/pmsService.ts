@@ -571,8 +571,8 @@ class PmsService {
           `Guests: *${booking.adults} Adults${(booking.children || 0) > 0 ? `, ${booking.children} Children` : ''}*\n` +
           `Total Tariff: *₹${totalAmount.toLocaleString('en-IN')}*\n` +
           `Payment: *Pay at Hotel on Arrival*\n\n` +
-          `Location: Cloud Crest Ridge, Mussoorie (7,120 ft)\n` +
-          `Concierge Hotline: +91 9838020859\n\n` +
+          `Location: 1, Kempty Fall Road, Charleville, Mussoorie (Near Happy Valley & Buddha Point)\n` +
+          `Front Desk: +91 96505 14794 | WhatsApp Concierge: +91 96505 14773\n\n` +
           `We look forward to welcoming you to the Himalayas!`;
 
         await fetch(`${PMS_BASE_URL}/api/whatsapp/notifications`, {

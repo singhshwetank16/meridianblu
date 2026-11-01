@@ -100,7 +100,7 @@ export const ContactPage: React.FC<ContactPageProps> = () => {
                 Estate Coordinates & Direct Lines
               </h2>
               <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
-                Situated atop Cloud Crest Ridge, Mussoorie, overlooking the Garhwal snow peaks and the southern Doon Valley horizon.
+                Situated at 1, Kempty Fall Road, Charleville, Mussoorie (near Happy Valley &amp; Buddha Point), overlooking the Garhwal snow peaks and the southern Doon Valley horizon.
               </p>
             </div>
 
@@ -113,12 +113,15 @@ export const ContactPage: React.FC<ContactPageProps> = () => {
                 <div className="space-y-1 text-xs">
                   <div className="font-serif font-bold text-sm text-slate-900">Mountain Residence Address</div>
                   <div className="text-slate-600 leading-relaxed">
-                    Meridian Blu Mussoorie Estate<br />
-                    Cloud Crest Ridge, near George Everest House<br />
+                    <strong>Meridian Blu Mussoorie</strong><br />
+                    1, Kempty Fall Road, Charleville<br />
                     Mussoorie, Uttarakhand 248179, India
                   </div>
-                  <div className="text-[#005cd8] font-mono text-[11px] pt-1 font-bold">
-                    Elevation: 7,120 ft (2,170 m)
+                  <div className="text-amber-800 text-[11px] pt-1 font-semibold">
+                    Landmark: Near Happy Valley &amp; Buddha Point (2.5 km from Library Chowk)
+                  </div>
+                  <div className="text-[#005cd8] font-mono text-[11px] pt-0.5 font-bold">
+                    GSTIN: 05AABCM1234F1Z5 (Uttarakhand 05)
                   </div>
                 </div>
               </div>
@@ -128,11 +131,18 @@ export const ContactPage: React.FC<ContactPageProps> = () => {
                 <div className="p-3 rounded-xl bg-sky-50 text-[#005cd8] shrink-0">
                   <Phone className="w-5 h-5" />
                 </div>
-                <div className="space-y-1 text-xs">
-                  <div className="font-serif font-bold text-sm text-slate-900">Telephone Concierge</div>
-                  <div className="text-slate-600 leading-relaxed">
-                    Reservations Hotline: <a href="tel:+919838020859" className="text-[#005cd8] font-bold hover:underline font-mono">+91 9838020859</a><br />
-                    Concierge Mobile & WhatsApp: <a href="https://wa.me/919838020859" target="_blank" rel="noopener noreferrer" className="text-[#005cd8] font-bold hover:underline font-mono">+91 9838020859</a>
+                <div className="space-y-1.5 text-xs">
+                  <div className="font-serif font-bold text-sm text-slate-900">Direct Calling &amp; WhatsApp</div>
+                  <div className="text-slate-600 leading-relaxed space-y-1">
+                    <div>
+                      Calling / Front Desk: <a href="tel:+919650514794" className="text-[#005cd8] font-bold hover:underline font-mono">+91 96505 14794</a>
+                    </div>
+                    <div>
+                      Reservations Desk: <a href="tel:+919650514773" className="text-[#005cd8] font-bold hover:underline font-mono">+91 96505 14773</a>
+                    </div>
+                    <div>
+                      WhatsApp Concierge (Blu): <a href="https://wa.me/919650514773" target="_blank" rel="noopener noreferrer" className="text-emerald-600 font-bold hover:underline font-mono">+91 96505 14773</a>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -145,7 +155,7 @@ export const ContactPage: React.FC<ContactPageProps> = () => {
                 <div className="space-y-1 text-xs">
                   <div className="font-serif font-bold text-sm text-slate-900">Written Inquiries</div>
                   <div className="text-slate-600 leading-relaxed">
-                    Direct Reservations: <a href={`mailto:${HOTEL_INFO.reservationsEmail}`} className="text-[#005cd8] font-semibold hover:underline">{HOTEL_INFO.reservationsEmail}</a>
+                    Direct Reservations: <a href="mailto:reservations@meridianblu.com" className="text-[#005cd8] font-semibold hover:underline">reservations@meridianblu.com</a>
                   </div>
                 </div>
               </div>
@@ -310,7 +320,7 @@ export const ContactPage: React.FC<ContactPageProps> = () => {
               Travel Guide & Mountain Accessibility
             </h2>
             <p className="text-xs text-slate-600">
-              Directions and transit times to Cloud Crest Ridge, Mussoorie.
+              Directions and transit times to 1, Kempty Fall Road, Charleville, Mussoorie.
             </p>
           </div>
 

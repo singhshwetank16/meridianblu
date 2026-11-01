@@ -33,7 +33,7 @@ export const AboutPage: React.FC = () => {
           </h1>
 
           <p className="text-sm sm:text-base text-slate-600 max-w-2xl mx-auto leading-relaxed">
-            Perched on the private 12-acre Cloud Crest Ridge at 7,120 feet elevation, explore our restored deodar cedar architecture and panoramic sunset terraces through interactive 360° spatial views.
+            Located at 1, Kempty Fall Road, Charleville, Mussoorie at 7,120 feet elevation, explore our restored deodar cedar architecture and panoramic sunset terraces through interactive 360° spatial views.
           </p>
 
           <div className="flex flex-wrap items-center justify-center gap-6 pt-2 text-xs text-slate-600 font-medium">
@@ -63,7 +63,7 @@ export const AboutPage: React.FC = () => {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
           <div className="lg:col-span-6 space-y-6">
             <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-sky-50 border border-sky-200 text-[#005cd8] text-xs font-bold uppercase">
-              Himalayan Heritage • Cloud Crest Ridge
+              Himalayan Heritage • Charleville, Mussoorie
             </div>
 
             <h2 className="text-3xl sm:text-4xl font-serif text-slate-900 leading-tight font-normal">
