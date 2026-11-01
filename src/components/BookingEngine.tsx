@@ -503,14 +503,6 @@ END:VCALENDAR`;
               <CheckCircle2 className="w-4 h-4 text-[#005cd8]" />
               Free Cancellation up to 48h
             </span>
-            <button
-              type="button"
-              onClick={() => setIsPmsModalOpen(true)}
-              className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-800 hover:bg-emerald-100 transition-colors cursor-pointer text-xs font-bold"
-            >
-              <Database className="w-3.5 h-3.5 text-emerald-600" />
-              <span>Live PMS Synced (Shop #{SHOP_ID})</span>
-            </button>
           </div>
         </div>
 
@@ -1202,7 +1194,7 @@ END:VCALENDAR`;
                 <div className="text-left sm:text-right">
                   <div className="text-[10px] uppercase font-bold text-emerald-600 flex items-center gap-1 justify-start sm:justify-end">
                     <CheckCircle2 className="w-3.5 h-3.5" />
-                    <span>Hotel PMS Synced (Shop #60)</span>
+                    <span>Official Reservation Guaranteed</span>
                   </div>
                   <div className="text-xs uppercase font-bold text-slate-500 mt-0.5">Booking Reference Code</div>
                   <div className="text-2xl font-mono font-bold text-[#005cd8] tracking-wider">
@@ -1278,7 +1270,7 @@ END:VCALENDAR`;
                     <Database className="w-4 h-4" />
                   </div>
                   <div>
-                    <span className="font-bold block text-emerald-900">Hotel PMS Reservation Confirmed (Shop #{SHOP_ID})</span>
+                    <span className="font-bold block text-emerald-900">Hotel Reservation Confirmed & Guaranteed</span>
                     <span className="text-[11px] text-emerald-800">
                       Record registered in central PMS. SMS & WhatsApp notification dispatched to {confirmedReservation.guest.phone}.
                     </span>
