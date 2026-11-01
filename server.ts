@@ -429,14 +429,25 @@ app.post(['/reservationBulk', '/api/pms/booking', '/api/reservations'], async (r
 
     console.log(`[PMS] Submitting reservation to ${PMS_BASE_URL}/reservationBulk...`);
 
-    // 4. Call PMS Endpoint 8: POST /reservationBulk
+    // 4. Call PMS Endpoint: POST https://hotelserver.billhost.co.in/60/reservationBulk (with hardcoded shopId: 60)
     let pmsReservationNo: any = null;
     try {
-      const pmsRes = await fetch(`${PMS_BASE_URL}/reservationBulk`, {
+      console.log(`[PMS] Submitting reservation to ${PMS_BASE_URL}/${shopId}/reservationBulk...`);
+      let pmsRes = await fetch(`${PMS_BASE_URL}/${shopId}/reservationBulk`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify([pmsReservationPayload])
       });
+
+      // Fallback if /{shopId}/reservationBulk returns 404 or 405
+      if (!pmsRes.ok && (pmsRes.status === 404 || pmsRes.status === 405)) {
+        console.log(`[PMS] Retrying with ${PMS_BASE_URL}/reservationBulk...`);
+        pmsRes = await fetch(`${PMS_BASE_URL}/reservationBulk`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify([pmsReservationPayload])
+        });
+      }
 
       if (pmsRes.ok) {
         const resText = await pmsRes.text();
@@ -447,7 +458,7 @@ app.post(['/reservationBulk', '/api/pms/booking', '/api/reservations'], async (r
         console.warn(`[PMS] reservationBulk returned status ${pmsRes.status}:`, errText);
       }
     } catch (bulkErr) {
-      console.error('[PMS] Failed to call /reservationBulk:', bulkErr);
+      console.error('[PMS] Failed to call reservationBulk:', bulkErr);
     }
 
     // Invalidate reservation caches so new booking shows up instantly in lookups

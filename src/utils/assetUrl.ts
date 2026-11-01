@@ -21,3 +21,4 @@ export const getAssetUrl = (url: string): string => {
   const full = base ? `${base}/${clean}` : `/${clean}`;
   return encodeURI(full);
 };
+

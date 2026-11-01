@@ -9,7 +9,7 @@
  * 5. Vacant Rooms: GET /60/room/status/0
  * 6. Reservations by Date: GET /60/reservationviewFilter/:startDate/:endDate/0
  * 7. All Reservations: GET /60/reservation
- * 8. Create Booking: POST /reservationBulk
+ * 8. Create Booking: POST /60/reservationBulk
  * 9. Booking Confirmation Email: POST /send-reservation-email
  * 10. WhatsApp Notification: POST /api/whatsapp/notifications
  */
@@ -498,21 +498,32 @@ class PmsService {
         isgstbill: false
       };
 
-      // 3. Direct call to PMS Endpoint 8: POST /reservationBulk
+      // 3. Direct call to PMS Endpoint: POST https://hotelserver.billhost.co.in/60/reservationBulk
       let pmsReservationNo: any = null;
       try {
-        const pmsRes = await fetch(`${PMS_BASE_URL}/reservationBulk`, {
+        console.log(`[PMS] Submitting reservation to ${PMS_BASE_URL}/${this.shopId}/reservationBulk...`);
+        let pmsRes = await fetch(`${PMS_BASE_URL}/${this.shopId}/reservationBulk`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify([pmsReservationPayload])
         });
+
+        // Fallback to /reservationBulk if /60/reservationBulk returns 404 or 405
+        if (!pmsRes.ok && (pmsRes.status === 404 || pmsRes.status === 405)) {
+          console.log(`[PMS] Retrying with ${PMS_BASE_URL}/reservationBulk...`);
+          pmsRes = await fetch(`${PMS_BASE_URL}/reservationBulk`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify([pmsReservationPayload])
+          });
+        }
 
         if (pmsRes.ok) {
           const resText = await pmsRes.text();
           pmsReservationNo = resText.trim();
         }
       } catch (bErr) {
-        console.warn('Direct /reservationBulk call error:', bErr);
+        console.warn('Direct reservationBulk call error:', bErr);
       }
 
       const finalResNumber = pmsReservationNo || Math.floor(1000 + Math.random() * 9000);
