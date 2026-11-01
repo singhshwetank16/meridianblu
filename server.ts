@@ -238,14 +238,21 @@ app.get('/api/pms/lookup', async (req, res) => {
 // DYNAMIC LIVE INVENTORY ENGINE (Combining rtmas + reservationviewFilter)
 // ==========================================
 app.get('/api/inventory', async (req, res) => {
-  const shopId = req.query.shopId ? parseInt(req.query.shopId as string, 10) : DEFAULT_SHOP_ID;
+  const shopId = DEFAULT_SHOP_ID; // Hardcoded to 60
   const checkIn = req.query.checkIn as string;
   const checkOut = req.query.checkOut as string;
 
   try {
-    // 1. Fetch room types
+    // 1. Fetch room types, physical rooms, and live vacant rooms from PMS
     const roomTypesUrl = `${PMS_BASE_URL}/${shopId}/rtmas`;
-    const roomTypes: ApiRoomType[] = await fetchWithCache(`rtmas_${shopId}`, roomTypesUrl, FALLBACK_ROOM_TYPES);
+    const roomsUrl = `${PMS_BASE_URL}/${shopId}/room`;
+    const vacantUrl = `${PMS_BASE_URL}/${shopId}/room/status/0`;
+
+    const [roomTypes, allRooms, vacantRooms] = await Promise.all([
+      fetchWithCache(`rtmas_${shopId}`, roomTypesUrl, FALLBACK_ROOM_TYPES),
+      fetchWithCache(`rooms_${shopId}`, roomsUrl, []),
+      fetchWithCache(`vacant_${shopId}_0`, vacantUrl, [], 10000)
+    ]);
 
     // 2. Fetch reservations in this date range if dates provided
     let bookedCounts: Record<number, number> = {};
@@ -269,24 +276,28 @@ app.get('/api/inventory', async (req, res) => {
       }
     }
 
-    // 3. Build live inventory map
+    // 3. Build live inventory map based on actual PMS vacant rooms (status === 0)
     const inventory: Record<string, any> = {};
     for (const rt of roomTypes) {
       const idStr = String(rt.id);
-      const totalUnits = rt.totalroom || 10;
-      const booked = bookedCounts[rt.id] || 0;
-      const availableUnits = Math.max(0, totalUnits - booked);
+      const physicalList = (allRooms as PhysicalRoom[]).filter(r => r.rtcode === rt.id);
+      const totalPhysical = physicalList.length;
+      const vacantList = (vacantRooms as PhysicalRoom[]).filter(r => r.rtcode === rt.id);
+      const vacantCount = vacantList.length;
+      const futureBooked = bookedCounts[rt.id] || 0;
+
+      const availableUnits = Math.max(0, vacantCount - futureBooked);
       const isSoldOut = availableUnits <= 0;
 
       inventory[idStr] = {
         roomId: idStr,
         roomName: rt.rtname,
-        totalUnits,
-        bookedUnits: booked,
+        totalUnits: totalPhysical || (rt.totalroom || 1),
+        bookedUnits: totalPhysical > 0 ? (totalPhysical - availableUnits) : 0,
         availableUnits,
         isSoldOut,
         statusText: isSoldOut
-          ? 'Sold Out for Selected Dates'
+          ? 'Sold Out in PMS'
           : availableUnits === 1
           ? 'Only 1 Unit Remaining in PMS'
           : `${availableUnits} Units Available in PMS`,

@@ -289,8 +289,12 @@ export const HomePage: React.FC<HomePageProps> = ({
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-transparent to-transparent opacity-60" />
                 
-                <div className="absolute top-4 right-4 px-3 py-1 rounded-full bg-white/90 backdrop-blur-sm border border-white text-xs text-[#005cd8] font-bold shadow">
-                  {room.inventory?.statusText || `${room.totalRooms} Units Available`}
+                <div className={`absolute top-4 right-4 px-3 py-1 rounded-full backdrop-blur-sm border text-xs font-bold shadow ${
+                  room.inventory?.isSoldOut
+                    ? 'bg-rose-50/95 border-rose-200 text-rose-600'
+                    : 'bg-white/95 border-white text-[#005cd8]'
+                }`}>
+                  {room.inventory?.statusText || (room.inventory?.isSoldOut ? 'Sold Out in PMS' : 'Available in PMS')}
                 </div>
 
                 <div className="absolute bottom-3 left-4 right-4">

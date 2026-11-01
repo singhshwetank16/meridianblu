@@ -33,6 +33,7 @@ import {
 import { ROOMS_DATA, HOTEL_INFO, SHOP_ID, INITIAL_INVENTORY_DB, fetchLiveRoomTypes } from '../data/hotelData';
 import { RoomTier, ConfirmedReservation, RoomInventoryRecord } from '../types';
 import { PmsStatusLookupModal } from './PmsStatusLookupModal';
+import { pmsService } from '../services/pmsService';
 
 interface BookingEngineProps {
   rooms?: RoomTier[];
@@ -139,10 +140,21 @@ export const BookingEngine: React.FC<BookingEngineProps> = ({
         const data = await res.json();
         if (data.inventory) {
           setInventoryMap(data.inventory);
+          return;
         }
       }
     } catch {
-      // Local cache maintains state
+      // Fallback to direct client PMS calculation
+    }
+
+    // Direct PMS Live Availability (strictly checks /60/room/status/0)
+    try {
+      const pmsInv = await pmsService.calculateLiveAvailability(checkInDate, checkOutDate);
+      if (pmsInv && Object.keys(pmsInv).length > 0) {
+        setInventoryMap(pmsInv);
+      }
+    } catch (err) {
+      console.warn('Failed to calculate live PMS availability:', err);
     }
   };
 
@@ -655,9 +667,9 @@ END:VCALENDAR`;
             {/* Room Cards Grid (Strictly from API data) */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
               {displayedRooms.map((room) => {
-                const inv = inventoryMap[room.id];
-                const isSoldOut = inv ? inv.isSoldOut : false;
-                const availableCount = inv ? inv.availableUnits : (room.totalRooms ?? 1);
+                const inv = inventoryMap[room.id] || INITIAL_INVENTORY_DB[room.id];
+                const isSoldOut = inv ? inv.isSoldOut : true;
+                const availableCount = inv ? inv.availableUnits : 0;
                 const isSelected = selectedRoom.id === room.id && !isSoldOut;
                 const images = room.galleryImages && room.galleryImages.length > 0 ? room.galleryImages : [room.imageUrl];
                 const activePhotoIdx = roomImageIndex[room.id] || 0;

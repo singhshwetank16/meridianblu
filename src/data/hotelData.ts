@@ -312,8 +312,10 @@ export const mapApiRoomToTier = (apiRoom: ApiRoomType): RoomTier => {
 
   // Strictly use exact PMS room name from apiRoom.rtname
   const name = apiRoom.rtname || cfg?.name || `Room Type ${apiRoom.id}`;
-  const totalUnits = apiRoom.totalroom ?? 10;
-  const isSoldOut = totalUnits <= 0;
+  const inv = INITIAL_INVENTORY_DB[idStr];
+  const totalUnits = inv ? inv.totalUnits : (apiRoom.totalroom ?? 1);
+  const availableUnits = inv ? inv.availableUnits : 0;
+  const isSoldOut = inv ? inv.isSoldOut : true;
   const originalPrice = Math.round(price * 1.25);
 
   // Sanitize narration if it starts with shop id (e.g. "60maharaja suit" -> "maharaja suit")
@@ -354,9 +356,9 @@ export const mapApiRoomToTier = (apiRoom: ApiRoomType): RoomTier => {
       roomId: idStr,
       roomName: name,
       totalUnits,
-      availableUnits: totalUnits,
+      availableUnits,
       isSoldOut,
-      statusText: isSoldOut ? "Sold Out for Selected Dates" : `${totalUnits} Units Available`,
+      statusText: inv?.statusText || (isSoldOut ? "Sold Out in PMS" : `${availableUnits} Available`),
       lastUpdated: new Date().toISOString()
     }
   };
@@ -379,18 +381,19 @@ export const RAW_API_ROOMS_SHOP_60: ApiRoomType[] = [
 // Initial preloaded ROOMS_DATA with room types & rents from API
 export const ROOMS_DATA: RoomTier[] = RAW_API_ROOMS_SHOP_60.map(mapApiRoomToTier);
 
-// Initial inventory state map
+// Initial inventory state map strictly reflecting PMS Vacant Rooms (/60/room/status/0)
+// In PMS Shop 60, only 3 rooms are vacant: maharaja suit (1487), ECO HUTS (1284), and OPEN GROUND ROOMS (1268). All others are occupied/sold out!
 export const INITIAL_INVENTORY_DB: Record<string, { totalUnits: number; availableUnits: number; isSoldOut: boolean; statusText: string }> = {
-  "1487": { totalUnits: 1, availableUnits: 1, isSoldOut: false, statusText: "Only 1 Suite Remaining" },
-  "1266": { totalUnits: 2, availableUnits: 2, isSoldOut: false, statusText: "2 Suites Available" },
-  "1265": { totalUnits: 2, availableUnits: 2, isSoldOut: false, statusText: "2 Suites Available" },
-  "1130": { totalUnits: 10, availableUnits: 10, isSoldOut: false, statusText: "10 Cottages Available" },
-  "553": { totalUnits: 15, availableUnits: 15, isSoldOut: false, statusText: "15 Tents Available" },
-  "1131": { totalUnits: 15, availableUnits: 15, isSoldOut: false, statusText: "15 Units Available" },
-  "1268": { totalUnits: 10, availableUnits: 10, isSoldOut: false, statusText: "10 Units Available" },
-  "1132": { totalUnits: 15, availableUnits: 15, isSoldOut: false, statusText: "15 Units Available" },
-  "1145": { totalUnits: 10, availableUnits: 10, isSoldOut: false, statusText: "10 Units Available" },
-  "1284": { totalUnits: 5, availableUnits: 5, isSoldOut: false, statusText: "5 Huts Available" }
+  "1487": { totalUnits: 2, availableUnits: 1, isSoldOut: false, statusText: "Only 1 Suite Remaining" },
+  "1284": { totalUnits: 1, availableUnits: 1, isSoldOut: false, statusText: "Only 1 Hut Remaining" },
+  "1268": { totalUnits: 1, availableUnits: 1, isSoldOut: false, statusText: "Only 1 Room Remaining" },
+  "553": { totalUnits: 7, availableUnits: 0, isSoldOut: true, statusText: "Sold Out in PMS" },
+  "1130": { totalUnits: 2, availableUnits: 0, isSoldOut: true, statusText: "Sold Out in PMS" },
+  "1131": { totalUnits: 1, availableUnits: 0, isSoldOut: true, statusText: "Sold Out in PMS" },
+  "1132": { totalUnits: 0, availableUnits: 0, isSoldOut: true, statusText: "Sold Out in PMS" },
+  "1145": { totalUnits: 1, availableUnits: 0, isSoldOut: true, statusText: "Sold Out in PMS" },
+  "1265": { totalUnits: 1, availableUnits: 0, isSoldOut: true, statusText: "Sold Out in PMS" },
+  "1266": { totalUnits: 1, availableUnits: 0, isSoldOut: true, statusText: "Sold Out in PMS" }
 };
 
 // Live fetch helper: fetches from https://hotelserver.billhost.co.in/60/rtmas or server proxy

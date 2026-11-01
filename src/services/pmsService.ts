@@ -314,10 +314,10 @@ class PmsService {
     return [];
   }
 
-  // Live Inventory Calculation helper combining room types + reservations
-  async calculateLiveAvailability(startDate: string, endDate: string): Promise<Record<string, PmsLiveInventoryItem>> {
+  // Live Inventory Calculation strictly querying PMS vacant rooms (/60/room/status/0) and physical rooms (/60/room)
+  async calculateLiveAvailability(startDate?: string, endDate?: string): Promise<Record<string, PmsLiveInventoryItem>> {
     try {
-      const res = await fetch(`/api/inventory?shopId=${this.shopId}&checkIn=${startDate}&checkOut=${endDate}`);
+      const res = await fetch(`/api/inventory?shopId=${this.shopId}&checkIn=${startDate || ''}&checkOut=${endDate || ''}`);
       if (res.ok) {
         const data = await res.json();
         if (data.inventory) {
@@ -325,40 +325,55 @@ class PmsService {
         }
       }
     } catch (e) {
-      console.warn('Could not fetch server-calculated inventory:', e);
+      console.warn('Could not fetch server-calculated inventory, querying PMS vacant rooms directly:', e);
     }
 
-    // Fallback client-side calculation
+    // Direct PMS Live Calculation using real vacant physical rooms
     try {
-      const [roomTypes, filteredReservations] = await Promise.all([
-        this.getRoomTypes(),
-        this.getReservationsByDate(startDate, endDate)
+      const [allRooms, vacantRooms, roomTypes] = await Promise.all([
+        this.getPhysicalRooms(),
+        this.getVacantRooms(),
+        this.getRoomTypes()
       ]);
 
-      const bookedCounts: Record<number, number> = {};
-      for (const item of filteredReservations) {
-        const r = Array.isArray(item) ? item[0] : item;
-        if (r && r.rtype) {
-          bookedCounts[r.rtype] = (bookedCounts[r.rtype] || 0) + (r.noofroom || 1);
+      // If dates provided, also check future date reservations
+      let futureBookedCounts: Record<number, number> = {};
+      if (startDate && endDate) {
+        try {
+          const filtered = await this.getReservationsByDate(startDate, endDate);
+          for (const item of filtered) {
+            const r = Array.isArray(item) ? item[0] : item;
+            if (r && r.rtype) {
+              futureBookedCounts[r.rtype] = (futureBookedCounts[r.rtype] || 0) + (r.noofroom || 1);
+            }
+          }
+        } catch (e) {
+          console.warn('Filtered reservation check note:', e);
         }
       }
 
       const inventory: Record<string, PmsLiveInventoryItem> = {};
       for (const rt of roomTypes) {
-        const total = rt.totalroom || 10;
-        const booked = bookedCounts[rt.id] || 0;
-        const available = Math.max(0, total - booked);
+        const idStr = String(rt.id);
+        const physicalList = allRooms.filter(r => r.rtcode === rt.id);
+        const totalPhysical = physicalList.length;
+        const vacantPhysicalList = vacantRooms.filter(r => r.rtcode === rt.id);
+        const vacantCount = vacantPhysicalList.length;
+        const futureBooked = futureBookedCounts[rt.id] || 0;
+
+        // Available count is strictly based on real vacant physical rooms from PMS status/0!
+        const available = Math.max(0, vacantCount - futureBooked);
         const isSoldOut = available <= 0;
 
-        inventory[String(rt.id)] = {
-          roomId: String(rt.id),
+        inventory[idStr] = {
+          roomId: idStr,
           roomName: rt.rtname,
-          totalUnits: total,
-          bookedUnits: booked,
+          totalUnits: totalPhysical || (rt.totalroom || 1),
+          bookedUnits: totalPhysical > 0 ? (totalPhysical - available) : 0,
           availableUnits: available,
           isSoldOut,
           statusText: isSoldOut
-            ? 'Sold Out for Selected Dates'
+            ? 'Sold Out in PMS'
             : available === 1
             ? 'Only 1 Unit Remaining in PMS'
             : `${available} Units Available in PMS`,
@@ -367,7 +382,7 @@ class PmsService {
       }
       return inventory;
     } catch (err) {
-      console.error('Error calculating live availability:', err);
+      console.error('Error calculating live PMS availability:', err);
       return {};
     }
   }
