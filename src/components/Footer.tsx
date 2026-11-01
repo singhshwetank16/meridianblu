@@ -198,17 +198,6 @@ export const Footer: React.FC<FooterProps> = ({ onOpenConcierge, onOpenPmsLookup
                   Head Concierge Desk
                 </button>
               </li>
-              {onOpenPmsLookup && (
-                <li>
-                  <button
-                    onClick={onOpenPmsLookup}
-                    className="text-sky-300 hover:text-white font-bold transition-colors cursor-pointer text-left flex items-center gap-1.5"
-                  >
-                    <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-                    <span>Track PMS Booking / System Status</span>
-                  </button>
-                </li>
-              )}
             </ul>
           </div>
 

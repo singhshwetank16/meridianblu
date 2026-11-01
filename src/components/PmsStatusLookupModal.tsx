@@ -127,15 +127,15 @@ export const PmsStatusLookupModal: React.FC<PmsStatusLookupModalProps> = ({
 
           <div className="flex items-center gap-2 text-sky-200 text-xs font-semibold uppercase tracking-wider mb-2">
             <Database className="w-4 h-4 text-sky-300" />
-            <span>Meridian Blu Hotel PMS System · Shop #{PMS_SHOP_ID}</span>
+            <span>Meridian Blu Central Reservations</span>
           </div>
 
           <h3 className="text-2xl sm:text-3xl font-serif text-white font-normal tracking-tight">
-            PMS Live Booking Lookup & System Health
+            Reservation Lookup & Verified Stays
           </h3>
 
           <p className="text-xs sm:text-sm text-sky-100/90 mt-1 max-w-xl">
-            Directly connected to <code className="bg-sky-950/60 px-1.5 py-0.5 rounded text-sky-300 font-mono text-xs">hotelserver.billhost.co.in</code> for real-time inventory, reservations, and WhatsApp alerts.
+            Real-time direct verification for guaranteed room reservations and WhatsApp confirmations.
           </p>
 
           {/* Navigation Tabs */}
@@ -420,7 +420,7 @@ export const PmsStatusLookupModal: React.FC<PmsStatusLookupModalProps> = ({
 
         {/* Modal Footer */}
         <div className="p-4 sm:p-5 bg-slate-50 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500">
-          <span>PMS Shop #60 · Real-Time Direct Integration</span>
+          <span>Meridian Blu Mussoorie · Direct Verified Reservation Engine</span>
           <button
             onClick={onClose}
             className="px-5 py-2 rounded-xl bg-slate-200 hover:bg-slate-300 text-slate-800 font-bold cursor-pointer transition-colors"

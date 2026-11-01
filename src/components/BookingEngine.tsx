@@ -1272,7 +1272,7 @@ END:VCALENDAR`;
                   <div>
                     <span className="font-bold block text-emerald-900">Hotel Reservation Confirmed & Guaranteed</span>
                     <span className="text-[11px] text-emerald-800">
-                      Record registered in central PMS. SMS & WhatsApp notification dispatched to {confirmedReservation.guest.phone}.
+                      Record registered in central system. SMS & WhatsApp notification dispatched to {confirmedReservation.guest.phone}.
                     </span>
                   </div>
                 </div>
@@ -1282,7 +1282,7 @@ END:VCALENDAR`;
                   onClick={() => setIsPmsModalOpen(true)}
                   className="px-3 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-[11px] transition-colors cursor-pointer shrink-0 shadow-sm"
                 >
-                  Verify in PMS System
+                  Verify Reservation
                 </button>
               </div>
             </div>
@@ -1323,7 +1323,7 @@ END:VCALENDAR`;
                   className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-sky-50 hover:bg-sky-100 border border-sky-200 text-xs font-bold text-[#005cd8] transition-colors cursor-pointer"
                 >
                   <Database className="w-4 h-4" />
-                  <span>PMS Lookup</span>
+                  <span>Verify Booking</span>
                 </button>
               </div>
 
