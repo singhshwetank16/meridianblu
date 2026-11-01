@@ -1,25 +1,51 @@
 @import "tailwindcss";
 
+@theme {
+  --font-serif: 'Playfair Display', 'Cormorant Garamond', Georgia, Cambria, serif;
+  --font-serif-luxury: 'Playfair Display', 'Cormorant Garamond', Georgia, serif;
+  --font-display: 'Cinzel', 'Playfair Display', Georgia, serif;
+  --font-sans: 'Plus Jakarta Sans', 'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-sans-luxury: 'Plus Jakarta Sans', 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
 @layer base {
   html {
-    font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    font-family: 'Plus Jakarta Sans', 'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     color-scheme: light;
     scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
   }
 
   body {
     background-color: #f8fafc;
     color: #0f172a;
+    font-family: 'Plus Jakarta Sans', 'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    text-wrap: balance;
   }
 }
 
+.font-serif,
 .font-serif-luxury {
-  font-family: 'Playfair Display', 'Cormorant Garamond', Garamond, 'Times New Roman', serif;
+  font-family: 'Playfair Display', 'Cormorant Garamond', Georgia, Cambria, serif !important;
+  letter-spacing: -0.012em;
 }
 
+.font-display {
+  font-family: 'Cinzel', 'Playfair Display', Georgia, serif !important;
+  letter-spacing: 0.04em;
+}
+
+.font-sans,
 .font-sans-luxury {
-  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-family: 'Plus Jakarta Sans', 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif !important;
 }
 
 /* Custom Alpine subtle scrollbar */
