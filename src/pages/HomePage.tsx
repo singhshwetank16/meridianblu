@@ -23,13 +23,12 @@ import {
 interface HomePageProps {
   rooms: RoomTier[];
   onOpenBooking: () => void;
-  onOpenConcierge: () => void;
+  onOpenConcierge?: () => void;
 }
 
 export const HomePage: React.FC<HomePageProps> = ({
   rooms,
   onOpenBooking,
-  onOpenConcierge,
 }) => {
   const { navigate } = useRouter();
 
@@ -105,12 +104,12 @@ export const HomePage: React.FC<HomePageProps> = ({
                 <span>Read The Estate Story</span>
                 <ArrowRight className="w-4 h-4" />
               </Link>
-              <button
-                onClick={onOpenConcierge}
-                className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl text-xs font-bold uppercase tracking-wider text-slate-700 hover:text-[#005cd8] bg-white border border-slate-300 hover:border-sky-300 transition-colors shadow-sm cursor-pointer"
+              <Link
+                to="/contact"
+                className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl text-xs font-bold uppercase tracking-wider text-slate-700 hover:text-[#005cd8] bg-white border border-slate-300 hover:border-sky-300 transition-colors shadow-sm"
               >
-                <span>Speak with Head Concierge</span>
-              </button>
+                <span>Speak with Concierge</span>
+              </Link>
             </div>
           </div>
 

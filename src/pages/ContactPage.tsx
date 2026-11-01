@@ -15,9 +15,7 @@ import {
   Snowflake
 } from 'lucide-react';
 
-interface ContactPageProps {
-  onOpenConcierge: () => void;
-}
+interface ContactPageProps {}
 
 const getNextDay = (dateStr: string): string => {
   if (!dateStr) return '';
@@ -28,9 +26,7 @@ const getNextDay = (dateStr: string): string => {
   return `${next.getFullYear()}-${pad(next.getMonth() + 1)}-${pad(next.getDate())}`;
 };
 
-export const ContactPage: React.FC<ContactPageProps> = ({
-  onOpenConcierge,
-}) => {
+export const ContactPage: React.FC<ContactPageProps> = () => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -152,20 +148,6 @@ export const ContactPage: React.FC<ContactPageProps> = ({
                     Direct Reservations: <a href={`mailto:${HOTEL_INFO.reservationsEmail}`} className="text-[#005cd8] font-semibold hover:underline">{HOTEL_INFO.reservationsEmail}</a>
                   </div>
                 </div>
-              </div>
-
-              {/* Live Chat Trigger */}
-              <div className="p-5 rounded-2xl bg-sky-50 border border-sky-100 flex items-center justify-between gap-4">
-                <div className="space-y-1 text-xs">
-                  <div className="font-serif font-bold text-sm text-slate-900">Instant AI Concierge</div>
-                  <div className="text-slate-600">Ask Pari about real-time suite availability, dining, or winterline timings.</div>
-                </div>
-                <button
-                  onClick={onOpenConcierge}
-                  className="px-4 py-2 rounded-xl text-xs font-bold uppercase tracking-wider bg-[#005cd8] text-white hover:bg-[#004bb3] transition-colors shrink-0 cursor-pointer shadow-md"
-                >
-                  Chat Now
-                </button>
               </div>
             </div>
           </div>

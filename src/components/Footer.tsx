@@ -13,12 +13,9 @@ import {
   Mountain
 } from 'lucide-react';
 
-interface FooterProps {
-  onOpenConcierge?: () => void;
-  onOpenPmsLookup?: () => void;
-}
+interface FooterProps {}
 
-export const Footer: React.FC<FooterProps> = ({ onOpenConcierge, onOpenPmsLookup }) => {
+export const Footer: React.FC<FooterProps> = () => {
   const { navigate } = useRouter();
   const [newsletterEmail, setNewsletterEmail] = useState('');
   const [subscribed, setSubscribed] = useState(false);
@@ -189,10 +186,7 @@ export const Footer: React.FC<FooterProps> = ({ onOpenConcierge, onOpenPmsLookup
               </li>
               <li>
                 <button
-                  onClick={() => {
-                    if (onOpenConcierge) onOpenConcierge();
-                    else navigate('/contact');
-                  }}
+                  onClick={() => navigate('/contact')}
                   className="hover:text-sky-300 transition-colors cursor-pointer text-left"
                 >
                   Head Concierge Desk

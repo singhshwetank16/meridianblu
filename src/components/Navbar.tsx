@@ -1,20 +1,15 @@
 import React, { useState } from 'react';
-import { Menu, X, Calendar, Phone, Database } from 'lucide-react';
+import { Menu, X, Calendar, Phone } from 'lucide-react';
 import { MeridianBluLogo } from './MeridianBluLogo';
-import { useRouter, Link } from '../router';
+import { useRouter } from '../router';
 
 interface NavbarProps {
   activeSection?: string;
   onNavigate?: (sectionId: string) => void;
   onOpenBooking?: () => void;
-  onOpenConcierge?: () => void;
-  onOpenPmsLookup?: () => void;
 }
 
-export const Navbar: React.FC<NavbarProps> = ({
-  onOpenConcierge,
-  onOpenPmsLookup,
-}) => {
+export const Navbar: React.FC<NavbarProps> = () => {
   const { currentPath, navigate } = useRouter();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -77,20 +72,8 @@ export const Navbar: React.FC<NavbarProps> = ({
           })}
         </nav>
 
-        {/* Quick Booking CTA, Find Booking & Mobile Menu Toggle */}
+        {/* Quick Booking CTA & Mobile Menu Toggle */}
         <div className="flex items-center gap-2.5 shrink-0">
-          {onOpenPmsLookup && (
-            <button
-              onClick={onOpenPmsLookup}
-              className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-full text-xs font-semibold text-slate-700 hover:text-[#005cd8] bg-slate-100 hover:bg-sky-50 border border-slate-200 hover:border-sky-300 transition-all cursor-pointer"
-              title="Track or verify your reservation"
-            >
-              <Database className="w-3.5 h-3.5 text-[#005cd8]" />
-              <span className="hidden lg:inline">Find Booking</span>
-              <span className="lg:hidden">Lookup</span>
-            </button>
-          )}
-
           <button
             onClick={() => handleNavClick('/rooms')}
             className="hidden sm:inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-xs font-semibold uppercase tracking-wider text-white bg-[#005cd8] hover:bg-[#004bb3] active:bg-[#003d92] transition-colors shadow-sm cursor-pointer"
@@ -136,19 +119,6 @@ export const Navbar: React.FC<NavbarProps> = ({
           </div>
 
           <div className="pt-4 flex flex-col gap-2.5">
-            {onOpenPmsLookup && (
-              <button
-                onClick={() => {
-                  setMobileMenuOpen(false);
-                  onOpenPmsLookup();
-                }}
-                className="w-full py-2.5 text-center text-xs font-bold text-[#005cd8] bg-sky-50 border border-sky-200 rounded-xl cursor-pointer hover:bg-sky-100 transition-colors flex items-center justify-center gap-2"
-              >
-                <Database className="w-4 h-4" />
-                <span>Find Reservation</span>
-              </button>
-            )}
-
             <button
               onClick={() => handleNavClick('/rooms')}
               className="w-full py-3 text-center text-xs font-bold uppercase tracking-wider text-white bg-[#005cd8] rounded-xl cursor-pointer shadow-md hover:bg-[#004bb3] transition-colors flex items-center justify-center gap-2"

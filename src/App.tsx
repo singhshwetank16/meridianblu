@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { RouterProvider, useRouter } from './router';
 import { Navbar } from './components/Navbar';
 import { Footer } from './components/Footer';
-import { ConciergeChatbot } from './components/ConciergeChatbot';
 import { HomePage } from './pages/HomePage';
 import { RoomsPage } from './pages/RoomsPage';
 import { AboutPage } from './pages/AboutPage';
@@ -13,13 +12,10 @@ import { ContactPage } from './pages/ContactPage';
 import { ConfirmedReservation, TrailAttraction, GalleryItem, RoomTier } from './types';
 import { SHOP_ID, ROOMS_DATA, fetchLiveRoomTypes } from './data/hotelData';
 import { SnowEffect } from './components/SnowEffect';
-import { PmsStatusLookupModal } from './components/PmsStatusLookupModal';
 import { Check, Calendar } from 'lucide-react';
 
 function AppContent() {
   const { currentPath, navigate } = useRouter();
-  const [isConciergeOpen, setIsConciergeOpen] = useState(false);
-  const [isPmsModalOpen, setIsPmsModalOpen] = useState(false);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
   const [rooms, setRooms] = useState<RoomTier[]>(ROOMS_DATA);
 
@@ -45,7 +41,7 @@ function AppContent() {
 
   const handleRequestTrailGuide = (trail: TrailAttraction) => {
     showToast(`Requested guided mountain guide for ${trail.name}.`);
-    setIsConciergeOpen(true);
+    navigate('/contact');
   };
 
   const handleShareTrail = (trail: TrailAttraction) => {
@@ -96,7 +92,6 @@ function AppContent() {
           <HomePage
             rooms={rooms}
             onOpenBooking={() => navigate('/rooms')}
-            onOpenConcierge={() => setIsConciergeOpen(true)}
           />
         );
 
@@ -117,7 +112,6 @@ function AppContent() {
           <TrailsPage
             onRequestTrailGuide={handleRequestTrailGuide}
             onShareTrail={handleShareTrail}
-            onOpenConcierge={() => setIsConciergeOpen(true)}
           />
         );
 
@@ -137,18 +131,13 @@ function AppContent() {
         );
 
       case '/contact':
-        return (
-          <ContactPage
-            onOpenConcierge={() => setIsConciergeOpen(true)}
-          />
-        );
+        return <ContactPage />;
 
       default:
         return (
           <HomePage
             rooms={rooms}
             onOpenBooking={() => navigate('/rooms')}
-            onOpenConcierge={() => setIsConciergeOpen(true)}
           />
         );
     }
@@ -173,10 +162,7 @@ function AppContent() {
       )}
 
       {/* Top Navigation Bar with active router link indicators */}
-      <Navbar
-        onOpenConcierge={() => setIsConciergeOpen(true)}
-        onOpenPmsLookup={() => setIsPmsModalOpen(true)}
-      />
+      <Navbar />
 
       {/* Main Routed Page Content */}
       <main className="flex-1">
@@ -184,34 +170,7 @@ function AppContent() {
       </main>
 
       {/* Persistent Global Footer */}
-      <Footer
-        onOpenConcierge={() => setIsConciergeOpen(true)}
-        onOpenPmsLookup={() => setIsPmsModalOpen(true)}
-      />
-
-      {/* PMS Live Lookup & Diagnostics Modal */}
-      <PmsStatusLookupModal
-        isOpen={isPmsModalOpen}
-        onClose={() => setIsPmsModalOpen(false)}
-      />
-
-      {/* AI Instant Concierge Chatbot ("Pari") */}
-      <ConciergeChatbot
-        isOpen={isConciergeOpen}
-        onToggle={() => setIsConciergeOpen(!isConciergeOpen)}
-        onOpenBooking={() => {
-          setIsConciergeOpen(false);
-          navigate('/rooms');
-        }}
-        onOpenTrailMap={() => {
-          setIsConciergeOpen(false);
-          navigate('/trails');
-        }}
-        onOpenVirtualTour={() => {
-          setIsConciergeOpen(false);
-          navigate('/about');
-        }}
-      />
+      <Footer />
 
       {/* Mobile Sticky Quick Reservation Bar (Shown only if not currently on /rooms) */}
       {currentPath !== '/rooms' && (

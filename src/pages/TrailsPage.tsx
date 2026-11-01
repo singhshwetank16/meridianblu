@@ -16,13 +16,12 @@ import {
 interface TrailsPageProps {
   onRequestTrailGuide: (trail: TrailAttraction) => void;
   onShareTrail: (trail: TrailAttraction) => void;
-  onOpenConcierge: () => void;
+  onOpenConcierge?: () => void;
 }
 
 export const TrailsPage: React.FC<TrailsPageProps> = ({
   onRequestTrailGuide,
   onShareTrail,
-  onOpenConcierge,
 }) => {
   return (
     <div className="space-y-16 pb-24">
@@ -84,13 +83,13 @@ export const TrailsPage: React.FC<TrailsPageProps> = ({
               </p>
             </div>
 
-            <button
-              onClick={onOpenConcierge}
-              className="inline-flex items-center gap-2 px-6 py-3 rounded-xl text-xs font-bold uppercase tracking-wider bg-gradient-to-r from-blue-700 to-indigo-800 text-white hover:from-blue-800 hover:to-indigo-900 shadow-md hover:shadow-lg transition-all self-start md:self-auto cursor-pointer"
+            <Link
+              to="/contact"
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-xl text-xs font-bold uppercase tracking-wider bg-gradient-to-r from-blue-700 to-indigo-800 text-white hover:from-blue-800 hover:to-indigo-900 shadow-md hover:shadow-lg transition-all self-start md:self-auto"
             >
-              <span>Consult Head Naturalist</span>
+              <span>Consult Naturalist Desk</span>
               <ArrowRight className="w-4 h-4" />
-            </button>
+            </Link>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4 text-xs text-slate-600">
