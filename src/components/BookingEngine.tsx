@@ -28,10 +28,12 @@ import {
   Square,
   Banknote,
   Mountain,
-  Database
+  Database,
+  Key,
+  BedDouble
 } from 'lucide-react';
-import { ROOMS_DATA, HOTEL_INFO, SHOP_ID, INITIAL_INVENTORY_DB, fetchLiveRoomTypes } from '../data/hotelData';
-import { RoomTier, ConfirmedReservation, RoomInventoryRecord } from '../types';
+import { ROOMS_DATA, HOTEL_INFO, SHOP_ID, INITIAL_INVENTORY_DB, fetchLiveRoomTypes, RAW_PHYSICAL_ROOMS_SHOP_165, fetchLivePhysicalRooms } from '../data/hotelData';
+import { RoomTier, ConfirmedReservation, RoomInventoryRecord, PhysicalRoomInfo } from '../types';
 import { PmsStatusLookupModal } from './PmsStatusLookupModal';
 import { pmsService } from '../services/pmsService';
 
@@ -50,6 +52,9 @@ export const BookingEngine: React.FC<BookingEngineProps> = ({
 }) => {
   // 1. Live Rooms List (strictly from API data)
   const [roomsList, setRoomsList] = useState<RoomTier[]>(rooms && rooms.length > 0 ? rooms : ROOMS_DATA);
+  // Live Physical Rooms List (all 33 physical rooms of Shop 165)
+  const [physicalRooms, setPhysicalRooms] = useState<PhysicalRoomInfo[]>(RAW_PHYSICAL_ROOMS_SHOP_165);
+  const [selectedRoomNumber, setSelectedRoomNumber] = useState<string>('');
 
   // Sync rooms prop if changed
   useEffect(() => {
@@ -58,11 +63,17 @@ export const BookingEngine: React.FC<BookingEngineProps> = ({
     }
   }, [rooms]);
 
-  // Fetch live room types from API
+  // Fetch live room types and physical rooms from API
   useEffect(() => {
     fetchLiveRoomTypes(SHOP_ID).then((live) => {
       if (live && live.length > 0) {
         setRoomsList(live);
+      }
+    });
+
+    fetchLivePhysicalRooms(SHOP_ID).then((rooms) => {
+      if (rooms && rooms.length > 0) {
+        setPhysicalRooms(rooms);
       }
     });
   }, []);
@@ -188,6 +199,26 @@ export const BookingEngine: React.FC<BookingEngineProps> = ({
   // 5. Rooms strictly derived from API data
   const displayedRooms = roomsList;
 
+  // Filter physical rooms for currently selected room category
+  const selectedRoomCode = parseInt(String(selectedRoom?.apiId || selectedRoom?.id || 1099), 10);
+  const categoryPhysicalRooms = useMemo(() => {
+    return physicalRooms.filter(r => r.rtcode === selectedRoomCode);
+  }, [physicalRooms, selectedRoomCode]);
+
+  // Vacant count for this category
+  const categoryVacantCount = categoryPhysicalRooms.filter(r => r.status === 0).length;
+
+  // Auto-select first vacant room when category changes
+  useEffect(() => {
+    if (categoryPhysicalRooms.length > 0) {
+      const alreadyValid = categoryPhysicalRooms.find(r => r.rname === selectedRoomNumber && r.status === 0);
+      if (!alreadyValid) {
+        const firstVacant = categoryPhysicalRooms.find(r => r.status === 0);
+        setSelectedRoomNumber(firstVacant ? firstVacant.rname : '');
+      }
+    }
+  }, [categoryPhysicalRooms]);
+
   // 6. Photo slider & lightbox state
   const [roomImageIndex, setRoomImageIndex] = useState<Record<string, number>>({});
   const [lightboxRoom, setLightboxRoom] = useState<{ room: RoomTier; index: number } | null>(null);
@@ -283,6 +314,8 @@ export const BookingEngine: React.FC<BookingEngineProps> = ({
 
     const paymentMethodLabel = 'Pay at Hotel (Cash / Card / UPI on Arrival)';
 
+    const matchedPhysical = physicalRooms.find(r => r.rname === selectedRoomNumber && r.rtcode === selectedRoomCode);
+
     const reservationPayload = {
       checkInDate,
       checkOutDate,
@@ -290,6 +323,10 @@ export const BookingEngine: React.FC<BookingEngineProps> = ({
       adults,
       children,
       room: selectedRoom,
+      assignedRoom: matchedPhysical ? {
+        rname: matchedPhysical.rname,
+        rcode: matchedPhysical.id
+      } : (selectedRoomNumber ? { rname: selectedRoomNumber } : undefined),
       addons: [],
       pricing: {
         roomTotal,
@@ -328,6 +365,8 @@ export const BookingEngine: React.FC<BookingEngineProps> = ({
         guestAddress: 'Direct Website Booking',
         specialRequests: `Estimated Arrival: ${expectedArrival}`,
         paymentMethod: paymentMethodLabel,
+        assignedRoomNumber: matchedPhysical?.rname || selectedRoomNumber || undefined,
+        assignedRoomCode: matchedPhysical?.id || undefined,
       });
 
       if (!pmsResult || !pmsResult.success) {
@@ -344,6 +383,10 @@ export const BookingEngine: React.FC<BookingEngineProps> = ({
         shopId: SHOP_ID,
         confirmationCode: confCode,
         pmsReservationNo: pmsResult.pmsReservationNo,
+        assignedRoom: matchedPhysical ? {
+          rname: matchedPhysical.rname,
+          rcode: matchedPhysical.id
+        } : (selectedRoomNumber ? { rname: selectedRoomNumber } : undefined),
         bookingDate: new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
       };
 
@@ -734,6 +777,38 @@ END:VCALENDAR`;
                             </li>
                           ))}
                         </ul>
+
+                        {/* Physical Room Numbers in this Category */}
+                        {(() => {
+                          const rCode = parseInt(String(room.apiId || room.id), 10);
+                          const thisRooms = physicalRooms.filter(pr => pr.rtcode === rCode);
+                          const vacantCount = thisRooms.filter(pr => pr.status === 0).length;
+                          const bookedCount = thisRooms.filter(pr => pr.status !== 0).length;
+
+                          if (thisRooms.length === 0) return null;
+
+                          return (
+                            <div className="pt-3 border-t border-slate-100 flex flex-wrap items-center justify-between gap-2 text-xs">
+                              <div className="flex items-center gap-1.5 text-slate-600">
+                                <Key className="w-3.5 h-3.5 text-[#005cd8] shrink-0" />
+                                <span className="font-semibold text-slate-700">Room Numbers:</span>
+                                <span className="font-mono text-slate-900 font-bold">
+                                  {thisRooms.map(r => r.rname).join(', ')}
+                                </span>
+                              </div>
+                              <div className="flex items-center gap-1.5 text-[11px] font-semibold">
+                                <span className="text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">
+                                  {vacantCount} Available
+                                </span>
+                                {bookedCount > 0 && (
+                                  <span className="text-rose-600 bg-rose-50 px-2 py-0.5 rounded border border-rose-200">
+                                    {bookedCount} Booked
+                                  </span>
+                                )}
+                              </div>
+                            </div>
+                          );
+                        })()}
                       </div>
                     </div>
 
@@ -804,6 +879,144 @@ END:VCALENDAR`;
               {/* Left 2 Cols: Form */}
               <div className="lg:col-span-2 space-y-6">
                 <form onSubmit={handleConfirmReservation} className="space-y-6">
+
+                  {/* Physical Room Selection Dropdown Card (Live PMS Allocation) */}
+                  <div className="bg-white border border-slate-200/90 rounded-2xl p-6 sm:p-7 space-y-4 shadow-xl">
+                    <div className="pb-3 border-b border-slate-100 flex items-center justify-between">
+                      <div>
+                        <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-blue-50 text-[#005cd8] text-[11px] font-bold uppercase tracking-wider mb-1">
+                          <Key className="w-3.5 h-3.5" />
+                          <span>Live PMS Room Allocation · Shop #{SHOP_ID}</span>
+                        </div>
+                        <h3 className="font-serif-luxury text-2xl font-bold text-slate-900">
+                          Select Specific Room Number
+                        </h3>
+                        <p className="text-xs text-slate-500 mt-0.5">
+                          Choose your room in <strong>{selectedRoom.name}</strong>. Booked rooms are blocked, and vacant rooms are available for selection.
+                        </p>
+                      </div>
+                      <div className="text-right hidden sm:block">
+                        <span className="text-xs font-semibold text-emerald-600 bg-emerald-50 px-3 py-1 rounded-lg border border-emerald-200">
+                          PMS Synced
+                        </span>
+                      </div>
+                    </div>
+
+                    <div className="space-y-4 pt-1">
+                      {/* Room Category Switcher Dropdown */}
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                          <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5">
+                            Room Category
+                          </label>
+                          <select
+                            value={selectedRoom.id}
+                            onChange={(e) => {
+                              const found = roomsList.find(r => r.id === e.target.value);
+                              if (found) setSelectedRoom(found);
+                            }}
+                            className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2.5 text-xs font-bold text-slate-800 focus:outline-none focus:border-[#005cd8] cursor-pointer"
+                          >
+                            {roomsList.map(r => (
+                              <option key={r.id} value={r.id}>
+                                {r.name} (₹{r.pricePerNight.toLocaleString('en-IN')}/nt)
+                              </option>
+                            ))}
+                          </select>
+                        </div>
+
+                        {/* Physical Room Dropdown */}
+                        <div>
+                          <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5 flex items-center justify-between">
+                            <span>Room Number Dropdown *</span>
+                            <span className="text-[11px] text-emerald-600 font-semibold lowercase">
+                              {categoryVacantCount} vacant · {categoryPhysicalRooms.length - categoryVacantCount} booked
+                            </span>
+                          </label>
+                          <select
+                            value={selectedRoomNumber}
+                            onChange={(e) => setSelectedRoomNumber(e.target.value)}
+                            className="w-full bg-slate-50 border border-slate-300 rounded-xl px-3.5 py-2.5 text-xs font-bold text-slate-800 focus:outline-none focus:border-[#005cd8] shadow-sm cursor-pointer"
+                          >
+                            <option value="">
+                              Auto-Assign Best Available Room ({categoryVacantCount} Vacant Available)
+                            </option>
+                            {categoryPhysicalRooms.map((room) => {
+                              const isBooked = room.status !== 0;
+                              return (
+                                <option
+                                  key={room.id}
+                                  value={room.rname}
+                                  disabled={isBooked}
+                                  className={isBooked ? "text-slate-400 bg-slate-100 font-normal" : "text-slate-800 font-semibold"}
+                                >
+                                  Room {room.rname} {isBooked ? "— [Booked / Blocked]" : "— [Available / Selectable]"}
+                                </option>
+                              );
+                            })}
+                          </select>
+                        </div>
+                      </div>
+
+                      {/* Visual Room Chips Grid */}
+                      <div>
+                        <div className="flex items-center justify-between text-xs text-slate-500 mb-2">
+                          <span className="font-semibold text-slate-700">Quick Select by Room Number:</span>
+                          <div className="flex items-center gap-3 text-[11px]">
+                            <span className="flex items-center gap-1 text-emerald-600 font-medium">
+                              <span className="w-2 h-2 rounded-full bg-emerald-500" /> Selectable
+                            </span>
+                            <span className="flex items-center gap-1 text-rose-500 font-medium">
+                              <span className="w-2 h-2 rounded-full bg-rose-500" /> Booked (Blocked)
+                            </span>
+                          </div>
+                        </div>
+
+                        <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-7 gap-2">
+                          {categoryPhysicalRooms.map((room) => {
+                            const isBooked = room.status !== 0;
+                            const isSelected = selectedRoomNumber === room.rname;
+
+                            return (
+                              <button
+                                type="button"
+                                key={room.id}
+                                disabled={isBooked}
+                                onClick={() => setSelectedRoomNumber(room.rname)}
+                                className={`p-2.5 rounded-xl border text-center transition-all ${
+                                  isBooked
+                                    ? "bg-slate-100 border-slate-200 text-slate-400 cursor-not-allowed opacity-70"
+                                    : isSelected
+                                    ? "bg-[#005cd8] border-[#005cd8] text-white shadow-md font-bold ring-2 ring-blue-300 scale-[1.02]"
+                                    : "bg-white hover:bg-sky-50 border-slate-200 text-slate-800 hover:border-sky-300 font-medium cursor-pointer"
+                                }`}
+                              >
+                                <div className="text-xs font-bold flex items-center justify-center gap-1">
+                                  {isBooked ? (
+                                    <Lock className="w-3 h-3 text-rose-400" />
+                                  ) : isSelected ? (
+                                    <Check className="w-3 h-3 text-white" />
+                                  ) : (
+                                    <span className="w-2 h-2 rounded-full bg-emerald-500" />
+                                  )}
+                                  <span>Room {room.rname}</span>
+                                </div>
+                                <div className={`text-[10px] mt-0.5 font-medium ${
+                                  isSelected ? "text-sky-100 font-bold" : isBooked ? "text-rose-500 font-semibold" : "text-emerald-600 font-semibold"
+                                }`}>
+                                  {isBooked ? "Booked" : isSelected ? "Selected" : "Available"}
+                                </div>
+                              </button>
+                            );
+                          })}
+                        </div>
+                      </div>
+
+                      <p className="text-[11px] text-slate-500 italic">
+                        * Only vacant rooms can be selected. Occupied or booked rooms are blocked directly from Hotel PMS.
+                      </p>
+                    </div>
+                  </div>
 
                   {/* Primary Guest Details Card */}
                   <div className="bg-white border border-slate-200/90 rounded-2xl p-6 sm:p-7 space-y-4 shadow-xl">
@@ -978,6 +1191,14 @@ END:VCALENDAR`;
                       <span>Duration:</span>
                       <strong className="text-slate-900 font-bold">{nights} {nights === 1 ? 'Night' : 'Nights'} ({adults} Adults)</strong>
                     </div>
+                    <div className="flex justify-between items-center pt-1 text-slate-700">
+                      <span className="flex items-center gap-1 font-medium">
+                        <Key className="w-3.5 h-3.5 text-[#005cd8]" /> Physical Room:
+                      </span>
+                      <span className="font-bold text-[#005cd8] font-mono bg-sky-50 px-2 py-0.5 rounded border border-sky-100">
+                        {selectedRoomNumber ? `Room ${selectedRoomNumber}` : 'Auto-Assign'}
+                      </span>
+                    </div>
                   </div>
 
                   {/* Coupon Application */}
@@ -1133,6 +1354,25 @@ END:VCALENDAR`;
                     <span className="text-xs text-slate-700">{confirmedReservation.guest.specialRequests}</span>
                   </div>
                 )}
+              </div>
+
+              {/* Confirmed Physical Room Allocation */}
+              <div className="p-4 rounded-xl bg-gradient-to-r from-emerald-50 to-sky-50 border border-emerald-200/80 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs">
+                <div className="flex items-center gap-3">
+                  <div className="w-9 h-9 rounded-xl bg-emerald-600 text-white flex items-center justify-center shrink-0 shadow-sm">
+                    <Key className="w-4 h-4" />
+                  </div>
+                  <div>
+                    <span className="text-[10px] uppercase font-bold text-slate-500 block">Assigned Physical Room Number</span>
+                    <strong className="text-emerald-900 text-base font-bold font-mono">
+                      Room {confirmedReservation.assignedRoom?.rname || selectedRoomNumber || 'Auto-Allocated on Arrival'}
+                    </strong>
+                  </div>
+                </div>
+                <div className="flex items-center gap-1.5 text-emerald-700 font-semibold bg-white px-3 py-1.5 rounded-lg border border-emerald-200 shadow-sm text-[11px] self-start sm:self-auto">
+                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
+                  <span>Reserved in Hotel PMS (Shop #{SHOP_ID})</span>
+                </div>
               </div>
 
               {/* Payment Mode & Total Settlement */}

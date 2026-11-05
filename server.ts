@@ -354,21 +354,23 @@ app.post(['/reservationBulk', '/api/pms/booking', '/api/reservations'], async (r
     const roomTypeId = parseInt(room.apiId || room.id, 10);
     const roomTypeName = room.name || 'Himalayan Suite';
 
-    // 1. Check for physical room match from PMS vacant rooms
-    let assignedRoomName = roomTypeName;
-    let assignedRoomCode = 0;
-    try {
-      const vacantRes = await fetch(`${PMS_BASE_URL}/${shopId}/room/status/0`);
-      if (vacantRes.ok) {
-        const vacantRooms: PhysicalRoom[] = await vacantRes.json();
-        const matched = vacantRooms.find(r => r.rtcode === roomTypeId);
-        if (matched) {
-          assignedRoomName = matched.rname;
-          assignedRoomCode = matched.id;
+    // 1. Check for physical room match from PMS vacant rooms or use explicitly selected room
+    let assignedRoomName = reservation.assignedRoomNumber || room.assignedRoomNumber || roomTypeName;
+    let assignedRoomCode = reservation.assignedRoomCode || room.assignedRoomCode || 0;
+    if (!reservation.assignedRoomNumber && !room.assignedRoomNumber) {
+      try {
+        const vacantRes = await fetch(`${PMS_BASE_URL}/${shopId}/room/status/0`);
+        if (vacantRes.ok) {
+          const vacantRooms: PhysicalRoom[] = await vacantRes.json();
+          const matched = vacantRooms.find(r => r.rtcode === roomTypeId);
+          if (matched) {
+            assignedRoomName = matched.rname;
+            assignedRoomCode = matched.id;
+          }
         }
+      } catch (e) {
+        console.warn('Physical room match lookup notice:', e);
       }
-    } catch (e) {
-      console.warn('Physical room match lookup notice:', e);
     }
 
     // 2. Prepare PMS reservation dates and timestamp

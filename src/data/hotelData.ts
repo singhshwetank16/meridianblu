@@ -1,5 +1,5 @@
 import { getAssetUrl } from '../utils/assetUrl';
-import { RoomTier, LuxuryAddon, TrailAttraction, GalleryItem, GuestStory, VirtualTourScene, ApiRoomType } from '../types';
+import { RoomTier, LuxuryAddon, TrailAttraction, GalleryItem, GuestStory, VirtualTourScene, ApiRoomType, PhysicalRoomInfo } from '../types';
 
 export const SHOP_ID = 165;
 export const API_ROOM_TYPES_URL = `https://hotelserver.billhost.co.in/${SHOP_ID}/rtmas`;
@@ -351,6 +351,85 @@ export const fetchLiveRoomTypes = async (shopId: number = SHOP_ID): Promise<Room
   }
 
   return ROOMS_DATA;
+};
+
+// All 33 physical inventory rooms for Meridian Blu (Shop ID: 165)
+// Status: 0 = Available/Vacant, 1 or 2 = Booked/Occupied
+export const RAW_PHYSICAL_ROOMS_SHOP_165: PhysicalRoomInfo[] = [
+  // Valley View Rooms (rtcode: 1099) - 7 rooms, 7 vacant
+  { id: 1708, rname: "101", rtcode: 1099, status: 0, roomname: "Valley View Rooms 101", shopid: 165 },
+  { id: 1709, rname: "102", rtcode: 1099, status: 0, roomname: "Valley View Rooms 102", shopid: 165 },
+  { id: 1710, rname: "103", rtcode: 1099, status: 0, roomname: "Valley View Rooms 103", shopid: 165 },
+  { id: 1711, rname: "104", rtcode: 1099, status: 0, roomname: "Valley View Rooms 104", shopid: 165 },
+  { id: 1712, rname: "105", rtcode: 1099, status: 0, roomname: "Valley View Rooms 105", shopid: 165 },
+  { id: 1713, rname: "106", rtcode: 1099, status: 0, roomname: "Valley View Rooms 106", shopid: 165 },
+  { id: 1714, rname: "107", rtcode: 1099, status: 0, roomname: "Valley View Rooms 107", shopid: 165 },
+
+  // Himalayan View Rooms (rtcode: 1100) - 17 rooms
+  { id: 1718, rname: "201", rtcode: 1100, status: 2, roomname: "Himalayan View Rooms 201", shopid: 165 },
+  { id: 1719, rname: "202", rtcode: 1100, status: 1, roomname: "Himalayan View Rooms 202", shopid: 165 },
+  { id: 1720, rname: "203", rtcode: 1100, status: 1, roomname: "Himalayan View Rooms 203", shopid: 165 },
+  { id: 1721, rname: "204", rtcode: 1100, status: 1, roomname: "Himalayan View Rooms 204", shopid: 165 },
+  { id: 1722, rname: "205", rtcode: 1100, status: 0, roomname: "Himalayan View Rooms 205", shopid: 165 },
+  { id: 1723, rname: "206", rtcode: 1100, status: 1, roomname: "Himalayan View Rooms 206", shopid: 165 },
+  { id: 1724, rname: "207", rtcode: 1100, status: 1, roomname: "Himalayan View Rooms 207", shopid: 165 },
+  { id: 1730, rname: "301", rtcode: 1100, status: 0, roomname: "Himalayan View Rooms 301", shopid: 165 },
+  { id: 1731, rname: "302", rtcode: 1100, status: 0, roomname: "Himalayan View Rooms 302", shopid: 165 },
+  { id: 1732, rname: "303", rtcode: 1100, status: 0, roomname: "Himalayan View Rooms 303", shopid: 165 },
+  { id: 1733, rname: "304", rtcode: 1100, status: 0, roomname: "Himalayan View Rooms 304", shopid: 165 },
+  { id: 1734, rname: "305", rtcode: 1100, status: 0, roomname: "Himalayan View Rooms 305", shopid: 165 },
+  { id: 1735, rname: "306", rtcode: 1100, status: 0, roomname: "Himalayan View Rooms 306", shopid: 165 },
+  { id: 1736, rname: "307", rtcode: 1100, status: 0, roomname: "Himalayan View Rooms 307", shopid: 165 },
+  { id: 1737, rname: "308", rtcode: 1100, status: 0, roomname: "Himalayan View Rooms 308", shopid: 165 },
+  { id: 1738, rname: "309", rtcode: 1100, status: 0, roomname: "Himalayan View Rooms 309", shopid: 165 },
+  { id: 1739, rname: "310", rtcode: 1100, status: 0, roomname: "Himalayan View Rooms 310", shopid: 165 },
+
+  // Summit Rooms (rtcode: 1101) - 6 rooms
+  { id: 1715, rname: "108", rtcode: 1101, status: 0, roomname: "Summit Rooms 108", shopid: 165 },
+  { id: 1716, rname: "109", rtcode: 1101, status: 0, roomname: "Summit Rooms 109", shopid: 165 },
+  { id: 1717, rname: "110", rtcode: 1101, status: 0, roomname: "Summit Rooms 110", shopid: 165 },
+  { id: 1727, rname: "208", rtcode: 1101, status: 0, roomname: "Summit Rooms 208", shopid: 165 },
+  { id: 1728, rname: "209", rtcode: 1101, status: 1, roomname: "Summit Rooms 209", shopid: 165 },
+  { id: 1729, rname: "210", rtcode: 1101, status: 1, roomname: "Summit Rooms 210", shopid: 165 },
+
+  // Skyline Rooms (rtcode: 1102) - 3 rooms, 3 vacant
+  { id: 1740, rname: "311", rtcode: 1102, status: 0, roomname: "Skyline Rooms 311", shopid: 165 },
+  { id: 1741, rname: "312", rtcode: 1102, status: 0, roomname: "Skyline Rooms 312", shopid: 165 },
+  { id: 1742, rname: "314", rtcode: 1102, status: 0, roomname: "Skyline Rooms 314", shopid: 165 }
+];
+
+// Live fetch helper for physical rooms
+export const fetchLivePhysicalRooms = async (shopId: number = SHOP_ID): Promise<PhysicalRoomInfo[]> => {
+  try {
+    const [allRes, vacantRes] = await Promise.all([
+      fetch(`https://hotelserver.billhost.co.in/${shopId}/room`).catch(() => null),
+      fetch(`https://hotelserver.billhost.co.in/${shopId}/room/status/0`).catch(() => null)
+    ]);
+
+    if (allRes && allRes.ok) {
+      const allRooms: any[] = await allRes.json();
+      let vacantIds = new Set<number>();
+      if (vacantRes && vacantRes.ok) {
+        const vacantRooms: any[] = await vacantRes.json();
+        vacantIds = new Set(vacantRooms.map((v: any) => v.id));
+      }
+
+      if (Array.isArray(allRooms) && allRooms.length > 0) {
+        return allRooms.map((r: any) => ({
+          id: r.id,
+          rname: r.rname,
+          rtcode: r.rtcode,
+          status: vacantIds.size > 0 ? (vacantIds.has(r.id) ? 0 : 1) : r.status,
+          roomname: r.roomname || `Room ${r.rname}`,
+          shopid: r.shopid || shopId
+        }));
+      }
+    }
+  } catch (err) {
+    console.warn("Direct physical room fetch notice:", err);
+  }
+
+  return RAW_PHYSICAL_ROOMS_SHOP_165;
 };
 
 export const LUXURY_ADDONS: LuxuryAddon[] = [

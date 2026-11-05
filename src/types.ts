@@ -78,10 +78,23 @@ export interface BookingState {
   };
 }
 
+export interface PhysicalRoomInfo {
+  id: number;
+  rname: string;
+  rtcode: number;
+  status: number; // 0 = Available, 1 = Booked, 2 = Occupied
+  roomname: string;
+  shopid: number;
+}
+
 export interface ConfirmedReservation {
   confirmationCode: string;
   shopId: number;
   pmsReservationNo?: number | string;
+  assignedRoom?: {
+    rname: string;
+    rcode?: number;
+  };
   bookingDate: string;
   checkInDate: string;
   checkOutDate: string;

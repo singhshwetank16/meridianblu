@@ -147,6 +147,8 @@ export interface PmsBookingRequest {
   guestAddress?: string;
   specialRequests?: string;
   paymentMethod?: string;
+  assignedRoomNumber?: string;
+  assignedRoomCode?: number;
 }
 
 export interface PmsBookingResponse {
@@ -464,18 +466,20 @@ class PmsService {
 
     // Direct PMS Execution (Static / GitHub Pages Direct Mode)
     try {
-      // 1. Match vacant room
-      let assignedRoomName = booking.roomTypeName;
-      let assignedRoomCode: any = booking.roomTypeId;
-      try {
-        const vacantRooms = await this.getVacantRooms();
-        const matched = vacantRooms.find(r => r.rtcode === booking.roomTypeId || r.rtype === booking.roomTypeId);
-        if (matched) {
-          assignedRoomName = matched.rname;
-          assignedRoomCode = matched.id;
+      // 1. Match vacant room or use explicitly chosen room
+      let assignedRoomName = booking.assignedRoomNumber || booking.roomTypeName;
+      let assignedRoomCode: any = booking.assignedRoomCode || booking.roomTypeId;
+      if (!booking.assignedRoomNumber) {
+        try {
+          const vacantRooms = await this.getVacantRooms();
+          const matched = vacantRooms.find(r => r.rtcode === booking.roomTypeId || r.rtype === booking.roomTypeId);
+          if (matched) {
+            assignedRoomName = matched.rname;
+            assignedRoomCode = matched.id;
+          }
+        } catch (vacErr) {
+          console.warn('Direct vacant room matching note:', vacErr);
         }
-      } catch (vacErr) {
-        console.warn('Direct vacant room matching note:', vacErr);
       }
 
       // 2. Dates & format
