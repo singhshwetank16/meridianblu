@@ -453,7 +453,7 @@ END:VCALENDAR`;
       `Booking Ref: *${confirmedReservation.confirmationCode}*\n` +
       `Residence: *${confirmedReservation.room.name}*\n` +
       `Dates: *${confirmedReservation.checkInDate} to ${confirmedReservation.checkOutDate}* (${confirmedReservation.nights} Nights)\n` +
-      `Guests: *${confirmedReservation.adults} Adults*\n` +
+      `Guests: *${confirmedReservation.adults} Adults${confirmedReservation.children > 0 ? `, ${confirmedReservation.children} Child` : ''}*\n` +
       `Total: *₹${confirmedReservation.pricing.totalAmount.toLocaleString('en-IN')}*\n` +
       `Location: 1, Kempty Fall Road, Charleville, Mussoorie (Near Happy Valley & Buddha Point)\n` +
       `Front Desk: +91 96505 14794 | WhatsApp: +91 96505 14773\n\n` +
@@ -848,6 +848,100 @@ END:VCALENDAR`;
               <div className="lg:col-span-2 space-y-6">
                 <form onSubmit={handleConfirmReservation} className="space-y-6">
 
+                  {/* Stay Dates & Guests Card */}
+                  <div className="bg-white border border-slate-200/90 rounded-2xl p-6 sm:p-7 space-y-4 shadow-xl">
+                    <div className="pb-3 border-b border-slate-100 flex items-center justify-between">
+                      <div>
+                        <h3 className="font-serif-luxury text-2xl font-bold text-slate-900">
+                          Stay Dates & Guests
+                        </h3>
+                        <p className="text-xs text-slate-500 mt-1">
+                          Select your check-in, check-out dates and guest count.
+                        </p>
+                      </div>
+                      <div className="w-10 h-10 rounded-xl bg-blue-50 border border-blue-100 flex items-center justify-center text-[#005cd8] shrink-0">
+                        <Calendar className="w-5 h-5" />
+                      </div>
+                    </div>
+
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 pt-1">
+                      {/* Check-In Date */}
+                      <div>
+                        <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5">
+                          Check-In Date
+                        </label>
+                        <div className="relative">
+                          <Calendar className="w-4 h-4 text-[#005cd8] absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
+                          <input
+                            type="date"
+                            value={checkInDate}
+                            min={formatDate(today)}
+                            onChange={(e) => handleCheckInDateChange(e.target.value)}
+                            className="w-full bg-slate-50 border border-slate-200 rounded-xl pl-9 pr-3 py-3 text-sm font-semibold text-slate-800 focus:outline-none focus:border-[#005cd8] transition-colors cursor-pointer shadow-sm"
+                          />
+                        </div>
+                      </div>
+
+                      {/* Check-Out Date */}
+                      <div>
+                        <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5 flex items-center justify-between">
+                          <span>Check-Out Date</span>
+                          <span className="text-[11px] font-semibold text-[#005cd8] bg-blue-50 px-2 py-0.5 rounded border border-blue-200">
+                            {nights} {nights === 1 ? 'Night' : 'Nights'}
+                          </span>
+                        </label>
+                        <div className="relative">
+                          <Calendar className="w-4 h-4 text-[#005cd8] absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
+                          <input
+                            type="date"
+                            value={checkOutDate}
+                            min={checkInDate ? getNextDay(checkInDate) : formatDate(tomorrow)}
+                            onChange={(e) => handleCheckOutDateChange(e.target.value)}
+                            className="w-full bg-slate-50 border border-slate-200 rounded-xl pl-9 pr-3 py-3 text-sm font-semibold text-slate-800 focus:outline-none focus:border-[#005cd8] transition-colors cursor-pointer shadow-sm"
+                          />
+                        </div>
+                      </div>
+
+                      {/* Adults */}
+                      <div>
+                        <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5">
+                          Adults (12+ Yrs)
+                        </label>
+                        <div className="relative">
+                          <Users className="w-4 h-4 text-[#005cd8] absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
+                          <select
+                            value={adults}
+                            onChange={(e) => setAdults(parseInt(e.target.value, 10))}
+                            className="w-full bg-slate-50 border border-slate-200 rounded-xl pl-9 pr-3 py-3 text-sm font-semibold text-slate-800 focus:outline-none focus:border-[#005cd8] transition-colors cursor-pointer shadow-sm"
+                          >
+                            <option value={1}>1 Adult</option>
+                            <option value={2}>2 Adults</option>
+                            <option value={3}>3 Adults</option>
+                            <option value={4}>4 Adults</option>
+                            <option value={5}>5+ Adults</option>
+                          </select>
+                        </div>
+                      </div>
+
+                      {/* Children */}
+                      <div>
+                        <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5">
+                          Children (0-11 Yrs)
+                        </label>
+                        <select
+                          value={children}
+                          onChange={(e) => setChildren(parseInt(e.target.value, 10))}
+                          className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-3 text-sm font-semibold text-slate-800 focus:outline-none focus:border-[#005cd8] transition-colors cursor-pointer shadow-sm"
+                        >
+                          <option value={0}>0 Children</option>
+                          <option value={1}>1 Child</option>
+                          <option value={2}>2 Children</option>
+                          <option value={3}>3 Children</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+
                   {/* Physical Room Selection Dropdown Card */}
                   <div className="bg-white border border-slate-200/90 rounded-2xl p-6 sm:p-7 space-y-4 shadow-xl">
                     <div className="pb-3 border-b border-slate-100 flex items-center justify-between">
@@ -1098,7 +1192,9 @@ END:VCALENDAR`;
                     </div>
                     <div className="flex justify-between text-slate-600">
                       <span>Duration:</span>
-                      <strong className="text-slate-900 font-bold">{nights} {nights === 1 ? 'Night' : 'Nights'} ({adults} Adults)</strong>
+                      <strong className="text-slate-900 font-bold">
+                        {nights} {nights === 1 ? 'Night' : 'Nights'} ({adults} {adults === 1 ? 'Adult' : 'Adults'}{children > 0 ? `, ${children} ${children === 1 ? 'Child' : 'Children'}` : ''})
+                      </strong>
                     </div>
                     <div className="flex justify-between items-center pt-1 text-slate-700">
                       <span className="flex items-center gap-1 font-medium">
