@@ -185,59 +185,8 @@ export const BookingEngine: React.FC<BookingEngineProps> = ({
     }
   }, [roomsList]);
 
-  // 5. Filters & Search State
-  const [categoryFilter, setCategoryFilter] = useState<'all' | 'suite' | 'cottage' | 'deluxe' | 'tent'>('all');
-  const [sortBy, setSortBy] = useState<'default' | 'price-asc' | 'price-desc' | 'capacity'>('default');
-  const [searchQuery, setSearchQuery] = useState('');
-
-  // Filtered and sorted rooms strictly derived from API data
-  const displayedRooms = useMemo(() => {
-    let result = [...roomsList];
-
-    // Filter by category
-    if (categoryFilter === 'suite') {
-      result = result.filter(r => {
-        const lower = r.name.toLowerCase();
-        return lower.includes('suite') || lower.includes('suit') || lower.includes('couple');
-      });
-    } else if (categoryFilter === 'cottage') {
-      result = result.filter(r => {
-        const lower = r.name.toLowerCase();
-        return lower.includes('cottage') || lower.includes('hut') || lower.includes('ground');
-      });
-    } else if (categoryFilter === 'deluxe') {
-      result = result.filter(r => {
-        const lower = r.name.toLowerCase();
-        return lower.includes('deluxe');
-      });
-    } else if (categoryFilter === 'tent') {
-      result = result.filter(r => {
-        const lower = r.name.toLowerCase();
-        return lower.includes('tent');
-      });
-    }
-
-    // Filter by search query
-    if (searchQuery.trim()) {
-      const q = searchQuery.toLowerCase().trim();
-      result = result.filter(r =>
-        r.name.toLowerCase().includes(q) ||
-        r.tagline.toLowerCase().includes(q) ||
-        r.view.toLowerCase().includes(q)
-      );
-    }
-
-    // Sorting
-    if (sortBy === 'price-asc') {
-      result.sort((a, b) => a.pricePerNight - b.pricePerNight);
-    } else if (sortBy === 'price-desc') {
-      result.sort((a, b) => b.pricePerNight - a.pricePerNight);
-    } else if (sortBy === 'capacity') {
-      result.sort((a, b) => (b.capacity.adults || 2) - (a.capacity.adults || 2));
-    }
-
-    return result;
-  }, [roomsList, categoryFilter, searchQuery, sortBy]);
+  // 5. Rooms strictly derived from API data
+  const displayedRooms = roomsList;
 
   // 6. Photo slider & lightbox state
   const [roomImageIndex, setRoomImageIndex] = useState<Record<string, number>>({});
@@ -603,55 +552,8 @@ END:VCALENDAR`;
                     <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse" />
                     <span className="text-xs font-bold text-slate-800">Live Inventory Online</span>
                   </div>
-                  <span className="text-xs text-[#005cd8] font-semibold">10 Room Types</span>
+                  <span className="text-xs text-[#005cd8] font-semibold">{roomsList.length} Room Types</span>
                 </div>
-              </div>
-            </div>
-
-            {/* Filter Pills, Search & Sort */}
-            <div className="flex flex-col md:flex-row items-stretch md:items-center justify-between gap-4">
-              {/* Category Pills */}
-              <div className="flex items-center gap-1.5 overflow-x-auto pb-1 sm:pb-0 scrollbar-none">
-                {[
-                  { id: 'all', label: 'All Residences', count: roomsList.length },
-                  { id: 'suite', label: 'Suites & Couple', count: 3 },
-                  { id: 'cottage', label: 'Cottages & Huts', count: 3 },
-                  { id: 'deluxe', label: 'Deluxe Rooms', count: 3 },
-                  { id: 'tent', label: 'Glamping Safari', count: 1 },
-                ].map((tab) => (
-                  <button
-                    key={tab.id}
-                    onClick={() => setCategoryFilter(tab.id as any)}
-                    className={`px-4 py-2 rounded-xl text-xs font-semibold transition-all whitespace-nowrap cursor-pointer ${categoryFilter === tab.id
-                      ? 'bg-[#005cd8] text-white shadow-md'
-                      : 'bg-white text-slate-600 hover:text-slate-900 hover:bg-slate-50 border border-slate-200 shadow-sm'
-                      }`}
-                  >
-                    {tab.label} ({tab.count})
-                  </button>
-                ))}
-              </div>
-
-              {/* Sort & Search */}
-              <div className="flex items-center gap-2.5">
-                <input
-                  type="text"
-                  placeholder="Filter by name..."
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  className="bg-white border border-slate-200 rounded-xl px-3 py-1.5 text-xs text-slate-800 placeholder-slate-400 focus:outline-none focus:border-[#005cd8] shadow-sm w-36 sm:w-44"
-                />
-
-                <select
-                  value={sortBy}
-                  onChange={(e) => setSortBy(e.target.value as any)}
-                  className="bg-white border border-slate-200 rounded-xl px-3 py-1.5 text-xs text-slate-700 focus:outline-none focus:border-[#005cd8] shadow-sm cursor-pointer"
-                >
-                  <option value="default">Sort: Recommended</option>
-                  <option value="price-asc">Price: Low to High</option>
-                  <option value="price-desc">Price: High to Low</option>
-                  <option value="capacity">Max Guests</option>
-                </select>
               </div>
             </div>
 
@@ -879,14 +781,8 @@ END:VCALENDAR`;
             {displayedRooms.length === 0 && (
               <div className="p-12 text-center rounded-2xl bg-white border border-slate-200 shadow-md space-y-3">
                 <AlertCircle className="w-8 h-8 text-[#005cd8] mx-auto" />
-                <h3 className="font-serif-luxury text-xl font-bold text-slate-800">No Accommodations Match Your Filter</h3>
-                <p className="text-xs text-slate-500">Try selecting "All Residences" or clearing your search keywords.</p>
-                <button
-                  onClick={() => { setCategoryFilter('all'); setSearchQuery(''); }}
-                  className="px-4 py-2 bg-[#005cd8] text-white rounded-xl text-xs font-semibold cursor-pointer shadow"
-                >
-                  Reset Filters
-                </button>
+                <h3 className="font-serif-luxury text-xl font-bold text-slate-800">No Accommodations Available</h3>
+                <p className="text-xs text-slate-500">Please adjust your check-in dates or contact our reservations desk directly.</p>
               </div>
             )}
           </div>
