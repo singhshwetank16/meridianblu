@@ -777,38 +777,6 @@ END:VCALENDAR`;
                             </li>
                           ))}
                         </ul>
-
-                        {/* Physical Room Numbers in this Category */}
-                        {(() => {
-                          const rCode = parseInt(String(room.apiId || room.id), 10);
-                          const thisRooms = physicalRooms.filter(pr => pr.rtcode === rCode);
-                          const vacantCount = thisRooms.filter(pr => pr.status === 0).length;
-                          const bookedCount = thisRooms.filter(pr => pr.status !== 0).length;
-
-                          if (thisRooms.length === 0) return null;
-
-                          return (
-                            <div className="pt-3 border-t border-slate-100 flex flex-wrap items-center justify-between gap-2 text-xs">
-                              <div className="flex items-center gap-1.5 text-slate-600">
-                                <Key className="w-3.5 h-3.5 text-[#005cd8] shrink-0" />
-                                <span className="font-semibold text-slate-700">Room Numbers:</span>
-                                <span className="font-mono text-slate-900 font-bold">
-                                  {thisRooms.map(r => r.rname).join(', ')}
-                                </span>
-                              </div>
-                              <div className="flex items-center gap-1.5 text-[11px] font-semibold">
-                                <span className="text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">
-                                  {vacantCount} Available
-                                </span>
-                                {bookedCount > 0 && (
-                                  <span className="text-rose-600 bg-rose-50 px-2 py-0.5 rounded border border-rose-200">
-                                    {bookedCount} Booked
-                                  </span>
-                                )}
-                              </div>
-                            </div>
-                          );
-                        })()}
                       </div>
                     </div>
 
@@ -955,60 +923,6 @@ END:VCALENDAR`;
                               );
                             })}
                           </select>
-                        </div>
-                      </div>
-
-                      {/* Visual Room Chips Grid */}
-                      <div>
-                        <div className="flex items-center justify-between text-xs text-slate-500 mb-2">
-                          <span className="font-semibold text-slate-700">Quick Select by Room Number:</span>
-                          <div className="flex items-center gap-3 text-[11px]">
-                            <span className="flex items-center gap-1 text-emerald-600 font-medium">
-                              <span className="w-2 h-2 rounded-full bg-emerald-500" /> Selectable
-                            </span>
-                            <span className="flex items-center gap-1 text-rose-500 font-medium">
-                              <span className="w-2 h-2 rounded-full bg-rose-500" /> Booked (Blocked)
-                            </span>
-                          </div>
-                        </div>
-
-                        <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-7 gap-2">
-                          {categoryPhysicalRooms.map((room) => {
-                            const isBooked = room.status !== 0;
-                            const isSelected = selectedRoomNumber === room.rname;
-
-                            return (
-                              <button
-                                type="button"
-                                key={room.id}
-                                disabled={isBooked}
-                                onClick={() => setSelectedRoomNumber(room.rname)}
-                                className={`p-2.5 rounded-xl border text-center transition-all ${
-                                  isBooked
-                                    ? "bg-slate-100 border-slate-200 text-slate-400 cursor-not-allowed opacity-70"
-                                    : isSelected
-                                    ? "bg-[#005cd8] border-[#005cd8] text-white shadow-md font-bold ring-2 ring-blue-300 scale-[1.02]"
-                                    : "bg-white hover:bg-sky-50 border-slate-200 text-slate-800 hover:border-sky-300 font-medium cursor-pointer"
-                                }`}
-                              >
-                                <div className="text-xs font-bold flex items-center justify-center gap-1">
-                                  {isBooked ? (
-                                    <Lock className="w-3 h-3 text-rose-400" />
-                                  ) : isSelected ? (
-                                    <Check className="w-3 h-3 text-white" />
-                                  ) : (
-                                    <span className="w-2 h-2 rounded-full bg-emerald-500" />
-                                  )}
-                                  <span>Room {room.rname}</span>
-                                </div>
-                                <div className={`text-[10px] mt-0.5 font-medium ${
-                                  isSelected ? "text-sky-100 font-bold" : isBooked ? "text-rose-500 font-semibold" : "text-emerald-600 font-semibold"
-                                }`}>
-                                  {isBooked ? "Booked" : isSelected ? "Selected" : "Available"}
-                                </div>
-                              </button>
-                            );
-                          })}
                         </div>
                       </div>
 
