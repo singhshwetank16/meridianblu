@@ -6,3 +6,4 @@ Allow: /
 
 # Canonical XML Sitemap
 Sitemap: https://singhshwetank16.github.io/meridianblu/sitemap.xml
+
