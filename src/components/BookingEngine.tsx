@@ -30,7 +30,8 @@ import {
   Mountain,
   Database,
   Key,
-  BedDouble
+  BedDouble,
+  Baby
 } from 'lucide-react';
 import { ROOMS_DATA, HOTEL_INFO, SHOP_ID, INITIAL_INVENTORY_DB, fetchLiveRoomTypes, RAW_PHYSICAL_ROOMS_SHOP_165, fetchLivePhysicalRooms } from '../data/hotelData';
 import { RoomTier, ConfirmedReservation, RoomInventoryRecord, PhysicalRoomInfo } from '../types';
@@ -864,20 +865,20 @@ END:VCALENDAR`;
                       </div>
                     </div>
 
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 pt-1">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5 pt-1">
                       {/* Check-In Date */}
                       <div>
                         <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5">
                           Check-In Date
                         </label>
                         <div className="relative">
-                          <Calendar className="w-4 h-4 text-[#005cd8] absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
+                          <Calendar className="w-4 h-4 text-[#005cd8] absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
                           <input
                             type="date"
                             value={checkInDate}
                             min={formatDate(today)}
                             onChange={(e) => handleCheckInDateChange(e.target.value)}
-                            className="w-full bg-slate-50 border border-slate-200 rounded-xl pl-9 pr-3 py-3 text-sm font-semibold text-slate-800 focus:outline-none focus:border-[#005cd8] transition-colors cursor-pointer shadow-sm"
+                            className="w-full bg-slate-50 border border-slate-200 rounded-xl pl-10 pr-3.5 py-3 text-sm font-semibold text-slate-800 focus:outline-none focus:border-[#005cd8] focus:bg-white transition-colors cursor-pointer shadow-sm"
                           />
                         </div>
                       </div>
@@ -886,18 +887,18 @@ END:VCALENDAR`;
                       <div>
                         <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5 flex items-center justify-between">
                           <span>Check-Out Date</span>
-                          <span className="text-[11px] font-semibold text-[#005cd8] bg-blue-50 px-2 py-0.5 rounded border border-blue-200">
+                          <span className="text-[11px] font-semibold text-[#005cd8] bg-blue-50 px-2.5 py-0.5 rounded-full border border-blue-200">
                             {nights} {nights === 1 ? 'Night' : 'Nights'}
                           </span>
                         </label>
                         <div className="relative">
-                          <Calendar className="w-4 h-4 text-[#005cd8] absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
+                          <Calendar className="w-4 h-4 text-[#005cd8] absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
                           <input
                             type="date"
                             value={checkOutDate}
                             min={checkInDate ? getNextDay(checkInDate) : formatDate(tomorrow)}
                             onChange={(e) => handleCheckOutDateChange(e.target.value)}
-                            className="w-full bg-slate-50 border border-slate-200 rounded-xl pl-9 pr-3 py-3 text-sm font-semibold text-slate-800 focus:outline-none focus:border-[#005cd8] transition-colors cursor-pointer shadow-sm"
+                            className="w-full bg-slate-50 border border-slate-200 rounded-xl pl-10 pr-3.5 py-3 text-sm font-semibold text-slate-800 focus:outline-none focus:border-[#005cd8] focus:bg-white transition-colors cursor-pointer shadow-sm"
                           />
                         </div>
                       </div>
@@ -908,11 +909,11 @@ END:VCALENDAR`;
                           Adults (12+ Yrs)
                         </label>
                         <div className="relative">
-                          <Users className="w-4 h-4 text-[#005cd8] absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
+                          <Users className="w-4 h-4 text-[#005cd8] absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
                           <select
                             value={adults}
                             onChange={(e) => setAdults(parseInt(e.target.value, 10))}
-                            className="w-full bg-slate-50 border border-slate-200 rounded-xl pl-9 pr-3 py-3 text-sm font-semibold text-slate-800 focus:outline-none focus:border-[#005cd8] transition-colors cursor-pointer shadow-sm"
+                            className="w-full bg-slate-50 border border-slate-200 rounded-xl pl-10 pr-3.5 py-3 text-sm font-semibold text-slate-800 focus:outline-none focus:border-[#005cd8] focus:bg-white transition-colors cursor-pointer shadow-sm"
                           >
                             <option value={1}>1 Adult</option>
                             <option value={2}>2 Adults</option>
@@ -928,16 +929,19 @@ END:VCALENDAR`;
                         <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5">
                           Children (0-11 Yrs)
                         </label>
-                        <select
-                          value={children}
-                          onChange={(e) => setChildren(parseInt(e.target.value, 10))}
-                          className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-3 text-sm font-semibold text-slate-800 focus:outline-none focus:border-[#005cd8] transition-colors cursor-pointer shadow-sm"
-                        >
-                          <option value={0}>0 Children</option>
-                          <option value={1}>1 Child</option>
-                          <option value={2}>2 Children</option>
-                          <option value={3}>3 Children</option>
-                        </select>
+                        <div className="relative">
+                          <Baby className="w-4 h-4 text-[#005cd8] absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
+                          <select
+                            value={children}
+                            onChange={(e) => setChildren(parseInt(e.target.value, 10))}
+                            className="w-full bg-slate-50 border border-slate-200 rounded-xl pl-10 pr-3.5 py-3 text-sm font-semibold text-slate-800 focus:outline-none focus:border-[#005cd8] focus:bg-white transition-colors cursor-pointer shadow-sm"
+                          >
+                            <option value={0}>0 Children</option>
+                            <option value={1}>1 Child</option>
+                            <option value={2}>2 Children</option>
+                            <option value={3}>3 Children</option>
+                          </select>
+                        </div>
                       </div>
                     </div>
                   </div>
