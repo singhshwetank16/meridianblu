@@ -26,7 +26,7 @@ if (process.env.GEMINI_API_KEY) {
 }
 
 export const PMS_BASE_URL = 'https://hotelserver.billhost.co.in';
-export const DEFAULT_SHOP_ID = 60;
+export const DEFAULT_SHOP_ID = 165;
 
 // Type definitions
 interface ApiRoomType {
@@ -63,18 +63,12 @@ interface PhysicalRoom {
   mealplanname?: string;
 }
 
-// Fallback room types if PMS is temporarily unreachable
+// Fallback room types if PMS is temporarily unreachable (Shop ID: 165 Meridian Blu)
 const FALLBACK_ROOM_TYPES: ApiRoomType[] = [
-  { id: 1487, rtname: "maharaja suit", shopid: DEFAULT_SHOP_ID, narration: "60maharaja suit", chid: "", totalroom: 1, occupancy: 2, roomtypedescription: "4004", rent: 0.0, rentsingle: 0.0, rentdouble: 2200.0 },
-  { id: 1266, rtname: "Couple with Nonveg Food", shopid: DEFAULT_SHOP_ID, narration: "60Couple with Nonveg Food", chid: "", totalroom: 2, occupancy: 2, roomtypedescription: "", rent: 0.0, rentsingle: 8000.0, rentdouble: 0.0 },
-  { id: 1265, rtname: "Couple with Veg Food", shopid: DEFAULT_SHOP_ID, narration: "60Couple with Veg Food", chid: "", totalroom: 2, occupancy: 2, roomtypedescription: "", rent: 0.0, rentsingle: 6000.0, rentdouble: 0.0 },
-  { id: 1130, rtname: "WOODEN COTTAGES", shopid: DEFAULT_SHOP_ID, narration: "60WOODEN COTTAGES", chid: "", totalroom: 10, occupancy: 2, roomtypedescription: "", rent: 4000.0, rentsingle: 0.0, rentdouble: 0.0 },
-  { id: 553, rtname: "TENT COTTAGES", shopid: DEFAULT_SHOP_ID, narration: "60TENT COTTAGES", chid: null, totalroom: 15, occupancy: 3, roomtypedescription: "roomtype-TENT COTTAGES-cp", rent: 3000.0, rentsingle: 0.0, rentdouble: 0.0 },
-  { id: 1131, rtname: "SUPER DELUXE", shopid: DEFAULT_SHOP_ID, narration: "60SUPER DELUXE", chid: "", totalroom: 15, occupancy: 3, roomtypedescription: null, rent: 3500.0, rentsingle: 0.0, rentdouble: 0.0 },
-  { id: 1268, rtname: "OPEN GROUND ROOMS", shopid: DEFAULT_SHOP_ID, narration: "60OPEN GROUND ROOMS", chid: "", totalroom: 10, occupancy: 2, roomtypedescription: "", rent: 0.0, rentsingle: 4000.0, rentdouble: 0.0 },
-  { id: 1132, rtname: "CEMI DELUXE", shopid: DEFAULT_SHOP_ID, narration: "60CEMI DELUXE", chid: "", totalroom: 15, occupancy: 3, roomtypedescription: null, rent: 2800.0, rentsingle: 0.0, rentdouble: 0.0 },
-  { id: 1145, rtname: "DELUXE", shopid: DEFAULT_SHOP_ID, narration: "60DELUXE", chid: "", totalroom: 10, occupancy: 2, roomtypedescription: "", rent: 2400.0, rentsingle: 0.0, rentdouble: 0.0 },
-  { id: 1284, rtname: "ECO HUTS", shopid: DEFAULT_SHOP_ID, narration: "60ECO HUTS", chid: "", totalroom: 5, occupancy: 2, roomtypedescription: "", rent: 0.0, rentsingle: 2000.0, rentdouble: 0.0 }
+  { id: 1099, rtname: "Valley View Rooms", shopid: DEFAULT_SHOP_ID, narration: "165Valley View Rooms", chid: "valley-view-rooms", totalroom: 7, occupancy: 2, roomtypedescription: "valley-view-rooms-s-ep, valley-view-rooms-d-ep", rent: 0.0, rentsingle: 2500.0, rentdouble: 3000.0 },
+  { id: 1100, rtname: "Himalayan View Rooms", shopid: DEFAULT_SHOP_ID, narration: "165Himalayan View Rooms", chid: "himalayan-view-rooms", totalroom: 17, occupancy: 2, roomtypedescription: "himalayan-view-rooms-s-ep, himalayan-view-rooms-d-ep", rent: 0.0, rentsingle: 2800.0, rentdouble: 3300.0 },
+  { id: 1101, rtname: "Summit Rooms", shopid: DEFAULT_SHOP_ID, narration: "165Summit Rooms", chid: "summit-rooms", totalroom: 6, occupancy: 2, roomtypedescription: "summit-rooms-s-ep, summit-rooms-d-ep", rent: 0.0, rentsingle: 3000.0, rentdouble: 3500.0 },
+  { id: 1102, rtname: "Skyline Rooms", shopid: DEFAULT_SHOP_ID, narration: "165Skyline Rooms", chid: "skyline-rooms", totalroom: 3, occupancy: 2, roomtypedescription: "skyline-rooms-s-ep, skyline-rooms-d-ep", rent: 0.0, rentsingle: 3500.0, rentdouble: 4000.0 }
 ];
 
 // In-memory cache for PMS calls with TTL
@@ -119,9 +113,9 @@ app.get(['/api/shopmas/:shopId?', '/api/pms/hotel-details'], async (req, res) =>
 });
 
 // ==========================================
-// 2. ROOM TYPES & RATES: GET /60/rtmas
+// 2. ROOM TYPES & RATES: GET /165/rtmas
 // ==========================================
-app.get(['/60/rtmas', '/api/room-types', '/api/pms/room-types'], async (req, res) => {
+app.get(['/165/rtmas', '/60/rtmas', '/api/room-types', '/api/pms/room-types'], async (req, res) => {
   const shopId = req.query.shopId || DEFAULT_SHOP_ID;
   const url = `${PMS_BASE_URL}/${shopId}/rtmas`;
   const data = await fetchWithCache(`rtmas_${shopId}`, url, FALLBACK_ROOM_TYPES);
@@ -129,9 +123,9 @@ app.get(['/60/rtmas', '/api/room-types', '/api/pms/room-types'], async (req, res
 });
 
 // ==========================================
-// 3. ALL PHYSICAL ROOMS: GET /60/room
+// 3. ALL PHYSICAL ROOMS: GET /165/room
 // ==========================================
-app.get(['/60/room', '/api/rooms', '/api/pms/rooms'], async (req, res) => {
+app.get(['/165/room', '/60/room', '/api/rooms', '/api/pms/rooms'], async (req, res) => {
   const shopId = req.query.shopId || DEFAULT_SHOP_ID;
   const url = `${PMS_BASE_URL}/${shopId}/room`;
   const data = await fetchWithCache(`rooms_${shopId}`, url, []);
@@ -164,9 +158,9 @@ app.get(['/api/ota-inventory', '/api/pms/ota-inventory'], async (req, res) => {
 });
 
 // ==========================================
-// 5. VACANT ROOMS: GET /60/room/status/0
+// 5. VACANT ROOMS: GET /165/room/status/0
 // ==========================================
-app.get(['/60/room/status/:status', '/api/vacant-rooms', '/api/pms/vacant-rooms'], async (req, res) => {
+app.get(['/165/room/status/:status', '/60/room/status/:status', '/api/vacant-rooms', '/api/pms/vacant-rooms'], async (req, res) => {
   const shopId = req.query.shopId || DEFAULT_SHOP_ID;
   const status = req.params.status ?? '0';
   const url = `${PMS_BASE_URL}/${shopId}/room/status/${status}`;
@@ -175,9 +169,9 @@ app.get(['/60/room/status/:status', '/api/vacant-rooms', '/api/pms/vacant-rooms'
 });
 
 // ==========================================
-// 6. RESERVATIONS BY DATE: GET /60/reservationviewFilter/:startDate/:endDate/0
+// 6. RESERVATIONS BY DATE: GET /165/reservationviewFilter/:startDate/:endDate/0
 // ==========================================
-app.get(['/60/reservationviewFilter/:startDate/:endDate/:status?', '/api/pms/reservations-filter'], async (req, res) => {
+app.get(['/165/reservationviewFilter/:startDate/:endDate/:status?', '/60/reservationviewFilter/:startDate/:endDate/:status?', '/api/pms/reservations-filter'], async (req, res) => {
   const shopId = req.query.shopId || DEFAULT_SHOP_ID;
   const startDate = req.params.startDate || (req.query.startDate as string);
   const endDate = req.params.endDate || (req.query.endDate as string);
@@ -201,9 +195,9 @@ app.get(['/60/reservationviewFilter/:startDate/:endDate/:status?', '/api/pms/res
 });
 
 // ==========================================
-// 7. ALL RESERVATIONS: GET /60/reservation
+// 7. ALL RESERVATIONS: GET /165/reservation
 // ==========================================
-app.get(['/60/reservation', '/api/reservations/all', '/api/pms/reservations'], async (req, res) => {
+app.get(['/165/reservation', '/60/reservation', '/api/reservations/all', '/api/pms/reservations'], async (req, res) => {
   const shopId = req.query.shopId || DEFAULT_SHOP_ID;
   const url = `${PMS_BASE_URL}/${shopId}/reservation`;
   const data = await fetchWithCache(`all_res_${shopId}`, url, [], 20 * 1000); // 20s cache
@@ -238,7 +232,7 @@ app.get('/api/pms/lookup', async (req, res) => {
 // DYNAMIC LIVE INVENTORY ENGINE (Combining rtmas + reservationviewFilter)
 // ==========================================
 app.get('/api/inventory', async (req, res) => {
-  const shopId = DEFAULT_SHOP_ID; // Hardcoded to 60
+  const shopId = DEFAULT_SHOP_ID; // Hardcoded to 165
   const checkIn = req.query.checkIn as string;
   const checkOut = req.query.checkOut as string;
 
@@ -440,7 +434,7 @@ app.post(['/reservationBulk', '/api/pms/booking', '/api/reservations'], async (r
 
     console.log(`[PMS] Submitting reservation to ${PMS_BASE_URL}/reservationBulk...`);
 
-    // 4. Call PMS Endpoint: POST https://hotelserver.billhost.co.in/60/reservationBulk (with hardcoded shopId: 60)
+    // 4. Call PMS Endpoint: POST https://hotelserver.billhost.co.in/165/reservationBulk (with hardcoded shopId: 165)
     let pmsReservationNo: any = null;
     try {
       console.log(`[PMS] Submitting reservation to ${PMS_BASE_URL}/${shopId}/reservationBulk...`);
@@ -599,9 +593,9 @@ app.get('/api/pms/status', async (_req, res) => {
   const checks: Record<string, boolean> = {};
   try {
     const [shopRes, rtRes, roomRes] = await Promise.all([
-      fetch(`${PMS_BASE_URL}/api/shopmas/60`).then(r => r.ok).catch(() => false),
-      fetch(`${PMS_BASE_URL}/60/rtmas`).then(r => r.ok).catch(() => false),
-      fetch(`${PMS_BASE_URL}/60/room`).then(r => r.ok).catch(() => false)
+      fetch(`${PMS_BASE_URL}/api/shopmas/${DEFAULT_SHOP_ID}`).then(r => r.ok).catch(() => false),
+      fetch(`${PMS_BASE_URL}/${DEFAULT_SHOP_ID}/rtmas`).then(r => r.ok).catch(() => false),
+      fetch(`${PMS_BASE_URL}/${DEFAULT_SHOP_ID}/room`).then(r => r.ok).catch(() => false)
     ]);
     checks['1_hotel_details'] = shopRes;
     checks['2_room_types'] = rtRes;
@@ -633,7 +627,7 @@ const KNOWLEDGE_RESPONSES: Record<string, string> = {
   winterline: "The Mussoorie Winterline is a rare atmospheric phenomenon observable from the southern face of Mussoorie and parts of the Swiss Alps between mid-October and February. At twilight, atmospheric refraction generates an unbroken horizontal band of crimson, amber, and violet over the Doon Valley. The Meridian Blu Observatory Terrace provides an unobstructed vista of this phenomenon at approximately 5:35 PM daily.",
   hike: "The following royal trails are curated by our estate naturalists:\n1. George Everest Peak and Observatory (3.2 kilometers, elevation 6,750 feet): The historic 1832 station of the Surveyor-General of India with 360-degree views of the Garhwal Himalaya.\n2. Benog Wildlife Sanctuary Ridge (4.8 kilometers, elevation 7,150 feet): A protected forest of deodar and Himalayan fir, home to the rare Monal pheasant.\n3. Landour Colonial Heritage Circuit (3.2 kilometers): A paved historical promenade passing St. Paul's Church and the historic cantonment.\n4. Camel's Back Vista Route (3.0 kilometers): An unhurried sunset walk along natural stone formations.",
   dining: "Culinary provisions at Meridian Blu comprise:\n- Cedar & Spice: Glasshouse conservatory presenting classical Continental and royal Garhwali preparations crafted from high-altitude organic produce.\n- The Winterline Observatory Lounge: Rare single malts, botanical infusions, and artisanal Garhwal cheese selections.\n- George Everest View Pavilion: Traditional British High Tea served with warm Landour scones, clotted mountain cream, and seasonal wild berry preserves.",
-  booking: "Reservations may be finalized directly through our Online Booking Engine. All bookings are registered directly in our Hotel PMS System (Shop #60) with guaranteed best direct tariffs and live availability.",
+  booking: "Reservations may be finalized directly through our Online Booking Engine. All bookings are registered directly in our Hotel PMS System (Shop #165) with guaranteed best direct tariffs and live availability.",
   transport: "Meridian Blu is located at 7,120 feet elevation on Cloud Crest Ridge, Mussoorie:\n- From Dehradun Jolly Grant Airport: Approximately 60 kilometers (90 to 110 minutes via private mountain highway).\n- From Dehradun Railway Terminal: Approximately 35 kilometers (75 minutes).\n- Private chauffeur service in luxury estate vehicles is available upon request with the Head Concierge.",
   spa: "The Ananda Himalayan Spa offers temperature-regulated cedar plunge pools, restorative Abhyanga therapies with wild Himalayan cedarwood oils, and private pine steam suites. Operating hours: 08:00 to 21:00 daily."
 };
@@ -672,7 +666,7 @@ Guidelines:
   * CEMI DELUXE (ID: 1132): ₹2,800/night (Total: 15 units)
   * DELUXE (ID: 1145): ₹2,400/night (Total: 10 units)
   * ECO HUTS (ID: 1284): ₹2,000/night (Total: 5 units)
-- PMS Integration: All room availability and reservations are synchronized live with Hotel PMS Shop #60.
+- PMS Integration: All room availability and reservations are synchronized live with Hotel PMS Shop #165.
 - Facilities: Heated cedar plunge pool, private hearths, conservatory dining at Cedar & Spice, George Everest High Tea pavilion, Ayurvedic therapies.
 - Mussoorie Highlights: Mussoorie Winterline sunset (October to February), Sir George Everest Peak trek, Benog Wildlife Sanctuary, Landour colonial architecture, Camel's Back promenade.
 - Format responses cleanly with brief paragraphs and bullet points. Never use slang or informal phrases.`;

@@ -288,13 +288,11 @@ export const HomePage: React.FC<HomePageProps> = ({
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-transparent to-transparent opacity-60" />
                 
-                <div className={`absolute top-4 right-4 px-3 py-1 rounded-full backdrop-blur-sm border text-xs font-bold shadow ${
-                  room.inventory?.isSoldOut
-                    ? 'bg-rose-50/95 border-rose-200 text-rose-600'
-                    : 'bg-white/95 border-white text-[#005cd8]'
-                }`}>
-                  {room.inventory?.statusText || (room.inventory?.isSoldOut ? 'Sold Out in PMS' : 'Available in PMS')}
-                </div>
+                {room.inventory?.isSoldOut && (
+                  <div className="absolute top-4 right-4 px-3 py-1 rounded-full backdrop-blur-sm border text-xs font-bold shadow bg-rose-50/95 border-rose-200 text-rose-600">
+                    Sold Out
+                  </div>
+                )}
 
                 <div className="absolute bottom-3 left-4 right-4">
                   <span className="text-[11px] font-bold text-white tracking-wider uppercase drop-shadow">

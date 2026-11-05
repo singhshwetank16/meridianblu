@@ -1,7 +1,7 @@
 import { getAssetUrl } from '../utils/assetUrl';
 import { RoomTier, LuxuryAddon, TrailAttraction, GalleryItem, GuestStory, VirtualTourScene, ApiRoomType } from '../types';
 
-export const SHOP_ID = 60;
+export const SHOP_ID = 165;
 export const API_ROOM_TYPES_URL = `https://hotelserver.billhost.co.in/${SHOP_ID}/rtmas`;
 
 export const HOTEL_INFO = {
@@ -23,10 +23,10 @@ export const HOTEL_INFO = {
   checkOutTime: "11:00",
   currencySymbol: "₹",
   softwareSystem: {
-    shopId: 60,
+    shopId: 165,
     status: "Active & Synced with Hotel PMS",
     engineVersion: "BillHost PMS 4.2",
-    apiEndpoint: "https://hotelserver.billhost.co.in/60/rtmas"
+    apiEndpoint: "https://hotelserver.billhost.co.in/165/rtmas"
   },
   weather: {
     tempC: 17,
@@ -37,7 +37,7 @@ export const HOTEL_INFO = {
   }
 };
 
-// Preset styling and asset dictionary for API room types by name/id using real property images
+// Preset styling and asset dictionary for API room types by name/id using real property images (Shop ID: 165)
 const ROOM_METADATA_CONFIG: Record<string, {
   name: string;
   tagline: string;
@@ -53,270 +53,151 @@ const ROOM_METADATA_CONFIG: Record<string, {
   amenities: string[];
   popular?: boolean;
 }> = {
-  "1487": {
-    name: "maharaja suit",
-    tagline: "Regal palatial residence with handcrafted teak & panoramic valley vista",
-    defaultPrice: 2200,
-    sizeSqFt: 850,
-    bed: "Grand Four-Poster Maharaja King Bed",
-    view: "Direct Himalayan Snow Peak Ridge & Valley Panorama",
+  "1099": {
+    name: "Valley View Rooms",
+    tagline: "Serene balcony retreats overlooking lush pine forests and misty Mussoorie valley folds",
+    defaultPrice: 3000,
+    sizeSqFt: 420,
+    bed: "Plush King Size Bed",
+    view: "Verdant Mussoorie Valley & Pine Hillside",
+    imageUrl: getAssetUrl("/images/Valley View Balcony Room/Valley View Balcony Room.avif"),
+    galleryImages: [
+      getAssetUrl("/images/Valley View Balcony Room/Valley View Balcony Room.avif"),
+      getAssetUrl("/images/Valley View Balcony Room/Valley View Balcony Room (1).avif"),
+      getAssetUrl("/images/Valley View Balcony Room/Valley View Balcony Room (8).avif"),
+      getAssetUrl("/images/Valley View Balcony Room/Valley View Balcony Room 9.avif"),
+      getAssetUrl("/images/Valley View Balcony Room/Valley View Balcony Room bath room.avif")
+    ],
+    backupGradient: "from-emerald-950 via-stone-900 to-stone-950",
+    description: "Immerse yourself in gentle valley breezes and panoramic hillside views. Featuring a private viewing balcony, handcrafted timber accents, premium high-thread linens, and luxurious modern en-suite amenities.",
+    features: [
+      "Private scenic balcony overlooking the Mussoorie valley",
+      "Plush king-size mattress with high-thread Egyptian cotton linens",
+      "Large picture windows capturing natural mountain daylight",
+      "En-suite designer bathroom with high-pressure rain shower",
+      "Artisanal Pahadi herbal tea & coffee maker station"
+    ],
+    amenities: ["Private Balcony", "High-Speed Starlink WiFi", "HD Smart TV", "Room Service", "Daily Housekeeping", "Climate Heating"],
+    popular: false
+  },
+  "1100": {
+    name: "Himalayan View Rooms",
+    tagline: "Unobstructed vistas of the snow-clad Garhwal Himalayan range and Bandarpunch peaks",
+    defaultPrice: 3300,
+    sizeSqFt: 460,
+    bed: "Grand Himalayan King Bed",
+    view: "Snow-Capped Garhwal Himalayan Ridge",
+    imageUrl: getAssetUrl("/images/Himalayan View Balcony Room/Himalayan View Balcony Room.avif"),
+    galleryImages: [
+      getAssetUrl("/images/Himalayan View Balcony Room/Himalayan View Balcony Room.avif"),
+      getAssetUrl("/images/Himalayan View Balcony Room/Himalayan View Balcony Room 2.avif"),
+      getAssetUrl("/images/Himalayan View Balcony Room/Himalayan View Balcony Room balcony.avif"),
+      getAssetUrl("/images/Himalayan View Balcony Room/Himalayan View Balcony Room bathroom.avif"),
+      getAssetUrl("/images/Himalayan View Balcony Room/Himalayan View Balcony Room bathroom2.avif")
+    ],
+    backupGradient: "from-sky-950 via-slate-900 to-blue-950",
+    description: "Perched gracefully to provide front-row vistas of the eternal snow peaks of Garhwal. Wake up to golden sunrise rays reflecting off the Himalayan horizon from your private furnished balcony.",
+    features: [
+      "Sweeping panoramic balcony facing Bandarpunch snow peaks",
+      "Generous sitting lounge with bespoke mountain-view daybed",
+      "Premium acoustic double-glazed windows for tranquil quietude",
+      "Spa-inspired Italian marble bathroom with rain shower",
+      "Complimentary mountain high tea service"
+    ],
+    amenities: ["Panoramic Mountain Balcony", "Smart 4K TV", "High-Speed WiFi", "24/7 Hot Water", "In-Room Dining", "Tea/Coffee Bar"],
+    popular: true
+  },
+  "1101": {
+    name: "Summit Rooms",
+    tagline: "Elevated luxury suites positioned high on Cloud Crest with dramatic 180° vistas",
+    defaultPrice: 3500,
+    sizeSqFt: 500,
+    bed: "Signature Summit King Bed",
+    view: "180° Himalayan Peaks & Cloud Sea",
     imageUrl: getAssetUrl("/images/Summit Balcony Room/Summit Balcony Room.avif"),
     galleryImages: [
       getAssetUrl("/images/Summit Balcony Room/Summit Balcony Room.avif"),
       getAssetUrl("/images/Summit Balcony Room/Summit Balcony Room (1).avif"),
+      getAssetUrl("/images/Summit Balcony Room/Summit Balcony Room (3).avif"),
       getAssetUrl("/images/Summit Balcony Room/Summit Balcony Room balcony.avif"),
       getAssetUrl("/images/Summit Balcony Room/Summit Balcony Room bathroom.jpg")
     ],
     backupGradient: "from-amber-950 via-stone-900 to-emerald-950",
-    description: "An homage to regal Himalayan heritage, the Maharaja Suite features an artisan river-stone hearth, a private royal drawing parlor, and panoramic bay windows framing Bandarpunch peaks.",
+    description: "Positioned at the upper summit floors of Meridian Blu, these premier rooms offer expansive glass fronts overlooking rolling cloud formations and dramatic mountain sunrises. Crafted with seasoned walnut wood and bespoke fittings.",
     features: [
-      "Regal four-poster king canopy bed with plush silk linens",
-      "Wood-burning stone hearth fireplace with evening attendant",
-      "Private viewing balcony over the Great Himalayan Range",
-      "Artisanal Kashmiri walnut wood furnishings",
-      "Butler service on call 24/7"
+      "Upper-level summit balcony with dramatic high-altitude views",
+      "Bespoke cedar wood furnishings and artisanal woven accents",
+      "Walk-in dressing area and spacious executive vanity",
+      "Deluxe bathroom featuring rain shower and botanical bath amenities",
+      "Personalized morning awakening tray with Pahadi honey"
     ],
-    amenities: ["Dedicated Royal Butler", "Loewe 65-inch Smart OLED", "Dyson Supersonic Haircare", "Kama Ayurveda Luxury Bath Line", "Complimentary High Tea"],
+    amenities: ["Summit Viewing Balcony", "Premium Starlink WiFi", "Ultra HD Smart TV", "Luxury Bathrobes & Slippers", "Concierge Butler Service", "Complimentary High Tea"],
     popular: true
   },
-  "1266": {
-    name: "Couple with Nonveg Food",
-    tagline: "Romantic mountain getaway inclusive of bespoke multi-course non-veg dining",
-    defaultPrice: 8000,
-    sizeSqFt: 620,
-    bed: "Plush King Bed with Feathered Duvet",
-    view: "Misty Valley & Pine Grove Sunset",
+  "1102": {
+    name: "Skyline Rooms",
+    tagline: "Our crown-tier penthouse rooms offering celestial twilight & famous Mussoorie winterline views",
+    defaultPrice: 4000,
+    sizeSqFt: 550,
+    bed: "Royal Emperor King Bed",
+    view: "Legendary Mussoorie Winterline & Horizon",
     imageUrl: getAssetUrl("/images/Skyline Balcony Room/Skyline Balcony Room (6).avif"),
     galleryImages: [
       getAssetUrl("/images/Skyline Balcony Room/Skyline Balcony Room (6).avif"),
       getAssetUrl("/images/Skyline Balcony Room/Skyline Balcony Room (2).avif"),
+      getAssetUrl("/images/Skyline Balcony Room/Skyline Balcony Room (3).avif"),
+      getAssetUrl("/images/Skyline Balcony Room/Skyline Balcony Room (5).avif"),
       getAssetUrl("/images/Skyline Balcony Room/Skyline Balcony Room balcony.avif"),
       getAssetUrl("/images/Skyline Balcony Room/Skyline Balcony Room bathroom.avif")
     ],
-    backupGradient: "from-rose-950 via-stone-900 to-amber-950",
-    description: "A tailored sanctuary curated specifically for couples. Includes a private candlelit 4-course gourmet non-veg mountain dinner with Garhwali & Continental delicacies.",
+    backupGradient: "from-purple-950 via-slate-900 to-indigo-950",
+    description: "The apex of alpine living at Meridian Blu. Crowned at the highest point of the property, Skyline Rooms showcase Mussoorie's legendary Winterline phenomenon and sweeping starlit Himalayan night skies from private rooftop-level balconies.",
     features: [
-      "Included 4-course chef-curated non-veg candlelit dinner",
-      "Private valley-facing cedar sun balcony",
-      "Freestanding clawfoot bathtub with rose-infused mountain salts",
-      "Pahadi artisanal tea & Nespresso coffee bar",
-      "Evening twilight mulled wine service"
+      "Top-floor private panoramic terrace balcony facing the Winterline",
+      "Grand Emperor King bed with bespoke goose-down luxury bedding",
+      "Floor-to-ceiling glass wall capturing sunrise to starlight",
+      "Designer bathroom with premium fixtures and luxury toiletries",
+      "Complimentary evening twilight refreshment service"
     ],
-    amenities: ["In-Suite Candlelit Dining", "Couple Spa Aromatherapy Voucher", "Complimentary Sparkling Wine", "Custom Rose Bouquet", "Late 13:00 Checkout"],
+    amenities: ["Top-Floor Skyline Balcony", "Dyson / Premium Haircare", "Starlink High-Speed WiFi", "Smart 4K Entertainment", "Priority Concierge & Chef Service", "Fireside Evening Access"],
     popular: true
-  },
-  "1265": {
-    name: "Couple with Veg Food",
-    tagline: "Romantic cliffside sanctuary inclusive of royal pure-veg culinary spreads",
-    defaultPrice: 6000,
-    sizeSqFt: 600,
-    bed: "Plush King Bed with 600-Thread Cotton",
-    view: "Doon Valley Twilight & Cedar Forest",
-    imageUrl: getAssetUrl("/images/Skyline Balcony Room/Skyline Balcony Room (3).avif"),
-    galleryImages: [
-      getAssetUrl("/images/Skyline Balcony Room/Skyline Balcony Room (3).avif"),
-      getAssetUrl("/images/Skyline Balcony Room/Skyline Balcony Room (5).avif"),
-      getAssetUrl("/images/Skyline Balcony Room/Skyline Balcony Room balcony.avif")
-    ],
-    backupGradient: "from-emerald-950 via-stone-900 to-stone-950",
-    description: "Serene mountain residence designed for romantic couples seeking mindful serenity, inclusive of farm-to-table organic pure vegetarian dining prepared by our executive chef.",
-    features: [
-      "Included 4-course organic farm-to-table pure veg dinner",
-      "Private cedarwood balcony facing evening Winterline sunsets",
-      "Herbal soaking tub with panoramic valley vistas",
-      "High-altitude honey and organic herbal tea bar",
-      "Acoustic double-glazed quiet windows"
-    ],
-    amenities: ["Private Fireside Dining", "Couple Herbal Plunge Session", "Artisan Dessert Box", "Bose Bluetooth Acoustics", "Morning Forest Yoga Access"],
-    popular: true
-  },
-  "1130": {
-    name: "WOODEN COTTAGES",
-    tagline: "Rustic luxury cedarwood cabins enveloped in fragrant Himalayan pine glades",
-    defaultPrice: 4000,
-    sizeSqFt: 580,
-    bed: "Handcrafted Cedar King Bed",
-    view: "Dense Deodar Pine Forest Canopy",
-    imageUrl: getAssetUrl("/images/Himalayan View Balcony Room/Himalayan View Balcony Room.avif"),
-    galleryImages: [
-      getAssetUrl("/images/Himalayan View Balcony Room/Himalayan View Balcony Room.avif"),
-      getAssetUrl("/images/Himalayan View Balcony Room/Himalayan View Balcony Room balcony.avif"),
-      getAssetUrl("/images/Himalayan View Balcony Room/Himalayan View Balcony Room bathroom.avif")
-    ],
-    backupGradient: "from-amber-950 via-stone-900 to-zinc-950",
-    description: "Constructed entirely from seasoned deodar and pine wood, these standalone cottages offer an authentic high-altitude retreat with warm wood aromatics and private outdoor wooden verandas.",
-    features: [
-      "Private wooden deck amidst towering deodar pine trees",
-      "Warm cedar wood-paneled walls and exposed timber rafters",
-      "Individual temperature control & radiant floor heating",
-      "En-suite slate stone bathroom with rain shower",
-      "Private outdoor fire pit access"
-    ],
-    amenities: ["Starlink WiFi", "Private Veranda Furniture", "Artisanal Tea Station", "Warm Wool Blankets", "24/7 Room Service"],
-    popular: true
-  },
-  "553": {
-    name: "TENT COTTAGES",
-    tagline: "Luxury high-altitude alpine safari tents with private viewing veranda",
-    defaultPrice: 3000,
-    sizeSqFt: 460,
-    bed: "Luxury Teak King Bed",
-    view: "Expansive Valley Vista & Starlit Sky",
-    imageUrl: getAssetUrl("/images/meridianblu9.jpg"),
-    galleryImages: [
-      getAssetUrl("/images/meridianblu9.jpg"),
-      getAssetUrl("/images/meridianblu10.jpg")
-    ],
-    backupGradient: "from-stone-900 via-amber-950 to-stone-950",
-    description: "Experience the romance of alpine safari glamping without compromising on luxury. Triple-layered weatherproof insulation, polished hardwood flooring, and private veranda overlooking Mussoorie's twilight.",
-    features: [
-      "Triple-insulated thermal weatherproofing for all seasons",
-      "Private canvas awning veranda with valley panorama",
-      "Hardwood timber flooring and en-suite heated bathroom",
-      "Electric heated blankets & plush bedding",
-      "Evening bonfire gathering privilege"
-    ],
-    amenities: ["High-speed WiFi", "Electric Heating", "En-suite Washroom", "Plush Robes", "Campfire Privileges"]
-  },
-  "1131": {
-    name: "SUPER DELUXE",
-    tagline: "Expansive contemporary living with floor-to-ceiling snow peak vistas",
-    defaultPrice: 3500,
-    sizeSqFt: 520,
-    bed: "Plush King Bed with Egyptian Cotton",
-    view: "Snow-Capped Himalayan Peak Range",
-    imageUrl: getAssetUrl("/images/Himalayan View Balcony Room/Himalayan View Balcony Room 2.avif"),
-    galleryImages: [
-      getAssetUrl("/images/Himalayan View Balcony Room/Himalayan View Balcony Room 2.avif"),
-      getAssetUrl("/images/Himalayan View Balcony Room/Himalayan View Balcony Room bathroom2.avif")
-    ],
-    backupGradient: "from-sky-950 via-stone-900 to-amber-950",
-    description: "Spacious luxury sanctuary featuring oversized panoramic picture windows framing the snowy Garhwal peaks, polished Italian tiles, and comfortable lounge seating.",
-    features: [
-      "Floor-to-ceiling panoramic picture windows",
-      "Italian marble bathroom with temperature-regulated rain shower",
-      "Separate mountain-view sitting lounge",
-      "Smart HD TV with streaming capabilities",
-      "Executive work desk with high-altitude vistas"
-    ],
-    amenities: ["Starlink WiFi", "55-inch Smart TV", "Custom Pillow Menu", "In-Room Safe", "Complimentary Mineral Water"]
-  },
-  "1268": {
-    name: "OPEN GROUND ROOMS",
-    tagline: "Ground-level garden suites stepping out directly onto manicured lawns",
-    defaultPrice: 4000,
-    sizeSqFt: 490,
-    bed: "Plush King Bed",
-    view: "Estate Green Lawns & Misty Forest Ridge",
-    imageUrl: getAssetUrl("/images/Valley View Balcony Room/Valley View Balcony Room.avif"),
-    galleryImages: [
-      getAssetUrl("/images/Valley View Balcony Room/Valley View Balcony Room.avif"),
-      getAssetUrl("/images/Valley View Balcony Room/Valley View Balcony Room (1).avif")
-    ],
-    backupGradient: "from-emerald-950 via-stone-900 to-stone-950",
-    description: "Direct walk-out access to the estate's central manicured gardens and outdoor lawn lounge. Perfect for morning strolls and taking in fresh Himalayan mountain air.",
-    features: [
-      "Direct walk-out access to private estate lawns",
-      "Personal lawn coffee seating with umbrella",
-      "Expansive sliding glass garden doors",
-      "Spacious modern walk-in bathroom",
-      "Complimentary morning tea served on the grass"
-    ],
-    amenities: ["Lawn Access", "Fast WiFi", "Lounge Chairs", "Tea & Coffee Maker", "Daily Housekeeping"]
-  },
-  "1132": {
-    name: "CEMI DELUXE",
-    tagline: "Serene mountain retreat blending warmth, quiet comfort, and pine vistas",
-    defaultPrice: 2800,
-    sizeSqFt: 420,
-    bed: "Comfortable Queen/King Bed",
-    view: "Whispering Deodar Pine Forest",
-    imageUrl: getAssetUrl("/images/Valley View Balcony Room/Valley View Balcony Room (8).avif"),
-    galleryImages: [
-      getAssetUrl("/images/Valley View Balcony Room/Valley View Balcony Room (8).avif"),
-      getAssetUrl("/images/Valley View Balcony Room/Valley View Balcony Room 9.avif")
-    ],
-    backupGradient: "from-stone-900 via-emerald-950 to-stone-950",
-    description: "An intimate and restful room overlooking fragrant pine canopies, providing modern amenities, premium bedding, and a peaceful mountain stay.",
-    features: [
-      "Large picture window facing pine canopy",
-      "Custom timber furnishings and ambient lighting",
-      "Heated bathroom with hot running spring water",
-      "Writing desk and plush sitting armchair",
-      "Acoustic quiet insulation"
-    ],
-    amenities: ["Free WiFi", "Smart TV", "Tea/Coffee Facility", "Heating Option", "Bathroom Toiletries"]
-  },
-  "1145": {
-    name: "DELUXE",
-    tagline: "Comfortable and authentic mountain residence with modern appointments",
-    defaultPrice: 2400,
-    sizeSqFt: 380,
-    bed: "Plush Double/King Bed",
-    view: "Valley Slopes & Forest Ridge",
-    imageUrl: getAssetUrl("/images/Valley View Balcony Room/Valley View Balcony Room bath room.avif"),
-    galleryImages: [
-      getAssetUrl("/images/Valley View Balcony Room/Valley View Balcony Room bath room.avif"),
-      getAssetUrl("/images/meridianblu1.jpg")
-    ],
-    backupGradient: "from-stone-900 via-stone-800 to-stone-950",
-    description: "Well-appointed deluxe room providing all modern comforts, warm mountain hospitality, and easy access to estate dining and hiking trails.",
-    features: [
-      "Valley-facing window with blackout curtains",
-      "Modern en-suite bathroom with 24-hr hot water",
-      "Wardrobe and digital safe",
-      "Cozy heated bedding and extra blankets",
-      "Direct dial telephone to concierge"
-    ],
-    amenities: ["Free WiFi", "Satellite TV", "Electric Kettle", "Room Service", "Daily Housekeeping"]
-  },
-  "1284": {
-    name: "ECO HUTS",
-    tagline: "Eco-conscious wooden huts immersed in pristine Himalayan deodar forests",
-    defaultPrice: 2000,
-    sizeSqFt: 340,
-    bed: "Cozy Queen Timber Bed",
-    view: "Pristine Deodar Wilderness",
-    imageUrl: getAssetUrl("/images/meridianblu.jpg"),
-    galleryImages: [
-      getAssetUrl("/images/meridianblu.jpg"),
-      getAssetUrl("/images/meridianblu10.jpg")
-    ],
-    backupGradient: "from-zinc-950 via-emerald-950 to-stone-950",
-    description: "Sustainable natural pine huts designed for nature lovers and trekkers seeking peaceful immersion in Mussoorie's mountain wilderness.",
-    features: [
-      "Built with sustainable reclaimed timber and stone",
-      "Tranquil secluded setting inside pine grove",
-      "Natural cross-ventilation and electric heater",
-      "Private outdoor porch seating",
-      "Direct trail head access"
-    ],
-    amenities: ["WiFi in Public Areas", "Hot Water Supply", "Nature Trail Guide", "Organic Toiletries", "Campfire Access"]
   }
 };
 
-// Initial inventory state map strictly reflecting PMS Vacant Rooms (/60/room/status/0)
-// In PMS Shop 60, only 3 rooms are vacant: maharaja suit (1487), ECO HUTS (1284), and OPEN GROUND ROOMS (1268). All others are occupied/sold out!
+// Initial inventory state map strictly reflecting PMS Vacant Rooms (/165/room/status/0)
+// For Meridian Blu Shop 165:
+// - Valley View Rooms (1099): 7 physical rooms, 7 vacant
+// - Himalayan View Rooms (1100): 17 physical rooms, 13 vacant
+// - Summit Rooms (1101): 6 physical rooms, 4 vacant
+// - Skyline Rooms (1102): 3 physical rooms, 3 vacant
 export const INITIAL_INVENTORY_DB: Record<string, { totalUnits: number; availableUnits: number; isSoldOut: boolean; statusText: string }> = {
-  "1487": { totalUnits: 2, availableUnits: 1, isSoldOut: false, statusText: "Only 1 Suite Remaining" },
-  "1284": { totalUnits: 1, availableUnits: 1, isSoldOut: false, statusText: "Only 1 Hut Remaining" },
-  "1268": { totalUnits: 1, availableUnits: 1, isSoldOut: false, statusText: "Only 1 Room Remaining" },
-  "553": { totalUnits: 7, availableUnits: 0, isSoldOut: true, statusText: "Sold Out in PMS" },
-  "1130": { totalUnits: 2, availableUnits: 0, isSoldOut: true, statusText: "Sold Out in PMS" },
-  "1131": { totalUnits: 1, availableUnits: 0, isSoldOut: true, statusText: "Sold Out in PMS" },
-  "1132": { totalUnits: 0, availableUnits: 0, isSoldOut: true, statusText: "Sold Out in PMS" },
-  "1145": { totalUnits: 1, availableUnits: 0, isSoldOut: true, statusText: "Sold Out in PMS" },
-  "1265": { totalUnits: 1, availableUnits: 0, isSoldOut: true, statusText: "Sold Out in PMS" },
-  "1266": { totalUnits: 1, availableUnits: 0, isSoldOut: true, statusText: "Sold Out in PMS" }
+  "1099": { totalUnits: 7, availableUnits: 7, isSoldOut: false, statusText: "7 Units Available" },
+  "1100": { totalUnits: 17, availableUnits: 13, isSoldOut: false, statusText: "13 Units Available" },
+  "1101": { totalUnits: 6, availableUnits: 4, isSoldOut: false, statusText: "4 Units Available" },
+  "1102": { totalUnits: 3, availableUnits: 3, isSoldOut: false, statusText: "3 Units Available" }
 };
 
 // Transform API room into complete UI RoomTier
 export const mapApiRoomToTier = (apiRoom: ApiRoomType): RoomTier => {
   const idStr = String(apiRoom.id);
-  const cfg = ROOM_METADATA_CONFIG[idStr];
+  const rawName = (apiRoom.rtname || '').replace(/\u00a0/g, ' ').trim();
+  const lowerName = rawName.toLowerCase();
+
+  // Match by idStr or by name keywords
+  let cfg = ROOM_METADATA_CONFIG[idStr];
+  if (!cfg) {
+    if (lowerName.includes('valley')) {
+      cfg = ROOM_METADATA_CONFIG["1099"];
+    } else if (lowerName.includes('himalayan')) {
+      cfg = ROOM_METADATA_CONFIG["1100"];
+    } else if (lowerName.includes('summit')) {
+      cfg = ROOM_METADATA_CONFIG["1101"];
+    } else if (lowerName.includes('skyline')) {
+      cfg = ROOM_METADATA_CONFIG["1102"];
+    }
+  }
 
   // Dynamic Rent Resolution from API:
-  // API returns rent, rentsingle, rentdouble. If any is > 0, use it directly!
   let price = 0;
   if (apiRoom.rent && apiRoom.rent > 0) {
     price = apiRoom.rent;
@@ -327,22 +208,20 @@ export const mapApiRoomToTier = (apiRoom: ApiRoomType): RoomTier => {
   } else if (cfg?.defaultPrice) {
     price = cfg.defaultPrice;
   } else {
-    price = 2500;
+    price = 3000;
   }
 
-  // Strictly use exact PMS room name from apiRoom.rtname
-  const name = apiRoom.rtname || cfg?.name || `Room Type ${apiRoom.id}`;
+  // Strictly use exact clean PMS room name from apiRoom.rtname
+  const name = rawName || cfg?.name || `Room Type ${apiRoom.id}`;
   const inv = INITIAL_INVENTORY_DB[idStr];
   const totalUnits = inv ? inv.totalUnits : (apiRoom.totalroom ?? 1);
-  const availableUnits = inv ? inv.availableUnits : 0;
-  const isSoldOut = inv ? inv.isSoldOut : true;
+  const availableUnits = inv ? inv.availableUnits : totalUnits;
+  const isSoldOut = inv ? inv.isSoldOut : false;
   const originalPrice = Math.round(price * 1.25);
 
-  // Sanitize narration if it starts with shop id (e.g. "60maharaja suit" -> "maharaja suit")
+  // Sanitize narration if it starts with shop id (e.g. "165Valley View Rooms" -> "Valley View Rooms")
   let sanitizedNarration = apiRoom.narration || "";
-  if (sanitizedNarration.startsWith("60")) {
-    sanitizedNarration = sanitizedNarration.slice(2).trim();
-  }
+  sanitizedNarration = sanitizedNarration.replace(/^\d+/, '').replace(/\u00a0/g, ' ').trim();
 
   return {
     id: idStr,
@@ -358,8 +237,8 @@ export const mapApiRoomToTier = (apiRoom: ApiRoomType): RoomTier => {
     },
     bed: cfg?.bed || "King/Queen Luxury Mountain Bed",
     view: cfg?.view || "Doon Valley & Himalayan Ridge",
-    imageUrl: cfg?.imageUrl || getAssetUrl("/images/meridianblu.jpg"),
-    galleryImages: cfg?.galleryImages || [cfg?.imageUrl || getAssetUrl("/images/meridianblu.jpg")],
+    imageUrl: cfg?.imageUrl || getAssetUrl("/images/Valley View Balcony Room/Valley View Balcony Room.avif"),
+    galleryImages: cfg?.galleryImages || [cfg?.imageUrl || getAssetUrl("/images/Valley View Balcony Room/Valley View Balcony Room.avif")],
     backupGradient: cfg?.backupGradient || "from-stone-900 via-emerald-950 to-stone-950",
     description: cfg?.description || apiRoom.roomtypedescription || "Experience tranquil Himalayan living with modern comforts and pristine nature.",
     features: cfg?.features || [
@@ -384,24 +263,66 @@ export const mapApiRoomToTier = (apiRoom: ApiRoomType): RoomTier => {
   };
 };
 
-// Raw initial data fetched from https://hotelserver.billhost.co.in/60/rtmas with exact PMS names
-export const RAW_API_ROOMS_SHOP_60: ApiRoomType[] = [
-  { id: 1487, rtname: "maharaja suit", shopid: 60, narration: "60maharaja suit", chid: "", totalroom: 1, occupancy: 2, roomtypedescription: "4004", rent: 0.0, rentsingle: 0.0, rentdouble: 2200.0 },
-  { id: 1266, rtname: "Couple with Nonveg Food", shopid: 60, narration: "60Couple with Nonveg Food", chid: "", totalroom: 2, occupancy: 2, roomtypedescription: "", rent: 0.0, rentsingle: 8000.0, rentdouble: 0.0 },
-  { id: 1265, rtname: "Couple with Veg Food", shopid: 60, narration: "60Couple with Veg Food", chid: "", totalroom: 2, occupancy: 2, roomtypedescription: "", rent: 0.0, rentsingle: 6000.0, rentdouble: 0.0 },
-  { id: 1130, rtname: "WOODEN COTTAGES", shopid: 60, narration: "60WOODEN COTTAGES", chid: "", totalroom: 10, occupancy: 2, roomtypedescription: "", rent: 4000.0, rentsingle: 0.0, rentdouble: 0.0 },
-  { id: 553, rtname: "TENT COTTAGES", shopid: 60, narration: "60TENT COTTAGES", chid: null, totalroom: 15, occupancy: 3, roomtypedescription: "roomtype-TENT COTTAGES-cp", rent: 3000.0, rentsingle: 0.0, rentdouble: 0.0 },
-  { id: 1131, rtname: "SUPER DELUXE", shopid: 60, narration: "60SUPER DELUXE", chid: "", totalroom: 15, occupancy: 3, roomtypedescription: null, rent: 3500.0, rentsingle: 0.0, rentdouble: 0.0 },
-  { id: 1268, rtname: "OPEN GROUND ROOMS", shopid: 60, narration: "60OPEN GROUND ROOMS", chid: "", totalroom: 10, occupancy: 2, roomtypedescription: "", rent: 0.0, rentsingle: 4000.0, rentdouble: 0.0 },
-  { id: 1132, rtname: "CEMI DELUXE", shopid: 60, narration: "60CEMI DELUXE", chid: "", totalroom: 15, occupancy: 3, roomtypedescription: null, rent: 2800.0, rentsingle: 0.0, rentdouble: 0.0 },
-  { id: 1145, rtname: "DELUXE", shopid: 60, narration: "60DELUXE", chid: "", totalroom: 10, occupancy: 2, roomtypedescription: "", rent: 2400.0, rentsingle: 0.0, rentdouble: 0.0 },
-  { id: 1284, rtname: "ECO HUTS", shopid: 60, narration: "60ECO HUTS", chid: "", totalroom: 5, occupancy: 2, roomtypedescription: "", rent: 0.0, rentsingle: 2000.0, rentdouble: 0.0 }
+// Raw initial data fetched from https://hotelserver.billhost.co.in/165/rtmas with exact PMS names
+export const RAW_API_ROOMS_SHOP_165: ApiRoomType[] = [
+  {
+    id: 1099,
+    rtname: "Valley View Rooms",
+    shopid: 165,
+    narration: "165Valley View Rooms",
+    chid: "valley-view-rooms",
+    totalroom: 7,
+    occupancy: 2,
+    roomtypedescription: "valley-view-rooms-s-ep, valley-view-rooms-d-ep",
+    rent: 0,
+    rentsingle: 2500,
+    rentdouble: 3000
+  },
+  {
+    id: 1100,
+    rtname: "Himalayan View Rooms",
+    shopid: 165,
+    narration: "165Himalayan View Rooms",
+    chid: "himalayan-view-rooms",
+    totalroom: 17,
+    occupancy: 2,
+    roomtypedescription: "himalayan-view-rooms-s-ep, himalayan-view-rooms-d-ep",
+    rent: 0,
+    rentsingle: 2800,
+    rentdouble: 3300
+  },
+  {
+    id: 1101,
+    rtname: "Summit Rooms",
+    shopid: 165,
+    narration: "165Summit Rooms",
+    chid: "summit-rooms",
+    totalroom: 6,
+    occupancy: 2,
+    roomtypedescription: "summit-rooms-s-ep, summit-rooms-d-ep",
+    rent: 0,
+    rentsingle: 3000,
+    rentdouble: 3500
+  },
+  {
+    id: 1102,
+    rtname: "Skyline Rooms",
+    shopid: 165,
+    narration: "165Skyline Rooms",
+    chid: "skyline-rooms",
+    totalroom: 3,
+    occupancy: 2,
+    roomtypedescription: "skyline-rooms-s-ep, skyline-rooms-d-ep",
+    rent: 0,
+    rentsingle: 3500,
+    rentdouble: 4000
+  }
 ];
 
 // Initial preloaded ROOMS_DATA with room types & rents from API
-export const ROOMS_DATA: RoomTier[] = RAW_API_ROOMS_SHOP_60.map(mapApiRoomToTier);
+export const ROOMS_DATA: RoomTier[] = RAW_API_ROOMS_SHOP_165.map(mapApiRoomToTier);
 
-// Live fetch helper: fetches from https://hotelserver.billhost.co.in/60/rtmas or server proxy
+// Live fetch helper: fetches from https://hotelserver.billhost.co.in/165/rtmas or server proxy
 export const fetchLiveRoomTypes = async (shopId: number = SHOP_ID): Promise<RoomTier[]> => {
   try {
     const res = await fetch(`https://hotelserver.billhost.co.in/${shopId}/rtmas`);
@@ -425,7 +346,7 @@ export const fetchLiveRoomTypes = async (shopId: number = SHOP_ID): Promise<Room
         }
       }
     } catch (err) {
-      console.warn("Proxy API fetch failed, using preloaded shop 60 room data:", err);
+      console.warn("Proxy API fetch failed, using preloaded shop 165 room data:", err);
     }
   }
 

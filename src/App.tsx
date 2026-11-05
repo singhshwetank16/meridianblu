@@ -19,7 +19,7 @@ function AppContent() {
   const [toastMessage, setToastMessage] = useState<string | null>(null);
   const [rooms, setRooms] = useState<RoomTier[]>(ROOMS_DATA);
 
-  // Load live room types & rents from API (Shop ID: 60)
+  // Load live room types & rents from API (Shop ID: 165)
   useEffect(() => {
     fetchLiveRoomTypes(SHOP_ID)
       .then((liveRooms) => {

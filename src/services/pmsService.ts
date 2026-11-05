@@ -1,20 +1,20 @@
 /**
- * PMS Integration Service for Meridian Blu / Shop #60
+ * PMS Integration Service for Meridian Blu / Shop #165
  * Connects directly to PMS server: https://hotelserver.billhost.co.in
  * Supports all 10 PMS Endpoints:
- * 1. Hotel Property Details: GET /api/shopmas/60
- * 2. Room Types & Rates: GET /60/rtmas
- * 3. All Physical Rooms: GET /60/room
+ * 1. Hotel Property Details: GET /api/shopmas/165
+ * 2. Room Types & Rates: GET /165/rtmas
+ * 3. All Physical Rooms: GET /165/room
  * 4. Live Room Availability: GET /api/ota-inventory
- * 5. Vacant Rooms: GET /60/room/status/0
- * 6. Reservations by Date: GET /60/reservationviewFilter/:startDate/:endDate/0
- * 7. All Reservations: GET /60/reservation
- * 8. Create Booking: POST /60/reservationBulk
+ * 5. Vacant Rooms: GET /165/room/status/0
+ * 6. Reservations by Date: GET /165/reservationviewFilter/:startDate/:endDate/0
+ * 7. All Reservations: GET /165/reservation
+ * 8. Create Booking: POST /165/reservationBulk
  * 9. Booking Confirmation Email: POST /send-reservation-email
  * 10. WhatsApp Notification: POST /api/whatsapp/notifications
  */
 
-export const PMS_SHOP_ID = 60;
+export const PMS_SHOP_ID = 165;
 export const PMS_BASE_URL = 'https://hotelserver.billhost.co.in';
 
 export const isDirectHost = (): boolean => {
@@ -166,7 +166,7 @@ export interface PmsBookingResponse {
 class PmsService {
   private shopId = PMS_SHOP_ID;
 
-  // 1. Hotel Property Details: GET /api/shopmas/60
+  // 1. Hotel Property Details: GET /api/shopmas/165
   async getHotelDetails(): Promise<PmsShopDetails | null> {
     if (!isDirectHost()) {
       try {
@@ -190,7 +190,7 @@ class PmsService {
     return null;
   }
 
-  // 2. Room Types & Rates: GET /60/rtmas
+  // 2. Room Types & Rates: GET /165/rtmas
   async getRoomTypes(): Promise<PmsRoomType[]> {
     if (!isDirectHost()) {
       try {
@@ -214,7 +214,7 @@ class PmsService {
     return [];
   }
 
-  // 3. All Physical Rooms: GET /60/room
+  // 3. All Physical Rooms: GET /165/room
   async getPhysicalRooms(): Promise<PmsPhysicalRoom[]> {
     if (!isDirectHost()) {
       try {
@@ -262,7 +262,7 @@ class PmsService {
     return [];
   }
 
-  // 5. Vacant Rooms: GET /60/room/status/0
+  // 5. Vacant Rooms: GET /165/room/status/0
   async getVacantRooms(): Promise<PmsPhysicalRoom[]> {
     if (!isDirectHost()) {
       try {
@@ -286,7 +286,7 @@ class PmsService {
     return [];
   }
 
-  // 6. Reservations by Date: GET /60/reservationviewFilter/:startDate/:endDate/0
+  // 6. Reservations by Date: GET /165/reservationviewFilter/:startDate/:endDate/0
   async getReservationsByDate(startDate: string, endDate: string): Promise<any[]> {
     if (!isDirectHost()) {
       try {
@@ -310,7 +310,7 @@ class PmsService {
     return [];
   }
 
-  // 7. All Reservations: GET /60/reservation
+  // 7. All Reservations: GET /165/reservation
   async getAllReservations(): Promise<PmsReservation[]> {
     if (!isDirectHost()) {
       try {
@@ -334,7 +334,7 @@ class PmsService {
     return [];
   }
 
-  // Live Inventory Calculation strictly querying PMS vacant rooms (/60/room/status/0) and physical rooms (/60/room)
+  // Live Inventory Calculation strictly querying PMS vacant rooms (/165/room/status/0) and physical rooms (/165/room)
   async calculateLiveAvailability(startDate?: string, endDate?: string): Promise<Record<string, PmsLiveInventoryItem>> {
     if (!isDirectHost()) {
       try {

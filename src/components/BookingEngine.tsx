@@ -695,21 +695,13 @@ END:VCALENDAR`;
                         </div>
 
                         {/* Top Right: Real-Time Availability Tag */}
-                        <div className="absolute top-3.5 right-3.5 flex flex-col items-end gap-1">
-                          {isSoldOut ? (
+                        {isSoldOut && (
+                          <div className="absolute top-3.5 right-3.5 flex flex-col items-end gap-1">
                             <span className="bg-rose-600 text-white font-bold px-3 py-1 rounded-md text-[11px] uppercase tracking-wider shadow">
                               Sold Out
                             </span>
-                          ) : availableCount <= 2 ? (
-                            <span className="bg-amber-500 text-slate-950 font-extrabold px-3 py-1 rounded-md text-[11px] uppercase tracking-wider shadow animate-pulse">
-                              Only {availableCount} Remaining!
-                            </span>
-                          ) : (
-                            <span className="bg-emerald-600 text-white font-bold px-3 py-1 rounded-md text-[11px] tracking-wide shadow">
-                              {availableCount} Available
-                            </span>
-                          )}
-                        </div>
+                          </div>
+                        )}
 
                         {/* Multi-Photo Carousel Arrows & Dots */}
                         {images.length > 1 && (

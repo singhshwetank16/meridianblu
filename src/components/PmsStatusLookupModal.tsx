@@ -329,23 +329,23 @@ export const PmsStatusLookupModal: React.FC<PmsStatusLookupModalProps> = ({
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-center">
                 <div className="p-4 rounded-2xl bg-sky-50 border border-sky-100">
                   <span className="text-[11px] uppercase tracking-wider text-slate-500 font-bold block">Room Types</span>
-                  <span className="text-2xl font-mono font-bold text-[#005cd8]">10</span>
-                  <span className="text-[10px] text-slate-500 block mt-0.5">from /60/rtmas</span>
+                  <span className="text-2xl font-mono font-bold text-[#005cd8]">4</span>
+                  <span className="text-[10px] text-slate-500 block mt-0.5">from /165/rtmas</span>
                 </div>
                 <div className="p-4 rounded-2xl bg-emerald-50 border border-emerald-100">
                   <span className="text-[11px] uppercase tracking-wider text-slate-500 font-bold block">Physical Rooms</span>
-                  <span className="text-2xl font-mono font-bold text-emerald-700">{totalRoomsCount ?? 17}</span>
-                  <span className="text-[10px] text-slate-500 block mt-0.5">from /60/room</span>
+                  <span className="text-2xl font-mono font-bold text-emerald-700">{totalRoomsCount ?? 33}</span>
+                  <span className="text-[10px] text-slate-500 block mt-0.5">from /165/room</span>
                 </div>
                 <div className="p-4 rounded-2xl bg-amber-50 border border-amber-100">
                   <span className="text-[11px] uppercase tracking-wider text-slate-500 font-bold block">Vacant Now</span>
-                  <span className="text-2xl font-mono font-bold text-amber-700">{vacantRoomsCount ?? 4}</span>
-                  <span className="text-[10px] text-slate-500 block mt-0.5">from /60/room/status/0</span>
+                  <span className="text-2xl font-mono font-bold text-amber-700">{vacantRoomsCount ?? 27}</span>
+                  <span className="text-[10px] text-slate-500 block mt-0.5">from /165/room/status/0</span>
                 </div>
                 <div className="p-4 rounded-2xl bg-purple-50 border border-purple-100">
                   <span className="text-[11px] uppercase tracking-wider text-slate-500 font-bold block">Total PMS Bookings</span>
-                  <span className="text-2xl font-mono font-bold text-purple-700">{totalBookingsCount ?? 88}</span>
-                  <span className="text-[10px] text-slate-500 block mt-0.5">from /60/reservation</span>
+                  <span className="text-2xl font-mono font-bold text-purple-700">{totalBookingsCount ?? 1611}</span>
+                  <span className="text-[10px] text-slate-500 block mt-0.5">from /165/reservation</span>
                 </div>
               </div>
 
@@ -365,13 +365,13 @@ export const PmsStatusLookupModal: React.FC<PmsStatusLookupModalProps> = ({
 
                 <div className="border border-slate-200 rounded-2xl divide-y divide-slate-100 overflow-hidden text-xs">
                   {[
-                    { id: 1, name: 'Hotel Property Details', method: 'GET', path: '/api/shopmas/60', desc: 'Hotel contact, address, tax configuration' },
-                    { id: 2, name: 'Room Types & Rates', method: 'GET', path: '/60/rtmas', desc: 'Live room categories, base rents & units' },
-                    { id: 3, name: 'All Physical Rooms', method: 'GET', path: '/60/room', desc: '17 inventory rooms & assigned codes' },
+                    { id: 1, name: 'Hotel Property Details', method: 'GET', path: '/api/shopmas/165', desc: 'Hotel contact, address, tax configuration' },
+                    { id: 2, name: 'Room Types & Rates', method: 'GET', path: '/165/rtmas', desc: 'Live room categories, base rents & units' },
+                    { id: 3, name: 'All Physical Rooms', method: 'GET', path: '/165/room', desc: '33 inventory rooms & assigned codes' },
                     { id: 4, name: 'Live Room Availability', method: 'GET', path: '/api/ota-inventory', desc: 'OTA channel rates & inventory limits' },
-                    { id: 5, name: 'Vacant Rooms', method: 'GET', path: '/60/room/status/0', desc: 'Currently vacant physical rooms' },
-                    { id: 6, name: 'Reservations by Date', method: 'GET', path: '/60/reservationviewFilter/:start/:end/0', desc: 'Date-level active bookings' },
-                    { id: 7, name: 'All Reservations', method: 'GET', path: '/60/reservation', desc: 'Historical & upcoming booking ledger' },
+                    { id: 5, name: 'Vacant Rooms', method: 'GET', path: '/165/room/status/0', desc: 'Currently vacant physical rooms' },
+                    { id: 6, name: 'Reservations by Date', method: 'GET', path: '/165/reservationviewFilter/:start/:end/0', desc: 'Date-level active bookings' },
+                    { id: 7, name: 'All Reservations', method: 'GET', path: '/165/reservation', desc: 'Historical & upcoming booking ledger' },
                     { id: 8, name: 'Create Booking', method: 'POST', path: '/reservationBulk', desc: 'Registers booking directly in PMS database' },
                     { id: 9, name: 'Booking Confirmation Email', method: 'POST', path: '/send-reservation-email', desc: 'Auto-sends booking voucher email' },
                     { id: 10, name: 'WhatsApp Notification', method: 'POST', path: '/api/whatsapp/notifications', desc: 'Dispatches instant WhatsApp confirmation' }
