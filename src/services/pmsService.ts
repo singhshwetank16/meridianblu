@@ -399,8 +399,8 @@ class PmsService {
           statusText: isSoldOut
             ? 'Sold Out in PMS'
             : available === 1
-            ? 'Only 1 Unit Remaining in PMS'
-            : `${available} Units Available in PMS`,
+              ? 'Only 1 Unit Remaining in PMS'
+              : `${available} Units Available in PMS`,
           lastUpdated: new Date().toISOString()
         };
       }

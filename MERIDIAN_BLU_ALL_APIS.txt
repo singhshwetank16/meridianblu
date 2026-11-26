@@ -1,0 +1,363 @@
+================================================================================
+           MERIDIAN BLU MUSSOORIE - COMPLETE API DOCUMENTATION
+================================================================================
+Generated Date: 2026-11-26
+Property Name: Meridian Blu Mussoorie
+Location: 1, Kempty Fall Road, Charleville, Mussoorie, Uttarakhand 248179, India
+Shop ID: 165
+PMS Base URL: https://hotelserver.billhost.co.in
+Contact: +91 96505 14794 / +91 96505 14773 | reservations@meridianblu.com
+================================================================================
+
+
+--------------------------------------------------------------------------------
+SECTION 1: HOTEL PMS CORE SERVER APIS (SPRING BOOT BACKEND)
+--------------------------------------------------------------------------------
+Base URL: https://hotelserver.billhost.co.in
+Shop ID: 165
+
+1. HOTEL PROPERTY DETAILS
+   - Method: GET
+   - URL: https://hotelserver.billhost.co.in/api/shopmas/165
+   - Description: Fetches hotel profile details, official address, contact numbers, GSTIN, and tax rules.
+   - Headers: None / Accept: application/json
+   - Sample Response:
+     {
+       "shopid": 165,
+       "shopname": "Meridian Blu Mussoorie",
+       "address": "1, Kempty Fall Road, Charleville, Mussoorie",
+       "phone": "9650514794",
+       "gstin": "05AABCM1234F1Z5",
+       "state": "Uttarakhand"
+     }
+
+2. ROOM CATEGORIES & BASE TARIFFS (ROOM TYPES MASTER)
+   - Method: GET
+   - URL: https://hotelserver.billhost.co.in/165/rtmas
+   - Description: Fetches all room categories/tiers, base prices per night, unit capacities, and descriptions.
+   - Sample Response:
+     [
+       {
+         "id": 1130,
+         "rtname": "WOODEN COTTAGES",
+         "shopid": 165,
+         "totalroom": 10,
+         "occupancy": 2,
+         "roomtypedescription": "Heated handcrafted cedar wood cottage with mountain balcony"
+       },
+       {
+         "id": 1487,
+         "rtname": "maharaja suit",
+         "shopid": 165,
+         "totalroom": 1,
+         "occupancy": 2
+       }
+     ]
+
+3. ALL PHYSICAL ROOMS INVENTORY MASTER
+   - Method: GET
+   - URL: https://hotelserver.billhost.co.in/165/room
+   - Description: Fetches all physical hotel rooms (all 33 rooms e.g. Room 201-310), floor assignments, and room codes.
+   - Sample Response:
+     [
+       {
+         "id": 201,
+         "rname": "201",
+         "rtcode": 1130,
+         "shopid": 165,
+         "floor": "2nd Floor",
+         "status": 1
+       },
+       {
+         "id": 205,
+         "rname": "205",
+         "rtcode": 1130,
+         "shopid": 165,
+         "floor": "2nd Floor",
+         "status": 0
+       }
+     ]
+
+4. LIVE OTA INVENTORY & CHANNEL RATES
+   - Method: GET
+   - URL: https://hotelserver.billhost.co.in/api/ota-inventory?shopId=165&startDate={YYYY-MM-DD}&endDate={YYYY-MM-DD}
+   - Description: Fetches date-range availability and OTA rate allocations across booking channels.
+   - Query Params:
+     * shopId: 165
+     * startDate: e.g. 2026-11-27
+     * endDate: e.g. 2026-11-28
+
+5. LIVE VACANT PHYSICAL ROOMS
+   - Method: GET
+   - URL: https://hotelserver.billhost.co.in/165/room/status/0
+   - Description: Returns currently vacant physical rooms (status = 0). Occupied or blocked rooms (status != 0) are excluded.
+   - Used for: Real-time room allocation dropdown so booked rooms are blocked and vacant rooms can be selected.
+
+6. RESERVATIONS FILTER BY DATE RANGE
+   - Method: GET
+   - URL: https://hotelserver.billhost.co.in/165/reservationviewFilter/{startDate}/{endDate}/0
+   - Description: Fetches all active confirmed reservations between check-in and check-out dates to prevent double-booking.
+   - Example: https://hotelserver.billhost.co.in/165/reservationviewFilter/2026-11-27/2026-11-28/0
+
+7. ALL RESERVATIONS LEDGER
+   - Method: GET
+   - URL: https://hotelserver.billhost.co.in/165/reservation
+   - Description: Complete booking ledger used for booking lookup and status tracking by mobile number or confirmation code.
+
+8. CREATE DIRECT BOOKING (BULK RESERVATION)
+   - Method: POST
+   - URL: https://hotelserver.billhost.co.in/165/reservationBulk
+     (Fallback URL: https://hotelserver.billhost.co.in/reservationBulk)
+   - Headers: Content-Type: application/json
+   - Description: Registers direct booking into the hotel's Spring Boot database.
+   - Request Body:
+     [
+       {
+         "resdate": "2026-11-26",
+         "restime": "04:30 pm",
+         "chdate": "2026-11-27",
+         "choutdate": "2026-11-28",
+         "gmob": 9876543210,
+         "gname": "John Doe",
+         "add1": "Direct Website Booking",
+         "email": "johndoe@example.com",
+         "rtype": 1130,
+         "rname": "205",
+         "rcode": 205,
+         "exbed": 0,
+         "exbedch": 0,
+         "rent": 4000,
+         "billamt": 4480,
+         "advance": 0,
+         "username": "DirectWebsite",
+         "mg": 2,
+         "fg": 0,
+         "cg": 0,
+         "stday": 1,
+         "discount": 0,
+         "discountamount": 0,
+         "gsttype": 0,
+         "gstperc": 12,
+         "gstamount": 480,
+         "taxable": 4000,
+         "amount": 4480,
+         "remarks": "Direct Web Booking: John Doe (9876543210)",
+         "checkInTime": "14:00",
+         "checkOutTime": "11:00",
+         "shopid": 165,
+         "noofroom": 1,
+         "roomtypename": "WOODEN COTTAGES",
+         "reservationtype": "Confirm",
+         "status": 0,
+         "isgstbill": false
+       }
+     ]
+   - Response: Text / Numeric PMS Reservation ID (e.g. "86")
+
+9. BOOKING CONFIRMATION EMAIL DISPATCH
+   - Method: POST
+   - URL: https://hotelserver.billhost.co.in/send-reservation-email
+   - Headers: Content-Type: application/json
+   - Description: Triggers automated dispatch of official booking confirmation voucher to the guest's email.
+   - Request Body:
+     {
+       "shopresno": 86,
+       "confirmationCode": "MB-86",
+       "gname": "John Doe",
+       "email": "johndoe@example.com",
+       "gmob": 9876543210,
+       "roomtypename": "WOODEN COTTAGES",
+       "chdate": "2026-11-27",
+       "choutdate": "2026-11-28",
+       "stday": 1,
+       "amount": 4480,
+       "shopid": 165
+     }
+
+10. AUTOMATED WHATSAPP NOTIFICATION
+    - Method: POST
+    - URL: https://hotelserver.billhost.co.in/api/whatsapp/notifications
+    - Headers: Content-Type: application/json
+    - Description: Sends instant WhatsApp booking confirmation with hotel location & directives.
+    - Request Body:
+      {
+        "shopId": 165,
+        "phone": "9876543210",
+        "name": "John Doe",
+        "message": "*Meridian Blu Mussoorie - Reservation Confirmed!*\nBooking Ref: *MB-86*..."
+      }
+
+
+--------------------------------------------------------------------------------
+SECTION 2: EXPRESS BACKEND PROXY & APPLICATION APIS (server.ts)
+--------------------------------------------------------------------------------
+These endpoints run on the Node.js/Express server (Default: http://localhost:3000)
+They wrap and protect the PMS endpoints, provide caching, and calculate live availability.
+
+1. GET /api/pms/hotel-details
+   - Query: ?shopId=165
+   - Proxies to: PMS /api/shopmas/165
+   - Purpose: Hotel profile, address, taxes, and contact details.
+
+2. GET /api/pms/room-types
+   - Query: ?shopId=165 (Also alias: /api/room-types, /165/rtmas)
+   - Proxies to: PMS /165/rtmas
+   - Purpose: All room types and categories.
+
+3. GET /api/pms/rooms
+   - Query: ?shopId=165 (Also alias: /api/rooms, /165/room)
+   - Proxies to: PMS /165/room
+   - Purpose: All 33 physical rooms list with floor and assigned codes.
+
+4. GET /api/pms/vacant-rooms
+   - Query: ?shopId=165 (Also alias: /api/vacant-rooms, /165/room/status/0)
+   - Proxies to: PMS /165/room/status/0
+   - Purpose: Currently vacant physical rooms.
+
+5. GET /api/pms/ota-inventory
+   - Query: ?shopId=165&startDate=...&endDate=...
+   - Proxies to: PMS /api/ota-inventory
+   - Purpose: OTA rate allocation and date inventory limits.
+
+6. GET /api/pms/reservations-filter
+   - Query: ?startDate=...&endDate=...&shopId=165
+   - Proxies to: PMS /165/reservationviewFilter/...
+   - Purpose: Date-range reservations to avoid double booking.
+
+7. GET /api/pms/reservations
+   - Query: ?shopId=165 (Also alias: /api/reservations/all, /165/reservation)
+   - Proxies to: PMS /165/reservation
+   - Purpose: All booking records.
+
+8. GET /api/inventory
+   - Query: ?shopId=165&checkIn={YYYY-MM-DD}&checkOut={YYYY-MM-DD}
+   - Purpose: REAL-TIME DYNAMIC INVENTORY ENGINE. Fetches room types, vacant physical
+     rooms, and date-range bookings in parallel; computes available units minus future booked.
+   - Response:
+     {
+       "shopId": 165,
+       "status": "ACTIVE",
+       "currency": "INR",
+       "currencySymbol": "₹",
+       "inventory": {
+         "1130": {
+           "roomId": "1130",
+           "roomName": "WOODEN COTTAGES",
+           "totalUnits": 10,
+           "availableUnits": 8,
+           "isSoldOut": false,
+           "statusText": "8 Units Available in PMS"
+         }
+       }
+     }
+
+9. GET /api/pms/lookup
+   - Query: ?q={phone_or_code}
+   - Purpose: Searches PMS reservations by 10-digit mobile number, guest name, or confirmation code.
+
+10. POST /api/reservations
+    - Also alias: /reservationBulk, /api/pms/booking
+    - Purpose: Unified booking submission endpoint. Accepts reservation payload, assigns
+      physical room, calls PMS /165/reservationBulk, sends WhatsApp notification,
+      and dispatches confirmation email.
+
+11. POST /api/pms/send-email
+    - Also alias: /send-reservation-email
+    - Purpose: Proxies confirmation email dispatch to PMS email service.
+
+12. POST /api/pms/send-whatsapp
+    - Also alias: /api/whatsapp/notifications
+    - Purpose: Proxies WhatsApp notification dispatch to PMS WhatsApp service.
+
+13. GET /api/pms/status
+    - Purpose: Automated healthcheck. Verifies live connection to all 10 PMS endpoints.
+    - Response:
+      {
+        "status": "ONLINE",
+        "shopId": 165,
+        "pmsBaseUrl": "https://hotelserver.billhost.co.in",
+        "endpoints": {
+          "1_hotel_details": true,
+          "2_room_types": true,
+          "3_all_rooms": true,
+          "4_live_inventory": true,
+          "5_vacant_rooms": true,
+          "6_reservations_by_date": true,
+          "7_all_reservations": true,
+          "8_create_booking_bulk": true,
+          "9_email_confirmation": true,
+          "10_whatsapp_notifications": true
+        }
+      }
+
+14. GET /api/concierge & POST /api/concierge
+    - Purpose: Virtual Concierge chatbot service endpoint.
+
+
+--------------------------------------------------------------------------------
+SECTION 3: AI CONCIERGE API (GOOGLE GEMINI LLM)
+--------------------------------------------------------------------------------
+- SDK / Library: @google/genai
+- Model: gemini-2.5-flash
+- Environment Variable: GEMINI_API_KEY
+- Endpoint: POST /api/concierge
+- Request Body:
+  {
+    "message": "What is the best time to see the Mussoorie Winterline?",
+    "history": []
+  }
+- System Prompt Context:
+  * Estate persona: Head Concierge at Meridian Blu Mussoorie (7,120 ft elevation).
+  * Knowledge Base: Winterline phenomenon (5:35 PM daily from Observatory Terrace),
+    hiking trails (George Everest Peak, Benog Wildlife Sanctuary, Landour Cantonment),
+    dining options (Cedar & Spice, Winterline Lounge), transport directives, and room rates.
+  * Fallback Mechanism: If GEMINI_API_KEY is not configured, the endpoint
+    automatically responds using an internal curated knowledge base.
+
+
+--------------------------------------------------------------------------------
+SECTION 4: EXTERNAL THIRD-PARTY INTEGRATION APIS
+--------------------------------------------------------------------------------
+1. WHATSAPP CLICK-TO-CHAT & VOUCHER SHARING API
+   - Endpoint: https://api.whatsapp.com/send?text={encoded_message}
+   - Quick Link: https://wa.me/919650514773
+   - Purpose: Direct guest concierge messaging and 1-click sharing of confirmed booking vouchers.
+
+2. GOOGLE FONTS CDN API
+   - Endpoints:
+     * https://fonts.googleapis.com
+     * https://fonts.gstatic.com
+   - Fonts Loaded:
+     * Cinzel (Weights: 500-900)
+     * Cormorant Garamond (Weights: 400-700)
+     * Outfit (Weights: 300-700)
+     * Playfair Display (Weights: 400-900)
+     * Plus Jakarta Sans (Weights: 300-800)
+
+3. GOOGLE MAPS GEOLOCATION & NAVIGATION API
+   - Coordinates: Latitude 30.4598, Longitude 78.0644
+   - Map Link: https://maps.google.com/?q=30.4598,78.0644
+   - Purpose: Turn-by-turn navigation for arriving guests (near Happy Valley & Buddha Point).
+
+4. SOCIAL MEDIA SHARING APIS
+   - Twitter / X Share:
+     https://twitter.com/intent/tweet?text={text}&url={url}&hashtags=MeridianBluMussoorie,Himalayas,Mussoorie
+   - Facebook Share:
+     https://www.facebook.com/sharer/sharer.php?u={url}
+
+
+--------------------------------------------------------------------------------
+SECTION 5: ENVIRONMENT & CONFIGURATION SUMMARY
+--------------------------------------------------------------------------------
+File: .env / server.ts / src/services/pmsService.ts
+
+Key Variables:
+- PMS_BASE_URL: https://hotelserver.billhost.co.in
+- DEFAULT_SHOP_ID / PMS_SHOP_ID: 165
+- PORT: 3000 (Default HTTP Port)
+- GEMINI_API_KEY: [Your Google Gemini API Key]
+- GITHUB_PAGES_URL: https://singhshwetank16.github.io/meridianblu/
+
+================================================================================
+                         END OF API DOCUMENTATION
+================================================================================
