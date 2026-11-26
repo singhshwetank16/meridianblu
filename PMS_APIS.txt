@@ -1,0 +1,128 @@
+HOTEL PMS APIS (MERIDIAN BLU - SHOP ID: 165)
+Base URL: https://hotelserver.billhost.co.in
+
+--------------------------------------------------------------------------------
+1. Hotel Property Details
+--------------------------------------------------------------------------------
+Method: GET
+URL: https://hotelserver.billhost.co.in/api/shopmas/165
+
+--------------------------------------------------------------------------------
+2. Room Categories & Rates (Room Types Master)
+--------------------------------------------------------------------------------
+Method: GET
+URL: https://hotelserver.billhost.co.in/165/rtmas
+
+--------------------------------------------------------------------------------
+3. All Physical Rooms List (All 33 Rooms)
+--------------------------------------------------------------------------------
+Method: GET
+URL: https://hotelserver.billhost.co.in/165/room
+
+--------------------------------------------------------------------------------
+4. Live OTA Inventory & Channel Rates
+--------------------------------------------------------------------------------
+Method: GET
+URL: https://hotelserver.billhost.co.in/api/ota-inventory?shopId=165&startDate={YYYY-MM-DD}&endDate={YYYY-MM-DD}
+
+--------------------------------------------------------------------------------
+5. Vacant Rooms (Available for Booking)
+--------------------------------------------------------------------------------
+Method: GET
+URL: https://hotelserver.billhost.co.in/165/room/status/0
+
+--------------------------------------------------------------------------------
+6. Reservations Filter by Date Range
+--------------------------------------------------------------------------------
+Method: GET
+URL: https://hotelserver.billhost.co.in/165/reservationviewFilter/{startDate}/{endDate}/0
+
+--------------------------------------------------------------------------------
+7. All Reservations Ledger
+--------------------------------------------------------------------------------
+Method: GET
+URL: https://hotelserver.billhost.co.in/165/reservation
+
+--------------------------------------------------------------------------------
+8. Create Booking (Bulk Reservation)
+--------------------------------------------------------------------------------
+Method: POST
+URL: https://hotelserver.billhost.co.in/165/reservationBulk
+Headers: Content-Type: application/json
+Payload:
+[
+  {
+    "resdate": "YYYY-MM-DD",
+    "restime": "hh:mm am/pm",
+    "chdate": "YYYY-MM-DD",
+    "choutdate": "YYYY-MM-DD",
+    "gmob": 9876543210,
+    "gname": "Guest Name",
+    "add1": "Direct Website Booking",
+    "email": "guest@example.com",
+    "rtype": 1130,
+    "rname": "205",
+    "rcode": 205,
+    "exbed": 0,
+    "exbedch": 0,
+    "rent": 4000,
+    "billamt": 4480,
+    "advance": 0,
+    "username": "DirectWebsite",
+    "mg": 2,
+    "fg": 0,
+    "cg": 0,
+    "stday": 1,
+    "discount": 0,
+    "discountamount": 0,
+    "gsttype": 0,
+    "gstperc": 12,
+    "gstamount": 480,
+    "taxable": 4000,
+    "amount": 4480,
+    "remarks": "Direct Web Booking",
+    "checkInTime": "14:00",
+    "checkOutTime": "11:00",
+    "shopid": 165,
+    "noofroom": 1,
+    "roomtypename": "WOODEN COTTAGES",
+    "reservationtype": "Confirm",
+    "status": 0,
+    "isgstbill": false
+  }
+]
+
+--------------------------------------------------------------------------------
+9. Booking Confirmation Email
+--------------------------------------------------------------------------------
+Method: POST
+URL: https://hotelserver.billhost.co.in/send-reservation-email
+Headers: Content-Type: application/json
+Payload:
+{
+  "shopresno": 86,
+  "confirmationCode": "MB-86",
+  "gname": "Guest Name",
+  "email": "guest@example.com",
+  "gmob": 9876543210,
+  "roomtypename": "WOODEN COTTAGES",
+  "chdate": "YYYY-MM-DD",
+  "choutdate": "YYYY-MM-DD",
+  "stday": 1,
+  "amount": 4480,
+  "shopid": 165
+}
+
+--------------------------------------------------------------------------------
+10. WhatsApp Booking Notification
+--------------------------------------------------------------------------------
+Method: POST
+URL: https://hotelserver.billhost.co.in/api/whatsapp/notifications
+Headers: Content-Type: application/json
+Payload:
+{
+  "shopId": 165,
+  "phone": "9876543210",
+  "name": "Guest Name",
+  "message": "Reservation Confirmed: MB-86"
+}
